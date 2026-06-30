@@ -42,6 +42,18 @@
 </div>
 <div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
+<!-- ✅ POPUP PERINGATAN YANG BAGUS -->
+<div id="popupPeringatan" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden">
+    <div class="bg-kartu p-6 rounded-xl border border-gray-700 w-80 text-center shadow-2xl">
+        <div class="text-5xl mb-4">⚠️</div>
+        <h3 class="text-xl font-bold mb-2">Perhatian</h3>
+        <p class="text-gray-400 mb-6">Silakan Login Dulu Sebelum Melakukan Pembelian!</p>
+        <div class="flex gap-3">
+            <button onclick="tutupPopup()" class="flex-1 bg-gray-700 py-2 rounded-lg font-bold hover:bg-gray-600">Nanti Saja</button>
+            <a href="login.html" class="flex-1 bg-ungu py-2 rounded-lg font-bold hover:opacity-90 text-white">Login Sekarang</a>
+        </div>
+    </div>
+</div>
         <!-- ✅ DAFTAR GAME LOGO CATBOX -->
 <section id="topup" class="px-4 py-8 max-w-4xl mx-auto">
     <h2 class="text-2xl font-bold text-center mb-8"><span class="gradasi">Pilih Game Kamu</span></h2>
@@ -142,7 +154,20 @@
 <script>
 function bukaMenu() { document.getElementById('menuSamping').classList.add('buka'); document.getElementById('latarTutup').classList.remove('hidden'); }
 function tutupMenu() { document.getElementById('menuSamping').classList.remove('buka'); document.getElementById('latarTutup').classList.add('hidden'); }
-function cekBeli() { if(localStorage.getItem('login')==='ya') location.href='bayar.html'; else { alert('⚠️ Silakan Login Dulu!'); location.href='login.html'; } }
+
+// CEK LOGIN DENGAN POPUP BAGUS
+function cekBeli() {
+    if(localStorage.getItem('login') === 'ya') {
+        location.href = 'bayar.html';
+    } else {
+        document.getElementById('popupPeringatan').classList.remove('hidden');
+    }
+}
+
+function tutupPopup() {
+    document.getElementById('popupPeringatan').classList.add('hidden');
+}
+
 function keluarAkun() { if(confirm('Yakin mau keluar?')) { localStorage.removeItem('login'); localStorage.removeItem('nama'); alert('Berhasil keluar!'); location.href='login.html'; } }
 </script>
 </body>
