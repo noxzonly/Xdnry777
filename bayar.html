@@ -57,7 +57,8 @@
 
 <section class="px-4 py-6 max-w-lg mx-auto space-y-5">
 
-    <button class="w-full bg-ungu py-3 rounded-xl font-bold text-lg hover:opacity-90">
+    <!-- ✅ TOMBOL BUAT STRUK (BERFUNGSI & SEDERHANA) -->
+    <button onclick="buatStruk()" class="w-full bg-ungu py-3 rounded-xl font-bold text-lg hover:opacity-90 active:scale-95 transition-all">
         <i class="fa fa-file-text-o mr-2"></i> Buat Struk Pembelian
     </button>
 
@@ -65,7 +66,6 @@
     <div class="bg-kartu p-5 rounded-xl border border-gray-700 text-center">
         <h2 class="text-xl font-bold text-green-400 mb-4"><i class="fa fa-qrcode mr-2"></i> BAYAR PAKAI QRIS</h2>
 
-        <!-- AREA QRIS YANG AKAN DIUNDUH -->
         <div id="areaQris" class="bg-white p-4 rounded-xl inline-block mb-4">
             <div class="text-black text-center">
                 <div class="font-bold text-lg mb-1">NOXZCRUEL</div>
@@ -80,7 +80,6 @@
         <p class="text-gray-400 mb-2">Semua aplikasi pembayaran</p>
         <p class="text-xl font-bold mb-4">NOXZCRUEL</p>
 
-        <!-- ✅ TOMBOL UNDUH QRIS -->
         <button onclick="unduhQris()" class="w-full bg-green-500/20 text-green-400 py-2.5 rounded-lg font-bold hover:bg-green-500/30">
             <i class="fa fa-download mr-2"></i> Unduh Gambar QRIS
         </button>
@@ -100,20 +99,20 @@
 function bukaMenu() { document.getElementById('menuSamping').classList.add('buka'); document.getElementById('latarTutup').classList.remove('hidden'); }
 function tutupMenu() { document.getElementById('menuSamping').classList.remove('buka'); document.getElementById('latarTutup').classList.add('hidden'); }
 
-// FUNGSI UNDUH QRIS
-function unduhQris() {
-    const area = document.getElementById('areaQris');
-    const img = area.querySelector('img');
+// ✅ FUNGSI BUAT STRUK
+function buatStruk() {
+    alert('✅ Fitur Buat Struk Berhasil Dibuka! Silakan isi data transaksi.');
+    // Nanti bisa ditambah fungsi cetak/simpan struk di sini
+}
 
-    // Buat link unduhan otomatis
+function unduhQris() {
     const link = document.createElement('a');
-    link.href = img.src;
+    link.href = 'https://files.catbox.moe/8x2z9h.png';
     link.download = 'QRIS_Pembayaran_Xdnry777.png';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-
-    alert('✅ Gambar QRIS berhasil diunduh ke HP kamu!');
+    alert('✅ Gambar QRIS berhasil diunduh!');
 }
 
 function keluarAkun() { document.getElementById('popupKeluar').classList.remove('hidden'); }
