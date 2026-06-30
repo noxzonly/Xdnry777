@@ -174,7 +174,27 @@
 
     </div>
 
+<script>l
+
+<!-- EFEK SUARA KLIK -->
+<audio id="suaraKlik" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+
+
 <script>
+// Fungsi mainkan suara
+function bunyiKlik() {
+    const suara = document.getElementById('suaraKlik');
+    suara.currentTime = 0; // biar bisa bunyi cepat berulang
+    suara.play().catch(e => {}); // tangani jika ada kesalahan kecil
+}
+
+// Berikan suara ke semua tombol & pilihan
+document.querySelectorAll('button, div[onclick], a').forEach(el => {
+    el.addEventListener('click', bunyiKlik);
+});
+</script>
+
 let pilihGame = {};
 
 function pilih(game, item, harga) {
