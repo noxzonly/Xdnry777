@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembayaran - Xdnry777</title>
+    <title>Pembayaran & Struk - Xdnry777</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script>
@@ -13,6 +13,8 @@
         .gradasi { background: linear-gradient(90deg, #8B5CF6, #EC4899); -webkit-background-clip: text; color: transparent; }
         #menuSamping { transform: translateX(-100%); transition: 0.3s ease; }
         #menuSamping.buka { transform: translateX(0); }
+        .struk-cetak { background: #fff; color: #000; }
+        @media print { body *:not(.struk-cetak, .struk-cetak *) { display: none; } }
     </style>
 </head>
 <body class="bg-gelap text-white min-h-screen">
@@ -55,10 +57,59 @@
     </div>
 </div>
 
+<!-- ✅ FORM ISIAN STRUK -->
+<div id="formStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
+    <div class="bg-kartu p-5 rounded-xl border border-gray-700 w-full max-w-md max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold gradasi">Buat Struk Pembelian</h3>
+            <button onclick="tutupFormStruk()" class="text-xl"><i class="fa fa-times"></i></button>
+        </div>
+
+        <div class="space-y-3">
+            <input type="text" id="namaPembeli" placeholder="Nama Pembeli" class="w-full bg-gelap border border-gray-600 rounded-lg p-3">
+            <input type="text" id="namaGame" placeholder="Nama Game" class="w-full bg-gelap border border-gray-600 rounded-lg p-3">
+            <input type="text" id="itemBeli" placeholder="Item yang Dibeli (Contoh: 12 Diamond)" class="w-full bg-gelap border border-gray-600 rounded-lg p-3">
+            <input type="text" id="idGame" placeholder="ID Game / ID Akun" class="w-full bg-gelap border border-gray-600 rounded-lg p-3">
+            <input type="text" id="hargaTotal" placeholder="Total Harga (Contoh: Rp 3.800)" class="w-full bg-gelap border border-gray-600 rounded-lg p-3">
+            <input type="text" id="metodeBayar" placeholder="Metode Pembayaran (QRIS / Transfer)" class="w-full bg-gelap border border-gray-600 rounded-lg p-3">
+            <input type="date" id="tanggalTransaksi" class="w-full bg-gelap border border-gray-600 rounded-lg p-3">
+        </div>
+
+        <div class="flex gap-3 mt-5">
+            <button onclick="tutupFormStruk()" class="flex-1 bg-gray-700 py-2.5 rounded-lg font-bold">Batal</button>
+            <button onclick="tampilkanStruk()" class="flex-1 bg-ungu py-2.5 rounded-lg font-bold">Buat Struk</button>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ HASIL STRUK SIAP CETAK -->
+<div id="hasilStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
+    <div class="struk-cetak p-5 rounded-lg w-full max-w-sm shadow-2xl">
+        <div class="text-center border-b border-gray-300 pb-3 mb-3">
+            <h2 class="text-xl font-bold">Xdnry777 STORE</h2>
+            <p class="text-sm text-gray-600">Top Up Game Terpercaya</p>
+        </div>
+
+        <div class="space-y-1 text-sm mb-3">
+            <div class="flex justify-between"><span>Nama:</span><span id="sNama">-</span></div>
+            <div class="flex justify-between"><span>Game:</span><span id="sGame">-</span></div>
+            <div class="flex justify-between"><span>Item:</span><span id="sItem">-</span></div>
+            <div class="flex justify-between"><span>ID Game:</span><span id="sId">-</span></div>
+            <div class="flex justify-between font-bold"><span>Total Bayar:</span><span id="sHarga">-</span></div>
+            <div class="flex justify-between"><span>Bayar Via:</span><span id="sMetode">-</span></div>
+            <div class="flex justify-between"><span>Tanggal:</span><span id="sTanggal">-</span></div>
+        </div>
+
+        <div class="text-center border-t border-gray-300 pt-3 text-xs text-gray-600">
+            <p>Terima Kasih Telah Berbelanja!</p>
+            <p>Struk ini bukti transaksi sah</p>
+        </div>
+    </div>
+</div>
+
 <section class="px-4 py-6 max-w-lg mx-auto space-y-5">
 
-    <!-- ✅ TOMBOL BUAT STRUK (BERFUNGSI & SEDERHANA) -->
-    <button onclick="buatStruk()" class="w-full bg-ungu py-3 rounded-xl font-bold text-lg hover:opacity-90 active:scale-95 transition-all">
+    <button onclick="bukaFormStruk()" class="w-full bg-ungu py-3 rounded-xl font-bold text-lg hover:opacity-90 active:scale-95 transition-all">
         <i class="fa fa-file-text-o mr-2"></i> Buat Struk Pembelian
     </button>
 
@@ -99,10 +150,48 @@
 function bukaMenu() { document.getElementById('menuSamping').classList.add('buka'); document.getElementById('latarTutup').classList.remove('hidden'); }
 function tutupMenu() { document.getElementById('menuSamping').classList.remove('buka'); document.getElementById('latarTutup').classList.add('hidden'); }
 
-// ✅ FUNGSI BUAT STRUK
-function buatStruk() {
-    alert('✅ Fitur Buat Struk Berhasil Dibuka! Silakan isi data transaksi.');
-    // Nanti bisa ditambah fungsi cetak/simpan struk di sini
+// ✅ FUNGSI STRUK
+function bukaFormStruk() {
+    document.getElementById('formStruk').classList.remove('hidden');
+    document.getElementById('hasilStruk').classList.add('hidden');
+    document.getElementById('tanggalTransaksi').valueAsDate = new Date();
+}
+function tutupFormStruk() { document.getElementById('formStruk').classList.add('hidden'); }
+
+function tampilkanStruk() {
+    // Ambil data dari formulir
+    const nama = document.getElementById('namaPembeli').value.trim();
+    const game = document.getElementById('namaGame').value.trim();
+    const item = document.getElementById('itemBeli').value.trim();
+    const idgm = document.getElementById('idGame').value.trim();
+    const harga = document.getElementById('hargaTotal').value.trim();
+    const metode = document.getElementById('metodeBayar').value.trim();
+    const tgl = document.getElementById('tanggalTransaksi').value;
+
+    // Cek wajib isi
+    if(!nama || !game || !item || !harga || !tgl) {
+        alert('⚠️ Isi data yang wajib diisi!');
+        return;
+    }
+
+    // Tampilkan ke struk
+    document.getElementById('sNama').textContent = nama;
+    document.getElementById('sGame').textContent = game;
+    document.getElementById('sItem').textContent = item;
+    document.getElementById('sId').textContent = idgm || '-';
+    document.getElementById('sHarga').textContent = harga;
+    document.getElementById('sMetode').textContent = metode || '-';
+    document.getElementById('sTanggal').textContent = tgl;
+
+    // Tampilkan hasil struk
+    tutupFormStruk();
+    document.getElementById('hasilStruk').classList.remove('hidden');
+
+    setTimeout(() => {
+        if(confirm('✅ Struk berhasil dibuat! Mau dicetak/disimpan sebagai PDF?')) {
+            window.print();
+        }
+    }, 300);
 }
 
 function unduhQris() {
