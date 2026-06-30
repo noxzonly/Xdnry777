@@ -42,15 +42,28 @@
 </div>
 <div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
-<!-- ✅ POPUP PERINGATAN YANG BAGUS -->
+<!-- ✅ POPUP KELUAR AKUN -->
+<div id="popupKeluar" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden">
+    <div class="bg-kartu/70 backdrop-blur-md border border-white/10 p-6 rounded-xl w-80 text-center shadow-2xl">
+        <div class="text-5xl mb-3">🚪</div>
+        <h3 class="text-xl font-bold mb-2">Konfirmasi</h3>
+        <p class="text-gray-300 mb-5">Yakin mau keluar dari akun ini?</p>
+        <div class="flex gap-3">
+            <button onclick="tutupPopupKeluar()" class="flex-1 bg-gray-700 py-2.5 rounded-lg font-bold hover:bg-gray-600">Batal</button>
+            <button onclick="lakukanKeluar()" class="flex-1 bg-ungu py-2.5 rounded-lg font-bold hover:opacity-90">Keluar</button>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ POPUP BELUM LOGIN -->
 <div id="popupPeringatan" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden">
-    <div class="bg-kartu p-6 rounded-xl border border-gray-700 w-80 text-center shadow-2xl">
+    <div class="bg-kartu/70 backdrop-blur-md border border-white/10 p-6 rounded-xl w-80 text-center shadow-2xl">
         <div class="text-5xl mb-4">⚠️</div>
         <h3 class="text-xl font-bold mb-2">Perhatian</h3>
-        <p class="text-gray-400 mb-6">Silakan Login Dulu Sebelum Melakukan Pembelian!</p>
+        <p class="text-gray-300 mb-6">Silakan Login Dulu Sebelum Melakukan Pembelian!</p>
         <div class="flex gap-3">
-            <button onclick="tutupPopup()" class="flex-1 bg-gray-700 py-2 rounded-lg font-bold hover:bg-gray-600">Nanti Saja</button>
-            <a href="login.html" class="flex-1 bg-ungu py-2 rounded-lg font-bold hover:opacity-90 text-white">Login Sekarang</a>
+            <button onclick="tutupPopup()" class="flex-1 bg-gray-700 py-2.5 rounded-lg font-bold hover:bg-gray-600">Nanti Saja</button>
+            <a href="login.html" class="flex-1 bg-ungu py-2.5 rounded-lg font-bold hover:opacity-90 text-white">Login Sekarang</a>
         </div>
     </div>
 </div>
@@ -155,20 +168,21 @@
 function bukaMenu() { document.getElementById('menuSamping').classList.add('buka'); document.getElementById('latarTutup').classList.remove('hidden'); }
 function tutupMenu() { document.getElementById('menuSamping').classList.remove('buka'); document.getElementById('latarTutup').classList.add('hidden'); }
 
-// CEK LOGIN DENGAN POPUP BAGUS
 function cekBeli() {
-    if(localStorage.getItem('login') === 'ya') {
-        location.href = 'bayar.html';
-    } else {
-        document.getElementById('popupPeringatan').classList.remove('hidden');
-    }
+    if(localStorage.getItem('login') === 'ya') location.href='bayar.html';
+    else document.getElementById('popupPeringatan').classList.remove('hidden');
 }
+function tutupPopup() { document.getElementById('popupPeringatan').classList.add('hidden'); }
 
-function tutupPopup() {
-    document.getElementById('popupPeringatan').classList.add('hidden');
+function keluarAkun() { document.getElementById('popupKeluar').classList.remove('hidden'); }
+function tutupPopupKeluar() { document.getElementById('popupKeluar').classList.add('hidden'); }
+function lakukanKeluar() {
+    tutupPopupKeluar();
+    localStorage.removeItem('login');
+    localStorage.removeItem('nama');
+    alert('✅ Berhasil keluar!');
+    location.href='login.html';
 }
-
-function keluarAkun() { if(confirm('Yakin mau keluar?')) { localStorage.removeItem('login'); localStorage.removeItem('nama'); alert('Berhasil keluar!'); location.href='login.html'; } }
 </script>
 </body>
 </html>
