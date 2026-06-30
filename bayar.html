@@ -73,10 +73,10 @@
                 <option value="Mobile Legends">Mobile Legends</option>
                 <option value="Free Fire">Free Fire</option>
                 <option value="PUBG Mobile">PUBG Mobile</option>
-                <option value="Genshin Impact">Genshin Impact</option>
+                <option value="Valorant">Valorant</option>
             </select>
 
-            <!-- PILIH HARGA/ITEM -->
+            <!-- PILIH HARGA/ITEM LENGKAP -->
             <select id="pilihItem" class="w-full pilihan rounded-lg p-3">
                 <option value="">Pilih Item & Harga</option>
             </select>
@@ -122,7 +122,6 @@
         <h2 class="text-xl font-bold text-green-400 mb-4"><i class="fa fa-qrcode mr-2"></i> BAYAR PAKAI QRIS</h2>
         <div class="bg-white p-4 rounded-xl inline-block mb-4">
             <div class="text-black text-center">
-                <div class="font-bold text-lg mb-1">NOXZCRUEL</div>
                 <img src="https://files.catbox.moe/g2agou.jpg" alt="QRIS" class="w-48 h-48 mx-auto rounded">
             </div>
         </div>
@@ -141,26 +140,38 @@
 </section>
 
 <script>
-// DAFTAR HARGA
+// ✅ DAFTAR HARGA LENGKAP SESUAI TAMPILAN AWAL
 const daftar = {
     'Mobile Legends': [
         {item: '12 Diamond', harga: 'Rp 3.800'},
         {item: '28 Diamond', harga: 'Rp 7.900'},
-        {item: '56 Diamond', harga: 'Rp 15.500'}
+        {item: '56 Diamond', harga: 'Rp 15.500'},
+        {item: '112 Diamond', harga: 'Rp 30.000'},
+        {item: '240 Diamond', harga: 'Rp 62.000'}
     ],
     'Free Fire': [
         {item: '20 Diamond', harga: 'Rp 3.500'},
-        {item: '55 Diamond', harga: 'Rp 9.800'}
+        {item: '55 Diamond', harga: 'Rp 9.800'},
+        {item: '70 Diamond', harga: 'Rp 12.000'},
+        {item: '355 Diamond', harga: 'Rp 56.000'},
+        {item: '720 Diamond', harga: 'Rp 108.000'}
     ],
     'PUBG Mobile': [
-        {item: '60 UC', harga: 'Rp 15.000'}
+        {item: '30 UC', harga: 'Rp 10.500'},
+        {item: '60 UC', harga: 'Rp 18.500'},
+        {item: '150 UC', harga: 'Rp 45.000'},
+        {item: '325 UC', harga: 'Rp 90.000'},
+        {item: '660 UC', harga: 'Rp 175.000'}
     ],
-    'Genshin Impact': [
-        {item: '60 Genesis', harga: 'Rp 16.000'}
+    'Valorant': [
+        {item: '300 VP', harga: 'Rp 49.000'},
+        {item: '475 VP', harga: 'Rp 73.000'},
+        {item: '1.100 VP', harga: 'Rp 160.000'},
+        {item: '2.400 VP', harga: 'Rp 335.000'}
     ]
 };
 
-// PILIH GAME → MUNCUL PILIHAN HARGA
+// PILIH GAME → MUNCUL SEMUA PILIHAN HARGA
 function updateHarga() {
     const game = document.getElementById('pilihGame').value;
     const selItem = document.getElementById('pilihItem');
@@ -219,7 +230,7 @@ function unduhQris() {
     alert('✅ QRIS Diunduh!');
 }
 
-function keluarAkun() { document.getElementById('popupKeluar').classList.remove('hidden'); }
+function keluarAkun() { document.getElementById('popupKeluar').classList.add('hidden'); }
 function tutupPopupKeluar() { document.getElementById('popupKeluar').classList.add('hidden'); }
 function lakukanKeluar() {
     tutupPopupKeluar();
