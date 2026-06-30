@@ -12,7 +12,7 @@
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
 
-    <!-- NAVIGASI ATAS -->
+        <!-- NAVIGASI ATAS -->
     <div class="flex justify-between items-center mb-6 max-w-2xl mx-auto">
         <a href="index.html" class="text-gray-300 hover:text-ungu text-2xl">
             <i class="fa fa-bars"></i>
@@ -27,7 +27,7 @@
 
         <!-- MOBILE LEGENDS -->
         <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <img src="https://i.imgur.com/7QZJZbL.png" class="w-20 h-20 mx-auto rounded" alt="ML">
+            <img src="https://files.catbox.moe/q692nn.jpg" class="w-20 h-20 mx-auto rounded" alt="ML">
             <h3 class="text-xl font-bold mt-3 text-center">Mobile Legends</h3>
             <p class="text-gray-400 text-center mb-3">Diamond</p>
             <div class="space-y-2 text-sm mb-4">
@@ -52,7 +52,7 @@
 
         <!-- FREE FIRE -->
         <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <img src="https://i.imgur.com/9p6u9Yh.png" class="w-20 h-20 mx-auto rounded" alt="FF">
+            <img src="https://files.catbox.moe/00jh4l.jpg" class="w-20 h-20 mx-auto rounded" alt="FF">
             <h3 class="text-xl font-bold mt-3 text-center">Free Fire</h3>
             <p class="text-gray-400 text-center mb-3">Diamond</p>
             <div class="space-y-2 text-sm mb-4">
@@ -77,7 +77,7 @@
 
         <!-- PUBG MOBILE -->
         <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <img src="https://i.imgur.com/5Z7dF4L.png" class="w-20 h-20 mx-auto rounded" alt="PUBG">
+            <img src="https://files.catbox.moe/xfxvzz.jpg" class="w-20 h-20 mx-auto rounded" alt="PUBG">
             <h3 class="text-xl font-bold mt-3 text-center">PUBG Mobile</h3>
             <p class="text-gray-400 text-center mb-3">UC</p>
             <div class="space-y-2 text-sm mb-4">
@@ -102,7 +102,7 @@
 
         <!-- VALORANT -->
         <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <img src="https://i.imgur.com/8kKj3xH.png" class="w-20 h-20 mx-auto rounded" alt="Valorant">
+            <img src="https://files.catbox.moe/wvkmfq.jpg" class="w-20 h-20 mx-auto rounded" alt="Valorant">
             <h3 class="text-xl font-bold mt-3 text-center">Valorant</h3>
             <p class="text-gray-400 text-center mb-3">Valorant Point</p>
             <div class="space-y-2 text-sm mb-4">
@@ -124,7 +124,7 @@
 
         <!-- HIGH DOMINO -->
         <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <img src="https://i.imgur.com/9XzQZbL.png" class="w-20 h-20 mx-auto rounded" alt="High Domino">
+            <img src="https://files.catbox.moe/hpyri8.jpg" class="w-20 h-20 mx-auto rounded" alt="High Domino">
             <h3 class="text-xl font-bold mt-3 text-center">High Domino</h3>
             <p class="text-gray-400 text-center mb-3">Koin Emas</p>
             <div class="space-y-2 text-sm mb-4">
@@ -147,9 +147,9 @@
             <button onclick="lanjut()" class="w-full bg-ungu py-3 rounded-lg font-bold">Beli Sekarang</button>
         </div>
 
-        <!-- ROBLOX -->
+        <!-- ✅ ROBLOX -->
         <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <img src="https://i.imgur.com/8YhV2wL.png" class="w-20 h-20 mx-auto rounded" alt="Roblox">
+            <img src="https://files.catbox.moe/rsf4xo.jpg" class="w-20 h-20 mx-auto rounded" alt="Roblox">
             <h3 class="text-xl font-bold mt-3 text-center">Roblox</h3>
             <p class="text-gray-400 text-center mb-3">Robux</p>
             <div class="space-y-2 text-sm mb-4">
@@ -174,38 +174,22 @@
 
     </div>
 
-<!-- SUARA KLIK DIPERBAIKI -->
-<audio id="suaraKlik" preload="auto">
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3" type="audio/mpeg">
-
-
 <script>
-// Siapkan suara saat halaman buka
-const suara = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3');
-suara.volume = 0.5; // Suara tidak terlalu keras
-
-function bunyiKlik() {
-    suara.currentTime = 0;
-    suara.play().catch(e => console.log("Siap diklik"));
-}
-
-// Pasang ke semua elemen yang bisa diklik
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('button, div[onclick], a').forEach(el => {
-        el.addEventListener('click', bunyiKlik);
-    });
-});
-
 let pilihGame = {};
+
 function pilih(game, item, harga) {
     pilihGame = { game, item, harga };
 }
+
 function lanjut() {
-    if(!pilihGame.game) { alert('⚠️ Klik dulu nominalnya!'); return; }
+    if(!pilihGame.game) {
+        alert('⚠️ Klik dulu nominal yang mau dibeli!');
+        return;
+    }
     localStorage.setItem('game', pilihGame.game);
     localStorage.setItem('item', pilihGame.item);
     localStorage.setItem('harga', pilihGame.harga);
-    location.href='bayar.html';
+    location.href = 'bayar.html';
 }
 </script>
 </body>
