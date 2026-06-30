@@ -58,7 +58,7 @@
     </div>
 </div>
 
-<!-- ✅ FORM STRUK RINGKAS -->
+<!-- FORM STRUK -->
 <div id="formStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
     <div class="bg-kartu p-5 rounded-xl border border-gray-700 w-full max-w-md">
         <div class="flex justify-between items-center mb-4">
@@ -67,7 +67,6 @@
         </div>
 
         <div class="space-y-3">
-            <!-- PILIH GAME -->
             <select id="pilihGame" onchange="updateHarga()" class="w-full pilihan rounded-lg p-3">
                 <option value="">Pilih Game</option>
                 <option value="Mobile Legends">Mobile Legends</option>
@@ -76,7 +75,6 @@
                 <option value="Valorant">Valorant</option>
             </select>
 
-            <!-- PILIH HARGA/ITEM LENGKAP -->
             <select id="pilihItem" class="w-full pilihan rounded-lg p-3">
                 <option value="">Pilih Item & Harga</option>
             </select>
@@ -89,7 +87,7 @@
     </div>
 </div>
 
-<!-- ✅ HASIL STRUK SANGAT RINGKAS -->
+<!-- HASIL STRUK -->
 <div id="hasilStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
     <div class="struk-cetak p-5 rounded-lg w-full max-w-sm shadow-2xl">
         <div class="text-center border-b border-gray-300 pb-3 mb-3">
@@ -107,6 +105,13 @@
 
         <div class="text-center border-t border-gray-300 pt-3 mt-3 text-xs text-gray-500">
             <p>Terima Kasih!</p>
+        </div>
+
+        <div class="mt-4 flex gap-2">
+            <button onclick="kirimKeWA()" class="flex-1 bg-green-500 text-white py-2 rounded-lg font-bold">
+                <i class="fa fa-whatsapp mr-1"></i> Kirim ke WA
+            </button>
+            <button onclick="tutupStruk()" class="flex-1 bg-gray-600 py-2 rounded-lg font-bold">Tutup</button>
         </div>
     </div>
 </div>
@@ -140,7 +145,7 @@
 </section>
 
 <script>
-// ✅ DAFTAR HARGA LENGKAP SESUAI TAMPILAN AWAL
+// DAFTAR HARGA LENGKAP
 const daftar = {
     'Mobile Legends': [
         {item: '12 Diamond', harga: 'Rp 3.800'},
@@ -171,7 +176,8 @@ const daftar = {
     ]
 };
 
-// PILIH GAME → MUNCUL SEMUA PILIHAN HARGA
+let dataSementara = {};
+
 function updateHarga() {
     const game = document.getElementById('pilihGame').value;
     const selItem = document.getElementById('pilihItem');
@@ -184,7 +190,6 @@ function updateHarga() {
     }
 }
 
-// BUAT KODE STRUK OTOMATIS
 function buatKodeStruk() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let kode = '';
@@ -196,8 +201,8 @@ function bukaMenu() { document.getElementById('menuSamping').classList.add('buka
 function tutupMenu() { document.getElementById('menuSamping').classList.remove('buka'); document.getElementById('latarTutup').classList.add('hidden'); }
 function bukaFormStruk() { document.getElementById('formStruk').classList.remove('hidden'); document.getElementById('hasilStruk').classList.add('hidden'); }
 function tutupFormStruk() { document.getElementById('formStruk').classList.add('hidden'); }
+function tutupStruk() { document.getElementById('hasilStruk').classList.add('hidden'); }
 
-// PROSES BUAT STRUK
 function buatStruk() {
     const game = document.getElementById('pilihGame').value;
     const selItem = document.getElementById('pilihItem');
@@ -206,31 +211,53 @@ function buatStruk() {
 
     if(!game || !item) { alert('⚠️ Pilih Game & Item dulu!'); return; }
 
-    // ISI OTOMATIS SEMUA
-    document.getElementById('kodeStruk').textContent = buatKodeStruk();
+    // Simpan data untuk dikirim WA
+    dataSementara.kode = buatKodeStruk();
+    dataSementara.game = game;
+    dataSementara.item = item;
+    dataSementara.harga = harga;
+    const sekarang = new Date();
+    dataSementara.waktu = sekarang.toLocaleDateString('id-ID', {day:'2-digit', month:'short', year:'numeric'}) + ' ' + sekarang.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
+
+    // Tampilkan struk
+    document.getElementById('kodeStruk').textContent = dataSementara.kode;
     document.getElementById('namaGame').textContent = game;
     document.getElementById('namaItem').textContent = item;
     document.getElementById('hargaItem').textContent = harga;
-    
-    // TANGGAL & WAKTU OTOMATIS
-    const sekarang = new Date();
-    document.getElementById('tglWaktu').textContent = sekarang.toLocaleDateString('id-ID', {day:'2-digit', month:'short', year:'numeric'}) + ' ' + sekarang.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
+    document.getElementById('tglWaktu').textContent = dataSementara.waktu;
 
     tutupFormStruk();
     document.getElementById('hasilStruk').classList.remove('hidden');
+}
 
-    setTimeout(() => { if(confirm('✅ Struk Selesai! Mau dicetak/PDF?')) window.print(); }, 300);
+// ✅ KIRIM LANGSUNG KE WHATSAPP
+function kirimKeWA() {
+    const pesan = `*STRUK PEMBELIAN - Xdnry777 STORE*
+━━━━━━━━━━━━━━━━━━━━
+📌 Kode Struk: *${dataSementara.kode}*
+🎮 Game: ${dataSementara.game}
+📦 Item: ${dataSementara.item}
+💰 Total: ${dataSementara.harga}
+⏰ Waktu: ${dataSementara.waktu}
+━━━━━━━━━━━━━━━━━━━━
+Terima Kasih Telah Berbelanja!`;
+
+    // Ganti nomor tujuan ke nomor WA kamu (awalan 62 bukan 0)
+    const nomorWA = '6285169935089'; 
+    const linkWA = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+    
+    window.open(linkWA, '_blank');
 }
 
 function unduhQris() {
     const a = document.createElement('a');
-    a.href = 'https://files.catbox.moe/8x2z9h.png';
+    a.href = 'https://files.catbox.moe/g2agou.jpg';
     a.download = 'QRIS_Xdnry777.png';
     a.click();
     alert('✅ QRIS Diunduh!');
 }
 
-function keluarAkun() { document.getElementById('popupKeluar').classList.add('hidden'); }
+function keluarAkun() { document.getElementById('popupKeluar').classList.remove('hidden'); }
 function tutupPopupKeluar() { document.getElementById('popupKeluar').classList.add('hidden'); }
 function lakukanKeluar() {
     tutupPopupKeluar();
