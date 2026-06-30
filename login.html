@@ -3,29 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masuk - Xdnry777</title>
+    <title>Masuk / Daftar - Xdnry777</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = { theme: { extend: { colors: { gelap: '#121212', kartu: '#1E1E1E', ungu: '#8B5CF6' } } } }
+        tailwind.config = {
+            theme: { extend: { colors: { gelap: '#121212', kartu: '#1E1E1E', ungu: '#8B5CF6' } } }
+        }
     </script>
-    <style>.gradasi { background: linear-gradient(90deg, #8B5CF6, #EC4899); -webkit-background-clip: text; color: transparent; }</style>
+    <style>
+        .gradasi {
+            background: linear-gradient(90deg, #8B5CF6, #EC4899);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+    </style>
 </head>
 <body class="bg-gelap text-white min-h-screen flex items-center justify-center p-4">
+
     <div class="bg-kartu p-6 rounded-xl border border-gray-700 w-full max-w-md">
-        <h1 class="text-2xl font-bold text-center mb-6"><span class="gradasi">Xdnry777</span></h1>
-        <input type="text" id="namaUser" placeholder="Masukkan Nama Lengkap" class="w-full bg-gelap border border-gray-600 rounded-lg p-3 mb-4">
-        <button onclick="masuk()" class="w-full bg-ungu py-3 rounded-lg font-bold">Masuk / Daftar</button>
-        <p class="text-center mt-4 text-sm text-gray-400">Cukup masukkan nama untuk melanjutkan</p>
+        <h1 class="text-2xl font-bold text-center mb-6">
+            <span class="gradasi">Xdnry777</span>
+        </h1>
+
+        <!-- TOMBOL PILIH: MASUK / DAFTAR -->
+        <div class="flex mb-6 bg-gelap rounded-lg p-1">
+            <button id="btnMasuk" onclick="bukaForm('masuk')" class="flex-1 py-2 rounded-lg font-bold bg-ungu">Masuk</button>
+            <button id="btnDaftar" onclick="bukaForm('daftar')" class="flex-1 py-2 rounded-lg font-bold text-gray-400">Daftar</button>
+        </div>
+
+        <!-- FORM MASUK -->
+        <div id="formMasuk">
+            <input type="text" id="userMasuk" placeholder="Username" class="w-full bg-gelap border border-gray-600 rounded-lg p-3 mb-3">
+            <input type="password" id="passMasuk" placeholder="Kata Sandi" class="w-full bg-gelap border border-gray-600 rounded-lg p-3 mb-4">
+            <button onclick="cekLogin()" class="w-full bg-ungu py-3 rounded-lg font-bold">Masuk Akun</button>
+        </div>
+
+        <!-- FORM DAFTAR -->
+        <div id="formDaftar" class="hidden">
+            <input type="text" id="namaDaftar" placeholder="Nama Lengkap" class="w-full bg-gelap border border-gray-600 rounded-lg p-3 mb-3">
+            <input type="text" id="userDaftar" placeholder="Buat Username" class="w-full bg-gelap border border-gray-600 rounded-lg p-3 mb-3">
+            <input type="password" id="passDaftar" placeholder="Buat Kata Sandi" class="w-full bg-gelap border border-gray-600 rounded-lg p-3 mb-4">
+            <button onclick="buatAkun()" class="w-full bg-ungu py-3 rounded-lg font-bold">Daftar Akun</button>
+        </div>
+
+        <p class="text-center mt-4 text-sm text-gray-400">
+            Aman & Terpercaya ✅
+        </p>
     </div>
+
 <script>
-function masuk() {
-    const nama = document.getElementById('namaUser').value.trim();
-    if(!nama) { alert('Isi nama dulu!'); return; }
-    localStorage.setItem('login','ya');
-    localStorage.setItem('nama',nama);
-    alert('Berhasil Masuk!');
-    location.href='index.html';
+// GANTI FORM MASUK / DAFTAR
+function bukaForm(tipe) {
+    if(tipe === 'masuk') {
+        document.getElementById('formMasuk').classList.remove('hidden');
+        document.getElementById('formDaftar').classList.add('hidden');
+        document.getElementById('btnMasuk').classList.add('bg-ungu');
+        document.getElementById('btnMasuk').classList.remove('text-gray-400');
+        document.getElementById('btnDaftar').classList.remove('bg-ungu');
+        document.getElementById('btnDaftar').classList.add('text-gray-400');
+    } else {
+        document.getElementById('formDaftar').classList.remove('hidden');
+        document.getElementById('formMasuk').classList.add('hidden');
+        document.getElementById('btnDaftar').classList.add('bg-ungu');
+        document.getElementById('btnDaftar').classList.remove('text-gray-400');
+        document.getElementById('btnMasuk').classList.remove('bg-ungu');
+        document.getElementById('btnMasuk').classList.add('text-gray-400');
+    }
+}
+
+// FUNGSI BUAT AKUN BARU
+function buatAkun() {
+    const nama = document.getElementById('namaDaftar').value.trim();
+    const user = document.getElementById('userDaftar').value.trim();
+    const pass = document.getElementById('passDaftar').value.trim();
+
+    if(!nama || !user || !pass) {
+        alert('⚠️ Semua kolom harus diisi!');
+        return;
+    }
+
+    // Cek apakah username sudah ada
+    const dataUser = localStorage.getItem('akun_' + user);
+    if(dataUser) {
+        alert('❌ Username sudah dipakai! Coba yang lain.');
+        return;
+    }
+
+    // Simpan akun baru
+    localStorage.setItem('akun_' + user, JSON.stringify({nama: nama, sandi: pass}));
+    alert('✅ Akun berhasil dibuat! Silakan Masuk.');
+    bukaForm('masuk');
+}
+
+// FUNGSI CEK LOGIN
+function cekLogin() {
+    const user = document.getElementById('userMasuk').value.trim();
+    const pass = document.getElementById('passMasuk').value.trim();
+
+    if(!user || !pass) {
+        alert('⚠️ Isi Username & Kata Sandi!');
+        return;
+    }
+
+    // Ambil data akun
+    const dataUser = localStorage.getItem('akun_' + user);
+    if(!dataUser) {
+        alert('❌ Akun tidak ditemukan! Silakan Daftar dulu.');
+        bukaForm('daftar');
+        return;
+    }
+
+    const akun = JSON.parse(dataUser);
+    if(akun.sandi !== pass) {
+        alert('❌ Kata sandi salah!');
+        return;
+    }
+
+    // Berhasil masuk
+    localStorage.setItem('login', 'ya');
+    localStorage.setItem('nama', akun.nama);
+    alert('✅ Selamat Datang, ' + akun.nama + '!');
+    location.href = 'index.html';
 }
 </script>
+
 </body>
 </html>
