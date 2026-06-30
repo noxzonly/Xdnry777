@@ -16,7 +16,6 @@
         .struk-cetak { background: #fff; color: #000; }
         @media print { body *:not(.struk-cetak, .struk-cetak *) { display: none; } }
         .pilihan { background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff; }
-        .pilihan:focus { outline: none; border-color: #8B5CF6; }
     </style>
 </head>
 <body class="bg-gelap text-white min-h-screen">
@@ -59,20 +58,17 @@
     </div>
 </div>
 
-<!-- ✅ FORM STRUK: PILIHAN LENGKAP -->
+<!-- ✅ FORM STRUK RINGKAS -->
 <div id="formStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
     <div class="bg-kartu p-5 rounded-xl border border-gray-700 w-full max-w-md">
         <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-bold gradasi">Buat Struk Pembelian</h3>
+            <h3 class="text-xl font-bold gradasi">Buat Struk</h3>
             <button onclick="tutupFormStruk()" class="text-xl"><i class="fa fa-times"></i></button>
         </div>
 
         <div class="space-y-3">
-            <!-- Nama Pembeli (Otomatis) -->
-            <input type="text" id="namaPembeli" class="w-full pilihan rounded-lg p-3" readonly>
-
-            <!-- Pilih Game -->
-            <select id="pilihGame" onchange="updateItem()" class="w-full pilihan rounded-lg p-3">
+            <!-- PILIH GAME -->
+            <select id="pilihGame" onchange="updateHarga()" class="w-full pilihan rounded-lg p-3">
                 <option value="">Pilih Game</option>
                 <option value="Mobile Legends">Mobile Legends</option>
                 <option value="Free Fire">Free Fire</option>
@@ -80,55 +76,37 @@
                 <option value="Genshin Impact">Genshin Impact</option>
             </select>
 
-            <!-- Pilih Item (Sesuai Game) -->
-            <select id="pilihItem" onchange="updateHarga()" class="w-full pilihan rounded-lg p-3">
-                <option value="">Pilih Item & Nominal</option>
+            <!-- PILIH HARGA/ITEM -->
+            <select id="pilihItem" class="w-full pilihan rounded-lg p-3">
+                <option value="">Pilih Item & Harga</option>
             </select>
-
-            <!-- ID Game (Isi Sendiri) -->
-            <input type="text" id="idGame" placeholder="Masukkan ID Game Kamu" class="w-full bg-gelap border border-gray-600 rounded-lg p-3">
-
-            <!-- Harga (Otomatis) -->
-            <input type="text" id="hargaTotal" class="w-full pilihan rounded-lg p-3" readonly>
-
-            <!-- Pilih Metode Bayar -->
-            <select id="metodeBayar" class="w-full pilihan rounded-lg p-3">
-                <option value="">Pilih Metode Pembayaran</option>
-                <option value="QRIS">QRIS</option>
-                <option value="Transfer Dana">Transfer Dana</option>
-                <option value="E-Wallet">E-Wallet</option>
-            </select>
-
-            <!-- Tanggal (Otomatis) -->
-            <input type="text" id="tanggalTransaksi" class="w-full pilihan rounded-lg p-3" readonly>
         </div>
 
         <div class="flex gap-3 mt-5">
             <button onclick="tutupFormStruk()" class="flex-1 bg-gray-700 py-2.5 rounded-lg font-bold">Batal</button>
-            <button onclick="tampilkanStruk()" class="flex-1 bg-ungu py-2.5 rounded-lg font-bold">Buat Struk</button>
+            <button onclick="buatStruk()" class="flex-1 bg-ungu py-2.5 rounded-lg font-bold">Buat Struk</button>
         </div>
     </div>
 </div>
 
-<!-- HASIL STRUK -->
+<!-- ✅ HASIL STRUK SANGAT RINGKAS -->
 <div id="hasilStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
     <div class="struk-cetak p-5 rounded-lg w-full max-w-sm shadow-2xl">
         <div class="text-center border-b border-gray-300 pb-3 mb-3">
             <h2 class="text-xl font-bold">Xdnry777 STORE</h2>
-            <p class="text-sm text-gray-600">Top Up Game Terpercaya</p>
+            <p class="text-xs text-gray-600">Top Up Terpercaya</p>
         </div>
-        <div class="space-y-1 text-sm mb-3">
-            <div class="flex justify-between"><span>Nama:</span><span id="sNama">-</span></div>
-            <div class="flex justify-between"><span>Game:</span><span id="sGame">-</span></div>
-            <div class="flex justify-between"><span>Item:</span><span id="sItem">-</span></div>
-            <div class="flex justify-between"><span>ID Game:</span><span id="sId">-</span></div>
-            <div class="flex justify-between font-bold"><span>Total Bayar:</span><span id="sHarga">-</span></div>
-            <div class="flex justify-between"><span>Bayar Via:</span><span id="sMetode">-</span></div>
-            <div class="flex justify-between"><span>Tanggal:</span><span id="sTanggal">-</span></div>
+
+        <div class="space-y-1 text-sm">
+            <div class="flex justify-between"><span>Kode Struk:</span><span class="font-mono font-bold" id="kodeStruk">-</span></div>
+            <div class="flex justify-between"><span>Game:</span><span id="namaGame">-</span></div>
+            <div class="flex justify-between"><span>Item:</span><span id="namaItem">-</span></div>
+            <div class="flex justify-between font-bold text-lg mt-2 border-t pt-2"><span>Total:</span><span id="hargaItem">-</span></div>
+            <div class="flex justify-between text-xs text-gray-600 mt-2"><span>Tanggal:</span><span id="tglWaktu">-</span></div>
         </div>
-        <div class="text-center border-t border-gray-300 pt-3 text-xs text-gray-600">
-            <p>Terima Kasih Telah Berbelanja!</p>
-            <p>Struk ini bukti transaksi sah</p>
+
+        <div class="text-center border-t border-gray-300 pt-3 mt-3 text-xs text-gray-500">
+            <p>Terima Kasih!</p>
         </div>
     </div>
 </div>
@@ -145,12 +123,9 @@
         <div class="bg-white p-4 rounded-xl inline-block mb-4">
             <div class="text-black text-center">
                 <div class="font-bold text-lg mb-1">NOXZCRUEL</div>
-                <div class="text-xs mb-1">NMID : ID102536744889</div>
-                <div class="text-xs mb-3">A01</div>
                 <img src="https://files.catbox.moe/g2agou.jpg" alt="QRIS" class="w-48 h-48 mx-auto rounded">
             </div>
         </div>
-        <p class="text-xl font-bold mb-4">NOXZCRUEL</p>
         <button onclick="unduhQris()" class="w-full bg-green-500/20 text-green-400 py-2.5 rounded-lg font-bold">
             <i class="fa fa-download mr-2"></i> Unduh QRIS
         </button>
@@ -159,7 +134,6 @@
     <!-- TRANSFER -->
     <div class="bg-kartu p-5 rounded-xl border border-gray-700 text-center">
         <h2 class="text-xl font-bold text-blue-400 mb-4"><i class="fa fa-credit-card mr-2"></i> TRANSFER DANA</h2>
-        <p class="text-gray-400 mb-2">Nomor Tujuan:</p>
         <p class="text-3xl font-bold mb-2">0851-6993-5089</p>
         <p class="text-gray-400">a.n EN**** YU******</p>
     </div>
@@ -167,98 +141,81 @@
 </section>
 
 <script>
-// Data Harga Item
-const daftarHarga = {
+// DAFTAR HARGA
+const daftar = {
     'Mobile Legends': [
         {item: '12 Diamond', harga: 'Rp 3.800'},
         {item: '28 Diamond', harga: 'Rp 7.900'},
-        {item: '56 Diamond', harga: 'Rp 15.500'},
-        {item: '112 Diamond', harga: 'Rp 30.000'}
+        {item: '56 Diamond', harga: 'Rp 15.500'}
     ],
     'Free Fire': [
         {item: '20 Diamond', harga: 'Rp 3.500'},
-        {item: '55 Diamond', harga: 'Rp 9.800'},
-        {item: '140 Diamond', harga: 'Rp 24.500'}
+        {item: '55 Diamond', harga: 'Rp 9.800'}
     ],
     'PUBG Mobile': [
-        {item: '60 UC', harga: 'Rp 15.000'},
-        {item: '325 UC', harga: 'Rp 75.000'}
+        {item: '60 UC', harga: 'Rp 15.000'}
     ],
     'Genshin Impact': [
-        {item: '60 Genesis', harga: 'Rp 16.000'},
-        {item: '300 Genesis', harga: 'Rp 78.000'}
+        {item: '60 Genesis', harga: 'Rp 16.000'}
     ]
 };
 
-// Update Item Sesuai Game
-function updateItem() {
+// PILIH GAME → MUNCUL PILIHAN HARGA
+function updateHarga() {
     const game = document.getElementById('pilihGame').value;
-    const itemSelect = document.getElementById('pilihItem');
-    itemSelect.innerHTML = '<option value="">Pilih Item & Nominal</option>';
+    const selItem = document.getElementById('pilihItem');
+    selItem.innerHTML = '<option value="">Pilih Item & Harga</option>';
     
-    if(game && daftarHarga[game]) {
-        daftarHarga[game].forEach(i => {
-            itemSelect.innerHTML += `<option value="${i.item}" data-harga="${i.harga}">${i.item} - ${i.harga}</option>`;
+    if(game && daftar[game]) {
+        daftar[game].forEach(i => {
+            selItem.innerHTML += `<option value="${i.item}" data-harga="${i.harga}">${i.item} - ${i.harga}</option>`;
         });
     }
-    document.getElementById('hargaTotal').value = '';
 }
 
-// Update Harga Otomatis
-function updateHarga() {
-    const pilih = document.getElementById('pilihItem');
-    const harga = pilih.options[pilih.selectedIndex].dataset.harga || '';
-    document.getElementById('hargaTotal').value = harga;
+// BUAT KODE STRUK OTOMATIS
+function buatKodeStruk() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let kode = '';
+    for(let i=0; i<8; i++) kode += chars[Math.floor(Math.random()*chars.length)];
+    return 'XDN-' + kode;
 }
 
 function bukaMenu() { document.getElementById('menuSamping').classList.add('buka'); document.getElementById('latarTutup').classList.remove('hidden'); }
 function tutupMenu() { document.getElementById('menuSamping').classList.remove('buka'); document.getElementById('latarTutup').classList.add('hidden'); }
-
-// Buka Form & Isi Otomatis
-function bukaFormStruk() {
-    document.getElementById('formStruk').classList.remove('hidden');
-    document.getElementById('hasilStruk').classList.add('hidden');
-    
-    // Isi Nama & Tanggal Otomatis
-    document.getElementById('namaPembeli').value = localStorage.getItem('nama') || 'Pengguna';
-    document.getElementById('tanggalTransaksi').value = new Date().toLocaleDateString('id-ID', {day:'2-digit', month:'2-digit', year:'numeric'});
-}
+function bukaFormStruk() { document.getElementById('formStruk').classList.remove('hidden'); document.getElementById('hasilStruk').classList.add('hidden'); }
 function tutupFormStruk() { document.getElementById('formStruk').classList.add('hidden'); }
 
-function tampilkanStruk() {
+// PROSES BUAT STRUK
+function buatStruk() {
     const game = document.getElementById('pilihGame').value;
-    const item = document.getElementById('pilihItem').value;
-    const idgm = document.getElementById('idGame').value.trim();
-    const harga = document.getElementById('hargaTotal').value;
-    const metode = document.getElementById('metodeBayar').value;
+    const selItem = document.getElementById('pilihItem');
+    const item = selItem.value;
+    const harga = selItem.options[selItem.selectedIndex].dataset.harga || '';
 
-    if(!game || !item || !idgm || !harga || !metode) {
-        alert('⚠️ Lengkapi semua pilihan & data!');
-        return;
-    }
+    if(!game || !item) { alert('⚠️ Pilih Game & Item dulu!'); return; }
 
-    // Tampilkan ke Struk
-    document.getElementById('sNama').textContent = document.getElementById('namaPembeli').value;
-    document.getElementById('sGame').textContent = game;
-    document.getElementById('sItem').textContent = item;
-    document.getElementById('sId').textContent = idgm;
-    document.getElementById('sHarga').textContent = harga;
-    document.getElementById('sMetode').textContent = metode;
-    document.getElementById('sTanggal').textContent = document.getElementById('tanggalTransaksi').value;
+    // ISI OTOMATIS SEMUA
+    document.getElementById('kodeStruk').textContent = buatKodeStruk();
+    document.getElementById('namaGame').textContent = game;
+    document.getElementById('namaItem').textContent = item;
+    document.getElementById('hargaItem').textContent = harga;
+    
+    // TANGGAL & WAKTU OTOMATIS
+    const sekarang = new Date();
+    document.getElementById('tglWaktu').textContent = sekarang.toLocaleDateString('id-ID', {day:'2-digit', month:'short', year:'numeric'}) + ' ' + sekarang.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
 
     tutupFormStruk();
     document.getElementById('hasilStruk').classList.remove('hidden');
-    
-    setTimeout(() => {
-        if(confirm('✅ Struk Siap! Mau dicetak/simpan PDF?')) window.print();
-    }, 300);
+
+    setTimeout(() => { if(confirm('✅ Struk Selesai! Mau dicetak/PDF?')) window.print(); }, 300);
 }
 
 function unduhQris() {
-    const link = document.createElement('a');
-    link.href = 'https://files.catbox.moe/8x2z9h.png';
-    link.download = 'QRIS_Xdnry777.png';
-    link.click();
+    const a = document.createElement('a');
+    a.href = 'https://files.catbox.moe/8x2z9h.png';
+    a.download = 'QRIS_Xdnry777.png';
+    a.click();
     alert('✅ QRIS Diunduh!');
 }
 
