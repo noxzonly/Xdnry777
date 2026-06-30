@@ -39,16 +39,32 @@
                 <p class="font-bold" id="item">-</p>
             </div>
 
-            <!-- ✅ KOLOM ID GAME -->
+            <!-- ID GAME -->
             <div class="p-3 bg-gelap rounded-lg">
                 <p class="text-gray-400 text-sm">ID Game / Server</p>
                 <input type="text" id="idGame" placeholder="Contoh: 12345678 (1234)" class="w-full bg-transparent font-bold mt-1 outline-none border-none">
             </div>
 
-            <!-- ✅ KOLOM NAMA AKUN / NICK -->
+            <!-- NAMA AKUN -->
             <div class="p-3 bg-gelap rounded-lg">
                 <p class="text-gray-400 text-sm">Nama Akun / Nickname</p>
                 <input type="text" id="namaAkun" placeholder="Tulis nama akun kamu disini..." class="w-full bg-transparent font-bold mt-1 outline-none border-none">
+            </div>
+
+            <!-- ✅ KAMU YANG PILIH STATUS -->
+            <div class="p-3 bg-gelap rounded-lg">
+                <p class="text-gray-400 text-sm mb-2">👉 Tentukan Status Pembayaran</p>
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="flex items-center justify-center gap-2 p-3 border-2 border-green-500 rounded-lg cursor-pointer hover:bg-green-900/30">
+                        <input type="radio" name="status" value="LUNAS" class="accent-green-500">
+                        <span class="text-green-400 font-bold">✅ LUNAS</span>
+                    </label>
+                    <label class="flex items-center justify-center gap-2 p-3 border-2 border-red-500 rounded-lg cursor-pointer hover:bg-red-900/30">
+                        <input type="radio" name="status" value="BELUM LUNAS" class="accent-red-500">
+                        <span class="text-red-400 font-bold">⏳ BELUM LUNAS</span>
+                    </label>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">*Klik salah satu sebelum buat struk</p>
             </div>
 
             <div class="p-3 bg-gelap rounded-lg">
@@ -66,7 +82,7 @@
     <!-- INFO PEMBAYARAN -->
     <div class="bg-kartu p-5 rounded-xl border border-gray-700">
         <h3 class="text-lg font-bold text-green-400 mb-3"><i class="fa fa-qrcode"></i> Bayar via QRIS</h3>
-        <img src="https://files.catbox.moe/g2agou.jpg" class="w-48 h-48 mx-auto rounded mb-3">
+        <img src="https://files.catbox.moe/8x2z9h.png" class="w-48 h-48 mx-auto rounded mb-3">
         <h3 class="text-lg font-bold text-blue-400 mt-5 mb-3"><i class="fa fa-bank"></i> Transfer Dana</h3>
         <p class="text-2xl font-bold text-center">0851-6993-5089</p>
         <p class="text-gray-400 text-center">a.n EN**** YU******</p>
@@ -85,9 +101,13 @@
             <div class="flex justify-between"><span>Game:</span><span id="g">-</span></div>
             <div class="flex justify-between"><span>Item:</span><span id="i">-</span></div>
             <div class="flex justify-between"><span>ID Akun:</span><span id="idg">-</span></div>
-            <!-- ✅ NAMA AKUN MUNCUL DI STRUK -->
-            <div class="flex justify-between"><span>Nama Akun:</span><span class="font-bold text-green-600" id="nama">-</span></div>
-            <div class="flex justify-between font-bold text-lg border-t pt-2 mt-2"><span>Total:</span><span id="hrg">-</span></div>
+            <div class="flex justify-between"><span>Nama Akun:</span><span id="nama">-</span></div>
+            <!-- STATUS DI STRUK -->
+            <div class="flex justify-between font-bold border-t pt-2 mt-2">
+                <span>Status:</span>
+                <span id="statusStruk">-</span>
+            </div>
+            <div class="flex justify-between font-bold text-lg"><span>Total:</span><span id="hrg">-</span></div>
             <div class="flex justify-between text-xs text-gray-500 mt-2"><span>Waktu:</span><span id="waktu">-</span></div>
         </div>
         <p class="text-center text-xs text-gray-400 mt-4">Terima Kasih!</p>
@@ -104,7 +124,6 @@
 <script>
 let data = {};
 
-// AMBIL DATA OTOMATIS
 window.onload = function() {
     data.game = localStorage.getItem('game');
     data.item = localStorage.getItem('item');
@@ -129,16 +148,23 @@ function buatKode() {
 }
 
 function buatStruk() {
-    // Ambil inputan pembeli
     data.idGame = document.getElementById('idGame').value.trim();
     data.namaAkun = document.getElementById('namaAkun').value.trim();
+    
+    // ✅ CEK KAMU SUDAH PILIH STATUS ATAU BELUM
+    let pilihStatus = document.querySelector('input[name="status"]:checked');
+    if(!pilihStatus) {
+        alert('⚠️ Silakan PILIH DULU: LUNAS atau BELUM LUNAS!');
+        return;
+    }
+    data.status = pilihStatus.value;
 
     if(!data.idGame) {
         alert('⚠️ Silakan isi ID Game dulu!');
         return;
     }
     if(!data.namaAkun) {
-        alert('⚠️ Silakan isi Nama Akun / Nickname dulu!');
+        alert('⚠️ Silakan isi Nama Akun dulu!');
         return;
     }
 
@@ -154,6 +180,11 @@ function buatStruk() {
     document.getElementById('hrg').textContent = data.harga;
     document.getElementById('waktu').textContent = data.waktu;
 
+    // WARNA STATUS
+    let elStatus = document.getElementById('statusStruk');
+    elStatus.textContent = data.status;
+    elStatus.className = data.status === 'LUNAS' ? 'text-green-600' : 'text-red-600';
+
     document.getElementById('boxStruk').classList.remove('hidden');
 }
 
@@ -165,7 +196,8 @@ function kirimWA() {
 📦 Item: ${data.item}
 🆔 ID Akun: ${data.idGame}
 👤 Nama Akun: ${data.namaAkun}
-💰 Bayar: ${data.harga}
+💰 Total: ${data.harga}
+📊 Status: ${data.status}
 ⏰ Waktu: ${data.waktu}
 ━━━━━━━━━━━━━━━━
 Terima Kasih!`;
