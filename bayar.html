@@ -26,7 +26,12 @@
             <div class="p-3 bg-gelap rounded-lg"><p class="text-gray-400 text-sm">Nama Akun / Nickname</p><input type="text" id="namaAkun" placeholder="Tulis nama akun..." class="w-full bg-transparent font-bold mt-1 outline-none border-none"></div>
             <div class="p-3 bg-gelap rounded-lg"><p class="text-gray-400 text-sm">Total Bayar</p><p class="font-bold text-xl text-ungu" id="harga">-</p></div>
         </div>
-        <div class="mt-5"><button onclick="prosesOtomatis()" class="w-full bg-green-600 py-3 rounded-lg font-bold text-lg"><i class="fa fa-whatsapp"></i> KIRIM PESANAN</button></div>
+        <!-- TOMBOL SUDAH DIPASTIKAN BISA DIPENCET -->
+        <div class="mt-5">
+            <button onclick="prosesOtomatis()" class="w-full bg-green-600 py-3 rounded-lg font-bold text-lg active:scale-95 transition-transform">
+                <i class="fa fa-whatsapp"></i> KIRIM PESANAN
+            </button>
+        </div>
         <div id="infoTunggu" class="mt-4 text-center text-yellow-400 hidden"><i class="fa fa-clock-o"></i> Struk muncul dalam <span id="detik">30</span> detik...</div>
     </div>
     <div class="bg-kartu p-5 rounded-xl border border-gray-700">
@@ -84,25 +89,13 @@ function prosesOtomatis() {
     let sisa = 30;
     let hitung = setInterval(()=>{ sisa--; document.getElementById('detik').textContent = sisa; if(sisa<=0) { clearInterval(hitung); tampilkanStruk(); } }, 1000);
 }
-
-// ✅ FUNGSI SIMPAN RIWAYAT (DIPASTIKAN BERJALAN)
 function simpanKeRiwayat() {
     let riwayat = JSON.parse(localStorage.getItem('riwayatPesanan') || '[]');
-    riwayat.push({
-        kode: data.kode,
-        game: data.game,
-        item: data.item,
-        idGame: data.idGame,
-        namaAkun: data.namaAkun,
-        harga: data.harga,
-        status: data.status,
-        waktu: data.waktu
-    });
+    riwayat.push({kode:data.kode, game:data.game, item:data.item, idGame:data.idGame, namaAkun:data.namaAkun, harga:data.harga, status:data.status, waktu:data.waktu});
     localStorage.setItem('riwayatPesanan', JSON.stringify(riwayat));
 }
-
 function tampilkanStruk() {
-    simpanKeRiwayat(); // Panggil fungsi simpan SEBELUM tampilkan struk
+    simpanKeRiwayat();
     document.getElementById('kode').textContent = data.kode;
     document.getElementById('g').textContent = data.game;
     document.getElementById('i').textContent = data.item;
