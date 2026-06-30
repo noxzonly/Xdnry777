@@ -20,13 +20,15 @@
         }
     </script>
     <style>
-        button, a, label, input {
+        button, a, label {
             cursor: pointer !important;
             position: relative !important;
             z-index: 10 !important;
             pointer-events: auto !important;
         }
-        * { pointer-events: auto !important; }
+        * {
+            pointer-events: auto !important;
+        }
     </style>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
@@ -42,223 +44,98 @@
     </div>
 
     <div class="space-y-6">
-
-        <!-- 1. MOBILE LEGENDS -->
-        <div class="bg-kartu p-5 rounded-xl border border-gray-700">
+        <!-- 🎮 MOBILE LEGENDS -->
+        <div class="bg-kartu p-6 rounded-xl border border-gray-700">
             <div class="text-center mb-4">
-                <h3 class="text-xl font-bold">Mobile Legends</h3>
+                <img src="https://i.ibb.co/94ZbKqG/mlbb-logo.png" class="w-24 h-24 mx-auto rounded-xl mb-2 object-cover">
+                <h3 class="text-2xl font-bold">Mobile Legends</h3>
                 <p class="text-gray-400">Diamond</p>
             </div>
-            <div class="space-y-2 mb-5">
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih" value="12 Diamond|Rp 3.800" class="mr-2">
+
+            <div class="space-y-3 mb-6">
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer hover:bg-gelap/80">
+                    <input type="radio" name="ml" value="12 Diamond|Rp 3.800" class="mr-2 accent-ungu">
                     <span>12 Diamond</span>
                     <span class="font-bold text-ungu">Rp 3.800</span>
                 </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih" value="28 Diamond|Rp 7.900" class="mr-2">
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer hover:bg-gelap/80">
+                    <input type="radio" name="ml" value="28 Diamond|Rp 7.900" class="mr-2 accent-ungu">
                     <span>28 Diamond</span>
                     <span class="font-bold text-ungu">Rp 7.900</span>
                 </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih" value="56 Diamond|Rp 15.500" class="mr-2">
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer hover:bg-gelap/80">
+                    <input type="radio" name="ml" value="56 Diamond|Rp 15.500" class="mr-2 accent-ungu">
                     <span>56 Diamond</span>
                     <span class="font-bold text-ungu">Rp 15.500</span>
                 </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih" value="112 Diamond|Rp 30.000" class="mr-2">
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer hover:bg-gelap/80">
+                    <input type="radio" name="ml" value="112 Diamond|Rp 30.000" class="mr-2 accent-ungu">
                     <span>112 Diamond</span>
                     <span class="font-bold text-ungu">Rp 30.000</span>
                 </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih" value="240 Diamond|Rp 62.000" class="mr-2">
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer hover:bg-gelap/80">
+                    <input type="radio" name="ml" value="240 Diamond|Rp 62.000" class="mr-2 accent-ungu">
                     <span>240 Diamond</span>
                     <span class="font-bold text-ungu">Rp 62.000</span>
                 </label>
             </div>
-            <button onclick="lanjutBeli('Mobile Legends')" class="w-full bg-ungu py-3 rounded-xl font-bold">Beli Sekarang</button>
+
+            <button onclick="pilihNominal('Mobile Legends')" class="w-full bg-ungu py-3 rounded-xl text-lg font-bold hover:bg-ungu/80 active:scale-95 transition">
+                Beli Sekarang
+            </button>
         </div>
 
-        <!-- 2. FREE FIRE -->
-        <div class="bg-kartu p-5 rounded-xl border border-gray-700">
+        <!-- 🎮 FREE FIRE -->
+        <div class="bg-kartu p-6 rounded-xl border border-gray-700">
             <div class="text-center mb-4">
-                <h3 class="text-xl font-bold">Free Fire</h3>
+                <img src="https://i.ibb.co/F8zVp2k/ff-logo.png" class="w-24 h-24 mx-auto rounded-xl mb-2 object-cover">
+                <h3 class="text-2xl font-bold">Free Fire</h3>
                 <p class="text-gray-400">Diamond</p>
             </div>
-            <div class="space-y-2 mb-5">
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih2" value="20 Diamond|Rp 3.500" class="mr-2">
+
+            <div class="space-y-3 mb-6">
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer hover:bg-gelap/80">
+                    <input type="radio" name="ff" value="20 Diamond|Rp 3.500" class="mr-2 accent-ungu">
                     <span>20 Diamond</span>
                     <span class="font-bold text-ungu">Rp 3.500</span>
                 </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih2" value="55 Diamond|Rp 9.800" class="mr-2">
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer hover:bg-gelap/80">
+                    <input type="radio" name="ff" value="55 Diamond|Rp 9.800" class="mr-2 accent-ungu">
                     <span>55 Diamond</span>
                     <span class="font-bold text-ungu">Rp 9.800</span>
                 </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih2" value="140 Diamond|Rp 20.000" class="mr-2">
-                    <span>140 Diamond</span>
-                    <span class="font-bold text-ungu">Rp 20.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih2" value="720 Diamond|Rp 100.000" class="mr-2">
-                    <span>720 Diamond</span>
-                    <span class="font-bold text-ungu">Rp 100.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih2" value="1450 Diamond|Rp 200.000" class="mr-2">
-                    <span>1450 Diamond</span>
-                    <span class="font-bold text-ungu">Rp 200.000</span>
-                </label>
             </div>
-            <button onclick="lanjutBeli('Free Fire')" class="w-full bg-ungu py-3 rounded-xl font-bold">Beli Sekarang</button>
+
+            <button onclick="pilihNominal('Free Fire')" class="w-full bg-ungu py-3 rounded-xl text-lg font-bold hover:bg-ungu/80 active:scale-95 transition">
+                Beli Sekarang
+            </button>
         </div>
 
-        <!-- 3. PUBG MOBILE -->
-        <div class="bg-kartu p-5 rounded-xl border border-gray-700">
+        <!-- 🎮 PUBG MOBILE -->
+        <div class="bg-kartu p-6 rounded-xl border border-gray-700">
             <div class="text-center mb-4">
-                <h3 class="text-xl font-bold">PUBG Mobile</h3>
+                <img src="https://i.ibb.co/rdcXjwM/pubg-logo.png" class="w-24 h-24 mx-auto rounded-xl mb-2 object-cover">
+                <h3 class="text-2xl font-bold">PUBG Mobile</h3>
                 <p class="text-gray-400">UC</p>
             </div>
-            <div class="space-y-2 mb-5">
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih3" value="60 UC|Rp 15.000" class="mr-2">
+
+            <div class="space-y-3 mb-6">
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer hover:bg-gelap/80">
+                    <input type="radio" name="pubg" value="60 UC|Rp 15.000" class="mr-2 accent-ungu">
                     <span>60 UC</span>
                     <span class="font-bold text-ungu">Rp 15.000</span>
                 </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih3" value="325 UC|Rp 75.000" class="mr-2">
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer hover:bg-gelap/80">
+                    <input type="radio" name="pubg" value="325 UC|Rp 75.000" class="mr-2 accent-ungu">
                     <span>325 UC</span>
                     <span class="font-bold text-ungu">Rp 75.000</span>
                 </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih3" value="660 UC|Rp 150.000" class="mr-2">
-                    <span>660 UC</span>
-                    <span class="font-bold text-ungu">Rp 150.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih3" value="1320 UC|Rp 300.000" class="mr-2">
-                    <span>1320 UC</span>
-                    <span class="font-bold text-ungu">Rp 300.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih3" value="2670 UC|Rp 600.000" class="mr-2">
-                    <span>2670 UC</span>
-                    <span class="font-bold text-ungu">Rp 600.000</span>
-                </label>
             </div>
-            <button onclick="lanjutBeli('PUBG Mobile')" class="w-full bg-ungu py-3 rounded-xl font-bold">Beli Sekarang</button>
-        </div>
 
-        <!-- 4. HONOR OF KINGS -->
-        <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <div class="text-center mb-4">
-                <h3 class="text-xl font-bold">Honor of Kings</h3>
-                <p class="text-gray-400">Token</p>
-            </div>
-            <div class="space-y-2 mb-5">
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih4" value="100 Token|Rp 25.000" class="mr-2">
-                    <span>100 Token</span>
-                    <span class="font-bold text-ungu">Rp 25.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih4" value="300 Token|Rp 70.000" class="mr-2">
-                    <span>300 Token</span>
-                    <span class="font-bold text-ungu">Rp 70.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih4" value="680 Token|Rp 150.000" class="mr-2">
-                    <span>680 Token</span>
-                    <span class="font-bold text-ungu">Rp 150.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih4" value="1200 Token|Rp 270.000" class="mr-2">
-                    <span>1200 Token</span>
-                    <span class="font-bold text-ungu">Rp 270.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih4" value="2500 Token|Rp 550.000" class="mr-2">
-                    <span>2500 Token</span>
-                    <span class="font-bold text-ungu">Rp 550.000</span>
-                </label>
-            </div>
-            <button onclick="lanjutBeli('Honor of Kings')" class="w-full bg-ungu py-3 rounded-xl font-bold">Beli Sekarang</button>
+            <button onclick="pilihNominal('PUBG Mobile')" class="w-full bg-ungu py-3 rounded-xl text-lg font-bold hover:bg-ungu/80 active:scale-95 transition">
+                Beli Sekarang
+            </button>
         </div>
-
-        <!-- 5. GENSHIN IMPACT -->
-        <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <div class="text-center mb-4">
-                <h3 class="text-xl font-bold">Genshin Impact</h3>
-                <p class="text-gray-400">Genesis Crystal</p>
-            </div>
-            <div class="space-y-2 mb-5">
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih5" value="60 Crystal|Rp 16.000" class="mr-2">
-                    <span>60 Crystal</span>
-                    <span class="font-bold text-ungu">Rp 16.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih5" value="330 Crystal|Rp 85.000" class="mr-2">
-                    <span>330 Crystal</span>
-                    <span class="font-bold text-ungu">Rp 85.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih5" value="1090 Crystal|Rp 275.000" class="mr-2">
-                    <span>1090 Crystal</span>
-                    <span class="font-bold text-ungu">Rp 275.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih5" value="2240 Crystal|Rp 550.000" class="mr-2">
-                    <span>2240 Crystal</span>
-                    <span class="font-bold text-ungu">Rp 550.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih5" value="3880 Crystal|Rp 920.000" class="mr-2">
-                    <span>3880 Crystal</span>
-                    <span class="font-bold text-ungu">Rp 920.000</span>
-                </label>
-            </div>
-            <button onclick="lanjutBeli('Genshin Impact')" class="w-full bg-ungu py-3 rounded-xl font-bold">Beli Sekarang</button>
-        </div>
-
-        <!-- 6. VALORANT -->
-        <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <div class="text-center mb-4">
-                <h3 class="text-xl font-bold">Valorant</h3>
-                <p class="text-gray-400">Valorant Point</p>
-            </div>
-            <div class="space-y-2 mb-5">
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih6" value="475 VP|Rp 25.000" class="mr-2">
-                    <span>475 VP</span>
-                    <span class="font-bold text-ungu">Rp 25.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih6" value="1000 VP|Rp 50.000" class="mr-2">
-                    <span>1000 VP</span>
-                    <span class="font-bold text-ungu">Rp 50.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih6" value="2050 VP|Rp 100.000" class="mr-2">
-                    <span>2050 VP</span>
-                    <span class="font-bold text-ungu">Rp 100.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih6" value="3650 VP|Rp 175.000" class="mr-2">
-                    <span>3650 VP</span>
-                    <span class="font-bold text-ungu">Rp 175.000</span>
-                </label>
-                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg">
-                    <input type="radio" name="pilih6" value="5350 VP|Rp 250.000" class="mr-2">
-                    <span>5350 VP</span>
-                    <span class="font-bold text-ungu">Rp 250.000</span>
-                </label>
-            </div>
-            <button onclick="lanjutBeli('Valorant')" class="w-full bg-ungu py-3 rounded-xl font-bold">Beli Sekarang</button>
-        </div>
-
     </div>
 </div>
 
@@ -270,32 +147,49 @@
             <i class="fa fa-times"></i>
         </button>
     </div>
+
     <nav class="space-y-3">
-        <a href="index.html" class="block py-2 border-b border-gray-700 text-ungu"><i class="fa fa-home mr-2"></i> Beranda</a>
-        <a href="daftar-game.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-gamepad mr-2"></i> Daftar Game</a>
-        <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-list-alt mr-2"></i> Riwayat Pesanan</a>
-        <a href="#" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-credit-card mr-2"></i> Cara Beli</a>
-        <a href="#" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-user mr-2"></i> Masuk / Daftar</a>
-        <a href="#" class="block py-2 hover:text-ungu"><i class="fa fa-sign-out mr-2"></i> Keluar Akun</a>
+        <a href="index.html" class="block py-2 border-b border-gray-700 text-ungu">
+            <i class="fa fa-home mr-2"></i> Beranda
+        </a>
+        <a href="daftar-game.html" class="block py-2 border-b border-gray-700 hover:text-ungu">
+            <i class="fa fa-gamepad mr-2"></i> Daftar Game
+        </a>
+        <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu">
+            <i class="fa fa-list-alt mr-2"></i> Riwayat Pesanan
+        </a>
+        <a href="#" class="block py-2 border-b border-gray-700 hover:text-ungu">
+            <i class="fa fa-credit-card mr-2"></i> Cara Beli
+        </a>
+        <a href="#" class="block py-2 border-b border-gray-700 hover:text-ungu">
+            <i class="fa fa-user mr-2"></i> Masuk / Daftar
+        </a>
+        <a href="#" class="block py-2 hover:text-ungu">
+            <i class="fa fa-sign-out mr-2"></i> Keluar Akun
+        </a>
     </nav>
 </div>
+
 <div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
 <script>
-function bukaMenu() { document.getElementById('menuSamping').classList.remove('-translate-x-full'); document.getElementById('latarTutup').classList.remove('hidden'); }
-function tutupMenu() { document.getElementById('menuSamping').classList.add('-translate-x-full'); document.getElementById('latarTutup').classList.add('hidden'); }
+function bukaMenu() {
+    document.getElementById('menuSamping').classList.remove('-translate-x-full');
+    document.getElementById('latarTutup').classList.remove('hidden');
+}
+function tutupMenu() {
+    document.getElementById('menuSamping').classList.add('-translate-x-full');
+    document.getElementById('latarTutup').classList.add('hidden');
+}
 
-function lanjutBeli(namaGame) {
-    let namaRadio;
-    if(namaGame === 'Mobile Legends') namaRadio = 'pilih';
-    else if(namaGame === 'Free Fire') namaRadio = 'pilih2';
-    else if(namaGame === 'PUBG Mobile') namaRadio = 'pilih3';
-    else if(namaGame === 'Honor of Kings') namaRadio = 'pilih4';
-    else if(namaGame === 'Genshin Impact') namaRadio = 'pilih5';
-    else namaRadio = 'pilih6';
-
-    let pilih = document.querySelector(`input[name="${namaRadio}"]:checked`);
-    if(!pilih) { alert('Pilih dulu nominalnya!'); return; }
+function pilihNominal(namaGame) {
+    let namaInput = namaGame === 'Mobile Legends' ? 'ml' : namaGame === 'Free Fire' ? 'ff' : 'pubg';
+    let pilih = document.querySelector(`input[name="${namaInput}"]:checked`);
+    
+    if (!pilih) {
+        alert('⚠️ Pilih dulu nominal yang mau dibeli!');
+        return;
+    }
 
     let [item, harga] = pilih.value.split('|');
     localStorage.setItem('game', namaGame);
