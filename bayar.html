@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayar - Xdnry777</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { gelap: '#121212', kartu: '#1E1E1E', ungu: '#8B5CF6' } } }
+        }
+    </script>
+    <style>
+        .gradasi { background: linear-gradient(90deg, #8B5CF6, #EC4899); -webkit-background-clip: text; color: transparent; }
+        
+        @media print {
+            body { background: white !important; color: black !important; }
+            .tombol-sembunyi { display: none !important; }
+            #struk-cetak { position: absolute; left: 0; top: 0; width: 100%; background: white; color: black; padding: 20px; }
+        }
+    </style>
+</head>
+<body class="bg-gelap text-white min-h-screen p-4">
+
+<script>
+if(localStorage.getItem('login') !== 'ya') {
+    alert('⚠️ Harap Login Dulu!');
+    location.href = 'login.html';
+}
+</script>
+
+<div class="max-w-md mx-auto mt-10">
+    <a href="index.html" class="text-ungu mb-4 inline-block"><i class="fa fa-arrow-left"></i> Kembali</a>
+    <h1 class="text-2xl font-bold text-center mb-6"><span class="gradasi">Pembayaran</span></h1>
+
+    <!-- DATA PESANAN -->
+    <div class="bg-kartu p-5 rounded-xl border border-gray-700 mb-4">
+        <h3 class="font-semibold text-lg mb-3">Data Pesanan</h3>
+        <select id="pilihGame" class="w-full bg-gelap border border-gray-600 rounded-lg p-3 mb-3" required>
+            <option value="">-- Pilih Game & Nominal --</option>
+            <option value="Mobile Legends | 12 Diamond | Rp 3.800">Mobile Legends - 12 Diamond - Rp 3.800</option>
+            <option value="Mobile Legends | 28 Diamond | Rp 7.900">Mobile Legends - 28 Diamond - Rp 7.900</option>
+            <option value="Mobile Legends | 56 Diamond | Rp 15.500">Mobile Legends - 56 Diamond - Rp 15.500</option>
+            <option value="Mobile Legends | 112 Diamond | Rp 30.000">Mobile Legends - 112 Diamond - Rp 30.000</option>
+            <option value="Mobile Legends | 240 Diamond | Rp 62.000">Mobile Legends - 240 Diamond - Rp 62.000</option>
+            
+            <option value="Free Fire | 20 Diamond | Rp 3.500">Free Fire - 20 Diamond - Rp 3.500</option>
+            <option value="Free Fire | 55 Diamond | Rp 9.800">Free Fire - 55 Diamond - Rp 9.800</option>
+            <option value="Free Fire | 70 Diamond | Rp 12.000">Free Fire - 70 Diamond - Rp 12.000</option>
+            <option value="Free Fire | 355 Diamond | Rp 56.000">Free Fire - 355 Diamond - Rp 56.000</option>
+            <option value="Free Fire | 720 Diamond | Rp 108.000">Free Fire - 720 Diamond - Rp 108.000</option>
+            
+            <option value="PUBG Mobile | 30 UC | Rp 10.500">PUBG Mobile - 30 UC - Rp 10.500</option>
+            <option value="PUBG Mobile | 60 UC | Rp 18.500">PUBG Mobile - 60 UC - Rp 18.500</option>
+            <option value="PUBG Mobile | 150 UC | Rp 45.000">PUBG Mobile - 150 UC - Rp 45.000</option>
+            <option value="PUBG Mobile | 325 UC | Rp 90.000">PUBG Mobile - 325 UC - Rp 90.000</option>
+            
+            <option value="Valorant | 300 VP | Rp 49.000">Valorant - 300 VP - Rp 49.000</option>
+            <option value="Valorant | 475 VP | Rp 73.000">Valorant - 475 VP - Rp 73.000</option>
+            <option value="Valorant | 1.100 VP | Rp 160.000">Valorant - 1.100 VP - Rp 160.000</option>
+            
+            <option value="Roblox | 170 Robux | Rp 35.000">Roblox - 170 Robux - Rp 35.000</option>
+            <option value="Roblox | 400 Robux | Rp 72.000">Roblox - 400 Robux - Rp 72.000</option>
+            <option value="Roblox | 800 Robux | Rp 135.000">Roblox - 800 Robux - Rp 135.000</option>
+            
+            <option value="Higgs Domino | 50M Koin | Rp 5.500">Higgs Domino - 50M Koin - Rp 5.500</option>
+            <option value="Higgs Domino | 100M Koin | Rp 9.500">Higgs Domino - 100M Koin - Rp 9.500</option>
+            <option value="Higgs Domino | 500M Koin | Rp 45.000">Higgs Domino - 500M Koin - Rp 45.000</option>
+            <option value="Higgs Domino | 1B Koin | Rp 85.000">Higgs Domino - 1B Koin - Rp 85.000</option>
+        </select>
+        <input type="text" id="idGame" placeholder="Masukkan ID Akun Game" class="w-full bg-gelap border border-gray-600 rounded-lg p-3 mb-3">
+        <input type="text" id="userGame" placeholder="Username Game" class="w-full bg-gelap border border-gray-600 rounded-lg p-3">
+        <button onclick="buatStruk()" class="w-full bg-ungu mt-3 py-2 rounded-lg font-semibold">Buat Struk Pembelian</button>
+    </div>
+
+    <!-- BAGIAN QRIS TERPISAH -->
+    <div class="bg-kartu p-5 rounded-xl border border-gray-700 mb-4 text-center">
+        <h3 class="font-semibold text-lg mb-4 text-green-400"><i class="fa fa-qrcode"></i> BAYAR PAKAI QRIS</h3>
+        <div class="bg-white p-3 rounded-lg inline-block mb-3">
+            <img src="https://files.catbox.moe/g2agou.jpg" alt="QRIS Xdnry777" class="w-48 h-48 rounded">
+        </div>
+        <p class="text-sm text-gray-400">Semua aplikasi pembayaran</p>
+        <p class="font-medium mt-1">NOXZCRUEL</p>
+    </div>
+
+    <!-- BAGIAN TRANSFER DANA TERPISAH -->
+    <div class="bg-kartu p-5 rounded-xl border border-gray-700 mb-4">
+        <h3 class="font-semibold text-lg mb-4 text-blue-400 text-center"><i class="fa fa-credit-card"></i> TRANSFER DANA</h3>
+        <p class="mb-1 text-center">Nomor Tujuan:</p>
+        <p class="text-xl font-bold text-center">0851-6993-5089</p>
+        <p class="text-gray-400 text-center mt-1">a.n EN**** YU*****</p>
+    </div>
+
+    <!-- AREA STRUK BISA DICETAK -->
+    <div id="struk-cetak" class="bg-white text-black p-5 rounded-xl border-2 border-gray-400 mb-6 hidden">
+        <div class="text-center mb-4">
+            <h2 class="text-xl font-bold">Xdnry777 STORE</h2>
+            <p class="text-xs text-gray-500">Top Up Game Terpercaya</p>
+            <hr class="my-2 border-gray-400">
+        </div>
+        <div class="space-y-1 text-sm mb-3">
+            <div class="flex justify-between"><span>Tanggal</span><span id="s-tgl"></span></div>
+            <div class="flex justify-between"><span>No. Transaksi</span><span id="s-trx"></span></div>
+            <div class="flex justify-between"><span>Nama Pembeli</span><span id="s-nama"></span></div>
+        </div>
+        <hr class="my-2 border-gray-400">
+        <div class="space-y-1 text-sm mb-3">
+            <div class="flex justify-between"><span>Game</span><span id="s-game"></span></div>
+            <div class="flex justify-between"><span>ID Game</span><span id="s-id"></span></div>
+            <div class="flex justify-between"><span>Username</span><span id="s-user"></span></div>
+        </div>
+        <hr class="my-2 border-gray-400">
+        <div class="text-center py-2 border-2 border-yellow-500 rounded mb-3 bg-yellow-50">
+            <p class="font-bold text-yellow-700 text-lg">⏳ STATUS: BELUM LUNAS</p>
+        </div>
+        <p class="text-center text-xs text-gray-500">Catatan: Kesalahan ID bukan tanggung jawab admin & tidak bisa refund.</p>
+    </div>
+
+    <!-- TOMBOL AKSI -->
+    <div id="tombol-aksi" class="hidden space-y-3">
+        <button onclick="window.print()" class="w-full bg-blue-600 py-3 rounded-lg font-semibold tombol-sembunyi">
+            <i class="fa fa-print"></i> CETAK STRUK
+        </button>
+        <button onclick="kirimKeWA()" class="w-full bg-green-600 py-3 rounded-lg font-semibold tombol-sembunyi">
+            <i class="fa fa-whatsapp"></i> KIRIM STRUK KE ADMIN
+        </button>
+    </div>
+</div>
+
+<script>
+let dataStrukSaja = '';
+
+function buatStruk() {
+    const game = document.getElementById('pilihGame').value;
+    const id = document.getElementById('idGame').value;
+    const user = document.getElementById('userGame').value;
+    const nama = localStorage.getItem('nama') || 'Pembeli';
+
+    if(!game || !id || !user) {
+        alert('⚠️ Lengkapi semua data dulu!');
+        return;
+    }
+
+    const tgl = new Date().toLocaleDateString('id-ID', {day:'2-digit', month:'long', year:'numeric'});
+    const trx = 'TRX-' + Math.floor(Math.random() * 90000) + 10000;
+
+    document.getElementById('s-tgl').textContent = tgl;
+    document.getElementById('s-trx').textContent = trx;
+    document.getElementById('s-nama').textContent = nama;
+    document.getElementById('s-game').textContent = game;
+    document.getElementById('s-id').textContent = id;
+    document.getElementById('s-user').textContent = user;
+
+    dataStrukSaja = `
+══════════════════════
+        STRUK PEMBELIAN
+           Xdnry777
+══════════════════════
+📅 Tanggal : ${tgl}
+📝 No. Trx : ${trx}
+👤 Pembeli: ${nama}
+══════════════════════
+🎮 Game    : ${game}
+🆔 ID Game : ${id}
+👤 Username: ${user}
+══════════════════════
+📊 STATUS  : ⏳ BELUM LUNAS
+══════════════════════
+Catatan: Kesalahan ID bukan tanggung jawab admin & tidak bisa refund.
+    `.trim();
+
+    document.getElementById('struk-cetak').classList.remove('hidden');
+    document.getElementById('tombol-aksi').classList.remove('hidden');
+}
+
+function kirimKeWA() {
+    const link = `https://wa.me/6285169935089?text=${encodeURIComponent(dataStrukSaja)}`;
+    window.open(link, '_blank');
+
+    // Ganti status otomatis setelah diklik
+    const statusEl = document.querySelector('#struk-cetak .text-yellow-700');
+    const kotakStatus = document.querySelector('#struk-cetak .border-yellow-500');
+    
+    statusEl.textContent = '✅ STATUS: SUDAH LUNAS';
+    statusEl.classList.remove('text-yellow-700');
+    statusEl.classList.add('text-green-700');
+    
+    kotakStatus.classList.remove('border-yellow-500', 'bg-yellow-50');
+    kotakStatus.classList.add('border-green-500', 'bg-green-50');
+}
+</script>
+
+</body>
+</html>

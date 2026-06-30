@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk - Xdnry777</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { gelap: '#121212', kartu: '#1E1E1E', ungu: '#8B5CF6' } } } }
+    </script>
+    <style>.gradasi { background: linear-gradient(90deg, #8B5CF6, #EC4899); -webkit-background-clip: text; color: transparent; }</style>
+</head>
+<body class="bg-gelap text-white min-h-screen flex items-center justify-center p-4">
+    <div class="bg-kartu p-6 rounded-xl border border-gray-700 w-full max-w-md">
+        <h1 class="text-2xl font-bold text-center mb-6"><span class="gradasi">Xdnry777</span></h1>
+        <input type="text" id="namaUser" placeholder="Masukkan Nama Lengkap" class="w-full bg-gelap border border-gray-600 rounded-lg p-3 mb-4">
+        <button onclick="masuk()" class="w-full bg-ungu py-3 rounded-lg font-bold">Masuk / Daftar</button>
+        <p class="text-center mt-4 text-sm text-gray-400">Cukup masukkan nama untuk melanjutkan</p>
+    </div>
+<script>
+function masuk() {
+    const nama = document.getElementById('namaUser').value.trim();
+    if(!nama) { alert('Isi nama dulu!'); return; }
+    localStorage.setItem('login','ya');
+    localStorage.setItem('nama',nama);
+    alert('Berhasil Masuk!');
+    location.href='index.html';
+}
+</script>
+</body>
+</html>

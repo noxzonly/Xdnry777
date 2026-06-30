@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Game - Xdnry777</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { gelap: '#121212', kartu: '#1E1E1E', ungu: '#8B5CF6' } } } }
+    </script>
+    <style>
+        .gradasi { background: linear-gradient(90deg, #8B5CF6, #EC4899); -webkit-background-clip: text; color: transparent; }
+        #menuSamping { transform: translateX(-100%); transition: 0.3s ease; }
+        #menuSamping.buka { transform: translateX(0); }
+    </style>
+</head>
+<body class="bg-gelap text-white min-h-screen">
+
+<header class="bg-kartu border-b border-gray-700 py-4 text-center">
+    <h1 class="text-2xl font-bold"><span class="gradasi">Xdnry777</span></h1>
+</header>
+
+<div class="bg-gelap sticky top-0 z-40 px-4 py-3 flex justify-between items-center border-b border-gray-700">
+    <button onclick="bukaMenu()" class="text-xl"><i class="fa fa-bars"></i></button>
+    <span class="text-sm text-gray-400">Daftar Game</span>
+    <div></div>
+</div>
+
+<div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4">
+    <div class="flex justify-between items-center mb-6">
+        <span class="text-xl font-bold gradasi">Xdnry777</span>
+        <button onclick="tutupMenu()" class="text-2xl"><i class="fa fa-times"></i></button>
+    </div>
+    <nav class="space-y-3">
+        <a href="index.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-home mr-2"></i> Beranda</a>
+        <a href="daftar-game.html" class="block py-2 border-b border-gray-700 text-ungu"><i class="fa fa-gamepad mr-2"></i> Daftar Game</a>
+        <a href="carabeli.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-credit-card mr-2"></i> Cara Beli</a>
+        <a href="login.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-user mr-2"></i> Masuk / Daftar</a>
+        <button onclick="keluarAkun()" class="w-full text-left block py-2 border-b border-gray-700 hover:text-red-400"><i class="fa fa-sign-out mr-2"></i> Keluar Akun</button>
+    </nav>
+</div>
+<div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+        <!-- ✅ DAFTAR GAME LOGO CATBOX -->
+<section id="topup" class="px-4 py-8 max-w-4xl mx-auto">
+    <h2 class="text-2xl font-bold text-center mb-8"><span class="gradasi">Pilih Game Kamu</span></h2>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+
+        <!-- 🎮 Mobile Legends -->
+        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
+            <img src="https://files.catbox.moe/q692nn.jpg" alt="Mobile Legends" class="w-16 h-16 mx-auto mb-2 rounded-lg object-cover">
+            <h3 class="font-bold text-center">Mobile Legends</h3>
+            <p class="text-sm text-gray-400 text-center mb-2">Diamond</p>
+            <div class="text-xs space-y-1 mb-3">
+                <div class="flex justify-between"><span>12 Diamond</span><span class="text-ungu">Rp3.800</span></div>
+                <div class="flex justify-between"><span>28 Diamond</span><span class="text-ungu">Rp7.900</span></div>
+                <div class="flex justify-between"><span>56 Diamond</span><span class="text-ungu">Rp15.500</span></div>
+                <div class="flex justify-between"><span>112 Diamond</span><span class="text-ungu">Rp30.000</span></div>
+                <div class="flex justify-between"><span>240 Diamond</span><span class="text-ungu">Rp62.000</span></div>
+            </div>
+            <button onclick="cekBeli()" class="w-full bg-ungu/20 text-ungu py-2 rounded-lg text-sm">Beli Sekarang</button>
+        </div>
+
+        <!-- 🎮 Free Fire -->
+        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
+            <img src="https://files.catbox.moe/00jh4l.jpg" alt="Free Fire" class="w-16 h-16 mx-auto mb-2 rounded-lg object-cover">
+            <h3 class="font-bold text-center">Free Fire</h3>
+            <p class="text-sm text-gray-400 text-center mb-2">Diamond</p>
+            <div class="text-xs space-y-1 mb-3">
+                <div class="flex justify-between"><span>20 Diamond</span><span class="text-ungu">Rp3.500</span></div>
+                <div class="flex justify-between"><span>55 Diamond</span><span class="text-ungu">Rp9.800</span></div>
+                <div class="flex justify-between"><span>70 Diamond</span><span class="text-ungu">Rp12.000</span></div>
+                <div class="flex justify-between"><span>355 Diamond</span><span class="text-ungu">Rp56.000</span></div>
+                <div class="flex justify-between"><span>720 Diamond</span><span class="text-ungu">Rp108.000</span></div>
+            </div>
+            <button onclick="cekBeli()" class="w-full bg-ungu/20 text-ungu py-2 rounded-lg text-sm">Beli Sekarang</button>
+        </div>
+
+        <!-- 🎮 PUBG Mobile -->
+        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
+            <img src="https://files.catbox.moe/xfxvzz.jpg" alt="PUBG Mobile" class="w-16 h-16 mx-auto mb-2 rounded-lg object-cover">
+            <h3 class="font-bold text-center">PUBG Mobile</h3>
+            <p class="text-sm text-gray-400 text-center mb-2">UC</p>
+            <div class="text-xs space-y-1 mb-3">
+                <div class="flex justify-between"><span>30 UC</span><span class="text-ungu">Rp10.500</span></div>
+                <div class="flex justify-between"><span>60 UC</span><span class="text-ungu">Rp18.500</span></div>
+                <div class="flex justify-between"><span>150 UC</span><span class="text-ungu">Rp45.000</span></div>
+                <div class="flex justify-between"><span>325 UC</span><span class="text-ungu">Rp90.000</span></div>
+                <div class="flex justify-between"><span>660 UC</span><span class="text-ungu">Rp175.000</span></div>
+            </div>
+            <button onclick="cekBeli()" class="w-full bg-ungu/20 text-ungu py-2 rounded-lg text-sm">Beli Sekarang</button>
+        </div>
+
+        <!-- 🎮 Valorant -->
+        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
+            <img src="https://files.catbox.moe/wvkmfq.jpg" alt="Valorant" class="w-16 h-16 mx-auto mb-2 rounded-lg object-cover">
+            <h3 class="font-bold text-center">Valorant</h3>
+            <p class="text-sm text-gray-400 text-center mb-2">Valorant Point</p>
+            <div class="text-xs space-y-1 mb-3">
+                <div class="flex justify-between"><span>300 VP</span><span class="text-ungu">Rp49.000</span></div>
+                <div class="flex justify-between"><span>475 VP</span><span class="text-ungu">Rp73.000</span></div>
+                <div class="flex justify-between"><span>1.100 VP</span><span class="text-ungu">Rp160.000</span></div>
+                <div class="flex justify-between"><span>2.400 VP</span><span class="text-ungu">Rp335.000</span></div>
+            </div>
+            <button onclick="cekBeli()" class="w-full bg-ungu/20 text-ungu py-2 rounded-lg text-sm">Beli Sekarang</button>
+        </div>
+
+        <!-- 🎮 Roblox -->
+        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
+            <img src="https://files.catbox.moe/rsf4xo.jpg" alt="Roblox" class="w-16 h-16 mx-auto mb-2 rounded-lg object-cover">
+            <h3 class="font-bold text-center">Roblox</h3>
+            <p class="text-sm text-gray-400 text-center mb-2">Robux</p>
+            <div class="text-xs space-y-1 mb-3">
+                <div class="flex justify-between"><span>170 Robux</span><span class="text-ungu">Rp35.000</span></div>
+                <div class="flex justify-between"><span>400 Robux</span><span class="text-ungu">Rp72.000</span></div>
+                <div class="flex justify-between"><span>800 Robux</span><span class="text-ungu">Rp135.000</span></div>
+                <div class="flex justify-between"><span>1.700 Robux</span><span class="text-ungu">Rp270.000</span></div>
+            </div>
+            <button onclick="cekBeli()" class="w-full bg-ungu/20 text-ungu py-2 rounded-lg text-sm">Beli Sekarang</button>
+        </div>
+
+        <!-- 🎮 Higgs Domino -->
+        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
+            <img src="https://files.catbox.moe/hpyri8.jpg" alt="Higgs Domino" class="w-16 h-16 mx-auto mb-2 rounded-lg object-cover">
+            <h3 class="font-bold text-center">Higgs Domino</h3>
+            <p class="text-sm text-gray-400 text-center mb-2">Koin Emas</p>
+            <div class="text-xs space-y-1 mb-3">
+                <div class="flex justify-between"><span>50M Koin</span><span class="text-ungu">Rp5.500</span></div>
+                <div class="flex justify-between"><span>100M Koin</span><span class="text-ungu">Rp9.500</span></div>
+                <div class="flex justify-between"><span>500M Koin</span><span class="text-ungu">Rp45.000</span></div>
+                <div class="flex justify-between"><span>1B Koin</span><span class="text-ungu">Rp85.000</span></div>
+                <div class="flex justify-between"><span>3B Koin</span><span class="text-ungu">Rp240.000</span></div>
+            </div>
+            <button onclick="cekBeli()" class="w-full bg-ungu/20 text-ungu py-2 rounded-lg text-sm">Beli Sekarang</button>
+        </div>
+
+    </div>
+</section>
+
+<script>
+function bukaMenu() { document.getElementById('menuSamping').classList.add('buka'); document.getElementById('latarTutup').classList.remove('hidden'); }
+function tutupMenu() { document.getElementById('menuSamping').classList.remove('buka'); document.getElementById('latarTutup').classList.add('hidden'); }
+function cekBeli() { if(localStorage.getItem('login')==='ya') location.href='bayar.html'; else { alert('⚠️ Silakan Login Dulu!'); location.href='login.html'; } }
+function keluarAkun() { if(confirm('Yakin mau keluar?')) { localStorage.removeItem('login'); localStorage.removeItem('nama'); alert('Berhasil keluar!'); location.href='login.html'; } }
+</script>
+</body>
+</html>
