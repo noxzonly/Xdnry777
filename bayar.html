@@ -3,266 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembayaran & Struk - Xdnry777</title>
+    <title>Pembayaran - Xdnry777</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script>
         tailwind.config = { theme: { extend: { colors: { gelap: '#121212', kartu: '#1E1E1E', ungu: '#8B5CF6' } } } }
     </script>
     <style>
-        .gradasi { background: linear-gradient(90deg, #8B5CF6, #EC4899); -webkit-background-clip: text; color: transparent; }
-        #menuSamping { transform: translateX(-100%); transition: 0.3s ease; }
-        #menuSamping.buka { transform: translateX(0); }
-        .struk-cetak { background: #fff; color: #000; }
-        @media print { body *:not(.struk-cetak, .struk-cetak *) { display: none; } }
-        .pilihan { background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff; }
+        .struk { background: #fff; color: #000; }
+        @media print { body *:not(.struk, .struk *) { display: none; } }
     </style>
 </head>
-<body class="bg-gelap text-white min-h-screen">
+<body class="bg-gelap text-white min-h-screen p-4">
 
-<header class="bg-kartu border-b border-gray-700 py-4 text-center">
-    <h1 class="text-2xl font-bold"><span class="gradasi">Xdnry777</span></h1>
-</header>
+<div class="max-w-md mx-auto">
+    <h1 class="text-2xl font-bold text-center mb-6"><span class="text-ungu">Konfirmasi Pesanan</span></h1>
 
-<div class="bg-gelap sticky top-0 z-40 px-4 py-3 flex justify-between items-center border-b border-gray-700">
-    <button onclick="bukaMenu()" class="text-xl"><i class="fa fa-bars"></i></button>
-    <span class="text-sm text-gray-400">Pembayaran</span>
-    <div></div>
-</div>
-
-<div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4">
-    <div class="flex justify-between items-center mb-6">
-        <span class="text-xl font-bold gradasi">Xdnry777</span>
-        <button onclick="tutupMenu()" class="text-2xl"><i class="fa fa-times"></i></button>
-    </div>
-    <nav class="space-y-3">
-        <a href="index.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-home mr-2"></i> Beranda</a>
-        <a href="daftar-game.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-gamepad mr-2"></i> Daftar Game</a>
-        <a href="carabeli.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-credit-card mr-2"></i> Cara Beli</a>
-        <a href="login.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-user mr-2"></i> Masuk / Daftar</a>
-        <button onclick="keluarAkun()" class="w-full text-left block py-2 border-b border-gray-700 hover:text-red-400"><i class="fa fa-sign-out mr-2"></i> Keluar Akun</button>
-    </nav>
-</div>
-<div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
-
-<!-- POPUP KELUAR AKUN -->
-<div id="popupKeluar" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden">
-    <div class="bg-kartu/70 backdrop-blur-md border border-white/10 p-6 rounded-xl w-80 text-center shadow-2xl">
-        <div class="text-5xl mb-3">🚪</div>
-        <h3 class="text-xl font-bold mb-2">Konfirmasi</h3>
-        <p class="text-gray-300 mb-5">Yakin mau keluar dari akun ini?</p>
-        <div class="flex gap-3">
-            <button onclick="tutupPopupKeluar()" class="flex-1 bg-gray-700 py-2.5 rounded-lg font-bold hover:bg-gray-600">Batal</button>
-            <button onclick="lakukanKeluar()" class="flex-1 bg-ungu py-2.5 rounded-lg font-bold hover:opacity-90">Keluar</button>
-        </div>
-    </div>
-</div>
-
-<!-- FORM STRUK -->
-<div id="formStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
-    <div class="bg-kartu p-5 rounded-xl border border-gray-700 w-full max-w-md">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-bold gradasi">Buat Struk</h3>
-            <button onclick="tutupFormStruk()" class="text-xl"><i class="fa fa-times"></i></button>
-        </div>
-
+    <div class="bg-kartu p-5 rounded-xl border border-gray-700 mb-6">
         <div class="space-y-3">
-            <select id="pilihGame" onchange="updateHarga()" class="w-full pilihan rounded-lg p-3">
-                <option value="">Pilih Game</option>
-                <option value="Mobile Legends">Mobile Legends</option>
-                <option value="Free Fire">Free Fire</option>
-                <option value="PUBG Mobile">PUBG Mobile</option>
-                <option value="Valorant">Valorant</option>
-            </select>
-
-            <select id="pilihItem" class="w-full pilihan rounded-lg p-3">
-                <option value="">Pilih Item & Harga</option>
-            </select>
+            <div class="p-3 bg-gelap rounded-lg">
+                <p class="text-gray-400 text-sm">Game</p>
+                <p class="font-bold" id="game">-</p>
+            </div>
+            <div class="p-3 bg-gelap rounded-lg">
+                <p class="text-gray-400 text-sm">Item</p>
+                <p class="font-bold" id="item">-</p>
+            </div>
+            <div class="p-3 bg-gelap rounded-lg">
+                <p class="text-gray-400 text-sm">Total Bayar</p>
+                <p class="font-bold text-xl text-ungu" id="harga">-</p>
+            </div>
         </div>
 
         <div class="flex gap-3 mt-5">
-            <button onclick="tutupFormStruk()" class="flex-1 bg-gray-700 py-2.5 rounded-lg font-bold">Batal</button>
-            <button onclick="buatStruk()" class="flex-1 bg-ungu py-2.5 rounded-lg font-bold">Buat Struk</button>
+            <a href="daftar-game.html" class="flex-1 bg-gray-700 py-3 rounded-lg font-bold text-center">Ubah</a>
+            <button onclick="buatStruk()" class="flex-1 bg-ungu py-3 rounded-lg font-bold">Buat Struk</button>
         </div>
+    </div>
+
+    <!-- INFO PEMBAYARAN -->
+    <div class="bg-kartu p-5 rounded-xl border border-gray-700">
+        <h3 class="text-lg font-bold text-green-400 mb-3"><i class="fa fa-qrcode"></i> Bayar via QRIS</h3>
+        <img src="https://files.catbox.moe/g2agou.jpg" class="w-48 h-48 mx-auto rounded mb-3">
+        <h3 class="text-lg font-bold text-blue-400 mt-5 mb-3"><i class="fa fa-bank"></i> Transfer Dana</h3>
+        <p class="text-2xl font-bold text-center">0851-6993-5089</p>
+        <p class="text-gray-400 text-center">a.n EN**** YU******</p>
     </div>
 </div>
 
-<!-- HASIL STRUK -->
-<div id="hasilStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
-    <div class="struk-cetak p-5 rounded-lg w-full max-w-sm shadow-2xl">
-        <div class="text-center border-b border-gray-300 pb-3 mb-3">
-            <h2 class="text-xl font-bold">Xdnry777 STORE</h2>
-            <p class="text-xs text-gray-600">Top Up Terpercaya</p>
+<!-- POPUP STRUK -->
+<div id="boxStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
+    <div class="struk p-5 rounded-lg w-full max-w-sm">
+        <div class="text-center border-b pb-3 mb-3">
+            <h2 class="text-xl font-bold">Xdnry777</h2>
+            <p class="text-xs text-gray-500">Top Up Terpercaya</p>
         </div>
-
         <div class="space-y-1 text-sm">
-            <div class="flex justify-between"><span>Kode Struk:</span><span class="font-mono font-bold" id="kodeStruk">-</span></div>
-            <div class="flex justify-between"><span>Game:</span><span id="namaGame">-</span></div>
-            <div class="flex justify-between"><span>Item:</span><span id="namaItem">-</span></div>
-            <div class="flex justify-between font-bold text-lg mt-2 border-t pt-2"><span>Total:</span><span id="hargaItem">-</span></div>
-            <div class="flex justify-between text-xs text-gray-600 mt-2"><span>Tanggal:</span><span id="tglWaktu">-</span></div>
+            <div class="flex justify-between"><span>Kode Struk:</span><span class="font-mono font-bold" id="kode">-</span></div>
+            <div class="flex justify-between"><span>Game:</span><span id="g">-</span></div>
+            <div class="flex justify-between"><span>Item:</span><span id="i">-</span></div>
+            <div class="flex justify-between font-bold text-lg border-t pt-2 mt-2"><span>Total:</span><span id="hrg">-</span></div>
+            <div class="flex justify-between text-xs text-gray-500 mt-2"><span>Waktu:</span><span id="waktu">-</span></div>
         </div>
+        <p class="text-center text-xs text-gray-400 mt-4">Terima Kasih!</p>
 
-        <div class="text-center border-t border-gray-300 pt-3 mt-3 text-xs text-gray-500">
-            <p>Terima Kasih!</p>
-        </div>
-
-        <div class="mt-4 flex gap-2">
-            <button onclick="kirimKeWA()" class="flex-1 bg-green-500 text-white py-2 rounded-lg font-bold">
-                <i class="fa fa-whatsapp mr-1"></i> Kirim ke WA
+        <div class="flex gap-2 mt-4">
+            <button onclick="kirimWA()" class="flex-1 bg-green-500 text-white py-2 rounded font-bold">
+                <i class="fa fa-whatsapp"></i> Kirim WA
             </button>
-            <button onclick="tutupStruk()" class="flex-1 bg-gray-600 py-2 rounded-lg font-bold">Tutup</button>
+            <button onclick="tutupStruk()" class="flex-1 bg-gray-600 py-2 rounded font-bold">Tutup</button>
         </div>
     </div>
 </div>
-
-<section class="px-4 py-6 max-w-lg mx-auto space-y-5">
-
-    <button onclick="bukaFormStruk()" class="w-full bg-ungu py-3 rounded-xl font-bold text-lg hover:opacity-90">
-        <i class="fa fa-file-text-o mr-2"></i> Buat Struk Pembelian
-    </button>
-
-    <!-- QRIS -->
-    <div class="bg-kartu p-5 rounded-xl border border-gray-700 text-center">
-        <h2 class="text-xl font-bold text-green-400 mb-4"><i class="fa fa-qrcode mr-2"></i> BAYAR PAKAI QRIS</h2>
-        <div class="bg-white p-4 rounded-xl inline-block mb-4">
-            <div class="text-black text-center">
-                <img src="https://files.catbox.moe/g2agou.jpg" alt="QRIS" class="w-48 h-48 mx-auto rounded">
-            </div>
-        </div>
-        <button onclick="unduhQris()" class="w-full bg-green-500/20 text-green-400 py-2.5 rounded-lg font-bold">
-            <i class="fa fa-download mr-2"></i> Unduh QRIS
-        </button>
-    </div>
-
-    <!-- TRANSFER -->
-    <div class="bg-kartu p-5 rounded-xl border border-gray-700 text-center">
-        <h2 class="text-xl font-bold text-blue-400 mb-4"><i class="fa fa-credit-card mr-2"></i> TRANSFER DANA</h2>
-        <p class="text-3xl font-bold mb-2">0851-6993-5089</p>
-        <p class="text-gray-400">a.n EN**** YU******</p>
-    </div>
-
-</section>
 
 <script>
-// DAFTAR HARGA LENGKAP
-const daftar = {
-    'Mobile Legends': [
-        {item: '12 Diamond', harga: 'Rp 3.800'},
-        {item: '28 Diamond', harga: 'Rp 7.900'},
-        {item: '56 Diamond', harga: 'Rp 15.500'},
-        {item: '112 Diamond', harga: 'Rp 30.000'},
-        {item: '240 Diamond', harga: 'Rp 62.000'}
-    ],
-    'Free Fire': [
-        {item: '20 Diamond', harga: 'Rp 3.500'},
-        {item: '55 Diamond', harga: 'Rp 9.800'},
-        {item: '70 Diamond', harga: 'Rp 12.000'},
-        {item: '355 Diamond', harga: 'Rp 56.000'},
-        {item: '720 Diamond', harga: 'Rp 108.000'}
-    ],
-    'PUBG Mobile': [
-        {item: '30 UC', harga: 'Rp 10.500'},
-        {item: '60 UC', harga: 'Rp 18.500'},
-        {item: '150 UC', harga: 'Rp 45.000'},
-        {item: '325 UC', harga: 'Rp 90.000'},
-        {item: '660 UC', harga: 'Rp 175.000'}
-    ],
-    'Valorant': [
-        {item: '300 VP', harga: 'Rp 49.000'},
-        {item: '475 VP', harga: 'Rp 73.000'},
-        {item: '1.100 VP', harga: 'Rp 160.000'},
-        {item: '2.400 VP', harga: 'Rp 335.000'}
-    ]
+let data = {};
+
+// AMBIL DATA OTOMATIS
+window.onload = function() {
+    data.game = localStorage.getItem('game');
+    data.item = localStorage.getItem('item');
+    data.harga = localStorage.getItem('harga');
+
+    if(!data.game) {
+        alert('⚠️ Pilih dulu di halaman Daftar Game!');
+        location.href = 'daftar-game.html';
+        return;
+    }
+
+    document.getElementById('game').textContent = data.game;
+    document.getElementById('item').textContent = data.item;
+    document.getElementById('harga').textContent = data.harga;
 };
 
-let dataSementara = {};
-
-function updateHarga() {
-    const game = document.getElementById('pilihGame').value;
-    const selItem = document.getElementById('pilihItem');
-    selItem.innerHTML = '<option value="">Pilih Item & Harga</option>';
-    
-    if(game && daftar[game]) {
-        daftar[game].forEach(i => {
-            selItem.innerHTML += `<option value="${i.item}" data-harga="${i.harga}">${i.item} - ${i.harga}</option>`;
-        });
-    }
-}
-
-function buatKodeStruk() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+function buatKode() {
     let kode = '';
-    for(let i=0; i<8; i++) kode += chars[Math.floor(Math.random()*chars.length)];
+    let acak = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    for(let i=0; i<8; i++) kode += acak[Math.floor(Math.random()*acak.length)];
     return 'XDN-' + kode;
 }
 
-function bukaMenu() { document.getElementById('menuSamping').classList.add('buka'); document.getElementById('latarTutup').classList.remove('hidden'); }
-function tutupMenu() { document.getElementById('menuSamping').classList.remove('buka'); document.getElementById('latarTutup').classList.add('hidden'); }
-function bukaFormStruk() { document.getElementById('formStruk').classList.remove('hidden'); document.getElementById('hasilStruk').classList.add('hidden'); }
-function tutupFormStruk() { document.getElementById('formStruk').classList.add('hidden'); }
-function tutupStruk() { document.getElementById('hasilStruk').classList.add('hidden'); }
-
 function buatStruk() {
-    const game = document.getElementById('pilihGame').value;
-    const selItem = document.getElementById('pilihItem');
-    const item = selItem.value;
-    const harga = selItem.options[selItem.selectedIndex].dataset.harga || '';
+    data.kode = buatKode();
+    let sekarang = new Date();
+    data.waktu = sekarang.toLocaleDateString('id-ID') + ' ' + sekarang.getHours() + ':' + String(sekarang.getMinutes()).padStart(2,'0');
 
-    if(!game || !item) { alert('⚠️ Pilih Game & Item dulu!'); return; }
+    document.getElementById('kode').textContent = data.kode;
+    document.getElementById('g').textContent = data.game;
+    document.getElementById('i').textContent = data.item;
+    document.getElementById('hrg').textContent = data.harga;
+    document.getElementById('waktu').textContent = data.waktu;
 
-    // Simpan data untuk dikirim WA
-    dataSementara.kode = buatKodeStruk();
-    dataSementara.game = game;
-    dataSementara.item = item;
-    dataSementara.harga = harga;
-    const sekarang = new Date();
-    dataSementara.waktu = sekarang.toLocaleDateString('id-ID', {day:'2-digit', month:'short', year:'numeric'}) + ' ' + sekarang.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
-
-    // Tampilkan struk
-    document.getElementById('kodeStruk').textContent = dataSementara.kode;
-    document.getElementById('namaGame').textContent = game;
-    document.getElementById('namaItem').textContent = item;
-    document.getElementById('hargaItem').textContent = harga;
-    document.getElementById('tglWaktu').textContent = dataSementara.waktu;
-
-    tutupFormStruk();
-    document.getElementById('hasilStruk').classList.remove('hidden');
+    document.getElementById('boxStruk').classList.remove('hidden');
 }
 
-// ✅ KIRIM LANGSUNG KE WHATSAPP
-function kirimKeWA() {
-    const pesan = `*STRUK PEMBELIAN - Xdnry777 STORE*
-━━━━━━━━━━━━━━━━━━━━
-📌 Kode Struk: *${dataSementara.kode}*
-🎮 Game: ${dataSementara.game}
-📦 Item: ${dataSementara.item}
-💰 Total: ${dataSementara.harga}
-⏰ Waktu: ${dataSementara.waktu}
-━━━━━━━━━━━━━━━━━━━━
-Terima Kasih Telah Berbelanja!`;
+function kirimWA() {
+    let pesan = `*STRUK PEMBELIAN - Xdnry777*
+━━━━━━━━━━━━━━━━
+📌 Kode: ${data.kode}
+🎮 Game: ${data.game}
+📦 Item: ${data.item}
+💰 Bayar: ${data.harga}
+⏰ Waktu: ${data.waktu}
+━━━━━━━━━━━━━━━━
+Terima Kasih!`;
 
-    // Ganti nomor tujuan ke nomor WA kamu (awalan 62 bukan 0)
-    const nomorWA = '6285169935089'; 
-    const linkWA = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
-    
-    window.open(linkWA, '_blank');
+    window.open('https://wa.me/6285169935089?text=' + encodeURIComponent(pesan), '_blank');
 }
 
-function unduhQris() {
-    const a = document.createElement('a');
-    a.href = 'https://files.catbox.moe/g2agou.jpg';
-    a.download = 'QRIS_Xdnry777.png';
-    a.click();
-    alert('✅ QRIS Diunduh!');
-}
-
-function keluarAkun() { document.getElementById('popupKeluar').classList.remove('hidden'); }
-function tutupPopupKeluar() { document.getElementById('popupKeluar').classList.add('hidden'); }
-function lakukanKeluar() {
-    tutupPopupKeluar();
-    localStorage.removeItem('login'); localStorage.removeItem('nama');
-    alert('✅ Berhasil Keluar!'); location.href='login.html';
+function tutupStruk() {
+    document.getElementById('boxStruk').classList.add('hidden');
 }
 </script>
 </body>
