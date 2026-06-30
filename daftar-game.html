@@ -12,20 +12,17 @@
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
 
-        <!-- NAVIGASI ATAS -->
-    <div class="flex justify-between items-center mb-6 max-w-2xl mx-auto">
-        <a href="index.html" class="text-gray-300 hover:text-ungu text-2xl">
+<div class="max-w-md mx-auto">
+    <!-- NAVIGASI -->
+    <div class="flex justify-between items-center mb-6">
+        <a href="#" class="text-gray-300 hover:text-ungu text-xl">
             <i class="fa fa-bars"></i>
         </a>
         <h1 class="text-xl font-bold"><span class="text-ungu">Pilih Game Kamu</span></h1>
-        <a href="carabeli.html" class="flex items-center text-gray-300 hover:text-ungu">
-            Cara Beli <i class="fa fa-question-circle ml-1"></i>
-        </a>
+        <div></div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl mx-auto">
-
-        <!-- MOBILE LEGENDS -->
+    <!-- MOBILE LEGENDS -->
         <div class="bg-kartu p-5 rounded-xl border border-gray-700">
             <img src="https://files.catbox.moe/q692nn.jpg" class="w-20 h-20 mx-auto rounded" alt="ML">
             <h3 class="text-xl font-bold mt-3 text-center">Mobile Legends</h3>
@@ -171,26 +168,17 @@
             </div>
             <button onclick="lanjut()" class="w-full bg-ungu py-3 rounded-lg font-bold">Beli Sekarang</button>
         </div>
-
-    </div>
+    
+</div>
 
 <script>
-let pilihGame = {};
-
-function pilih(game, item, harga) {
-    pilihGame = { game, item, harga };
-}
-
-function lanjut() {
-    if(!pilihGame.game) {
-        alert('⚠️ Klik dulu nominal yang mau dibeli!');
-        return;
-    }
-    localStorage.setItem('game', pilihGame.game);
-    localStorage.setItem('item', pilihGame.item);
-    localStorage.setItem('harga', pilihGame.harga);
+function pilihGame(game, item, harga) {
+    localStorage.setItem('game', game);
+    localStorage.setItem('item', item);
+    localStorage.setItem('harga', harga);
     location.href = 'bayar.html';
 }
 </script>
+
 </body>
 </html>
