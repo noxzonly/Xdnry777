@@ -5,12 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Game - Xdnry777</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script>
         tailwind.config = { theme: { extend: { colors: { gelap: '#121212', kartu: '#1E1E1E', ungu: '#8B5CF6' } } } }
     </script>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
-    <h1 class="text-2xl font-bold text-center mb-6"><span class="text-ungu">Pilih Game Kamu</span></h1>
+
+    <!-- ✅ NAVIGASI ATAS -->
+    <div class="flex justify-between items-center mb-6 max-w-2xl mx-auto">
+        <a href="index.html" class="flex items-center text-gray-300 hover:text-ungu">
+            <i class="fa fa-home mr-1"></i> Beranda
+        </a>
+        <h1 class="text-xl font-bold"><span class="text-ungu">Pilih Game Kamu</span></h1>
+        <a href="carabeli.html" class="flex items-center text-gray-300 hover:text-ungu">
+            Cara Beli <i class="fa fa-question-circle ml-1"></i>
+        </a>
+    </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl mx-auto">
 
