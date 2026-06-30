@@ -12,6 +12,7 @@
     <style>
         .struk { background: #fff; color: #000; }
         @media print { body *:not(.struk, .struk *) { display: none; } }
+        .admin-kontrol { display: none; } /* Sembunyikan dari pembeli */
     </style>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
@@ -51,20 +52,19 @@
                 <input type="text" id="namaAkun" placeholder="Tulis nama akun kamu disini..." class="w-full bg-transparent font-bold mt-1 outline-none border-none">
             </div>
 
-            <!-- ✅ KAMU YANG PILIH STATUS -->
-            <div class="p-3 bg-gelap rounded-lg">
-                <p class="text-gray-400 text-sm mb-2">👉 Tentukan Status Pembayaran</p>
-                <div class="grid grid-cols-2 gap-3">
-                    <label class="flex items-center justify-center gap-2 p-3 border-2 border-green-500 rounded-lg cursor-pointer hover:bg-green-900/30">
+            <!-- ✅ KHUSUS ADMIN: PILIH STATUS (TIDAK TERLIHAT PEMBELI) -->
+            <div class="admin-kontrol p-3 bg-yellow-900/30 border border-yellow-500 rounded-lg">
+                <p class="text-yellow-400 text-sm mb-2">🔧 KONTROL ADMIN - Status Pembayaran</p>
+                <div class="flex gap-3">
+                    <label class="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="status" value="LUNAS" class="accent-green-500">
                         <span class="text-green-400 font-bold">✅ LUNAS</span>
                     </label>
-                    <label class="flex items-center justify-center gap-2 p-3 border-2 border-red-500 rounded-lg cursor-pointer hover:bg-red-900/30">
+                    <label class="flex items-center gap-2 cursor-pointer">
                         <input type="radio" name="status" value="BELUM LUNAS" class="accent-red-500">
                         <span class="text-red-400 font-bold">⏳ BELUM LUNAS</span>
                     </label>
                 </div>
-                <p class="text-xs text-gray-500 mt-2">*Klik salah satu sebelum buat struk</p>
             </div>
 
             <div class="p-3 bg-gelap rounded-lg">
@@ -102,7 +102,7 @@
             <div class="flex justify-between"><span>Item:</span><span id="i">-</span></div>
             <div class="flex justify-between"><span>ID Akun:</span><span id="idg">-</span></div>
             <div class="flex justify-between"><span>Nama Akun:</span><span id="nama">-</span></div>
-            <!-- STATUS DI STRUK -->
+            <!-- STATUS MUNCUL DI STRUK -->
             <div class="flex justify-between font-bold border-t pt-2 mt-2">
                 <span>Status:</span>
                 <span id="statusStruk">-</span>
@@ -151,10 +151,10 @@ function buatStruk() {
     data.idGame = document.getElementById('idGame').value.trim();
     data.namaAkun = document.getElementById('namaAkun').value.trim();
     
-    // ✅ CEK KAMU SUDAH PILIH STATUS ATAU BELUM
+    // CEK PILIHAN ADMIN
     let pilihStatus = document.querySelector('input[name="status"]:checked');
     if(!pilihStatus) {
-        alert('⚠️ Silakan PILIH DULU: LUNAS atau BELUM LUNAS!');
+        alert('⚠️ ADMIN: Silakan tentukan status pembayaran dulu!');
         return;
     }
     data.status = pilihStatus.value;
