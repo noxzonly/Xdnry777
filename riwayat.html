@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Pesanan - Xdnry777</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { gelap: '#121212', kartu: '#1E1E1E', ungu: '#8B5CF6' } } } }
+    </script>
+</head>
+<body class="bg-gelap text-white min-h-screen p-4">
+<div class="max-w-md mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <a href="daftar-game.html" class="text-gray-300 hover:text-ungu text-xl"><i class="fa fa-arrow-left"></i></a>
+        <h1 class="text-xl font-bold"><span class="text-ungu">Riwayat Pesanan</span></h1>
+        <a href="index.html" class="text-gray-300 hover:text-ungu text-xl"><i class="fa fa-home"></i></a>
+    </div>
+    <div class="mb-4 flex justify-between items-center">
+        <p class="text-gray-400 text-sm">Semua pesanan</p>
+        <button onclick="hapusSemua()" class="text-red-400 text-sm">Hapus Semua</button>
+    </div>
+    <div id="daftarRiwayat" class="space-y-3">
+        <div class="text-center text-gray-500 py-10"><i class="fa fa-history text-4xl mb-2"></i><p>Belum ada riwayat pesanan</p></div>
+    </div>
+</div>
+<script>
+function tampilkanRiwayat() {
+    let riwayat = JSON.parse(localStorage.getItem('riwayatPesanan') || '[]');
+    let wadah = document.getElementById('daftarRiwayat');
+    wadah.innerHTML = '';
+    if(riwayat.length === 0) {
+        wadah.innerHTML = `<div class="text-center text-gray-500 py-10"><i class="fa fa-history text-4xl mb-2"></i><p>Belum ada riwayat pesanan</p></div>`;
+        return;
+    }
+    riwayat.reverse().forEach(item => {
+        let warna = item.status === 'LUNAS' ? 'text-green-400' : 'text-red-400';
+        wadah.innerHTML += `
+            <div class="bg-kartu p-4 rounded-xl border border-gray-700">
+                <div class="flex justify-between items-start mb-2">
+                    <p class="font-bold">${item.game}</p>
+                    <span class="text-sm font-bold ${warna}">${item.status}</span>
+                </div>
+                <p class="text-sm text-gray-300">${item.item}</p>
+                <p class="text-sm text-gray-400">🆔 ${item.idGame} • 👤 ${item.namaAkun}</p>
+                <div class="flex justify-between items-center mt-2">
+                    <p class="font-bold text-ungu">${item.harga}</p>
+                    <p class="text-xs text-gray-500">${item.waktu}</p>
+                </div>
+                <p class="text-xs text-gray-500 mt-1">📌 Kode: ${item.kode}</p>
+            </div>
+        `;
+    });
+}
+function hapusSemua() {
+    if(confirm('Yakin hapus semua riwayat?')) {
+        localStorage.removeItem('riwayatPesanan');
+        tampilkanRiwayat();
+    }
+}
+window.onload = tampilkanRiwayat;
+</script>
+</body>
+</html>
