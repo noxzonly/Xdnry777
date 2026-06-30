@@ -17,7 +17,16 @@
 <body class="bg-gelap text-white min-h-screen p-4">
 
 <div class="max-w-md mx-auto">
-    <h1 class="text-2xl font-bold text-center mb-6"><span class="text-ungu">Konfirmasi Pesanan</span></h1>
+    <!-- NAVIGASI -->
+    <div class="flex justify-between items-center mb-6">
+        <a href="daftar-game.html" class="text-gray-300 hover:text-ungu text-xl">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        <h1 class="text-xl font-bold"><span class="text-ungu">Konfirmasi Pesanan</span></h1>
+        <a href="index.html" class="text-gray-300 hover:text-ungu text-xl">
+            <i class="fa fa-home"></i>
+        </a>
+    </div>
 
     <div class="bg-kartu p-5 rounded-xl border border-gray-700 mb-6">
         <div class="space-y-3">
@@ -29,6 +38,19 @@
                 <p class="text-gray-400 text-sm">Item</p>
                 <p class="font-bold" id="item">-</p>
             </div>
+
+            <!-- ✅ KOLOM ID GAME -->
+            <div class="p-3 bg-gelap rounded-lg">
+                <p class="text-gray-400 text-sm">ID Game / Server</p>
+                <input type="text" id="idGame" placeholder="Contoh: 12345678 (1234)" class="w-full bg-transparent font-bold mt-1 outline-none border-none">
+            </div>
+
+            <!-- ✅ KOLOM NAMA AKUN / NICK -->
+            <div class="p-3 bg-gelap rounded-lg">
+                <p class="text-gray-400 text-sm">Nama Akun / Nickname</p>
+                <input type="text" id="namaAkun" placeholder="Tulis nama akun kamu disini..." class="w-full bg-transparent font-bold mt-1 outline-none border-none">
+            </div>
+
             <div class="p-3 bg-gelap rounded-lg">
                 <p class="text-gray-400 text-sm">Total Bayar</p>
                 <p class="font-bold text-xl text-ungu" id="harga">-</p>
@@ -55,13 +77,16 @@
 <div id="boxStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
     <div class="struk p-5 rounded-lg w-full max-w-sm">
         <div class="text-center border-b pb-3 mb-3">
-            <h2 class="text-xl font-bold">Xdnry777</h2>
+            <h2 class="text-xl font-bold">Xdnry777 STORE</h2>
             <p class="text-xs text-gray-500">Top Up Terpercaya</p>
         </div>
         <div class="space-y-1 text-sm">
             <div class="flex justify-between"><span>Kode Struk:</span><span class="font-mono font-bold" id="kode">-</span></div>
             <div class="flex justify-between"><span>Game:</span><span id="g">-</span></div>
             <div class="flex justify-between"><span>Item:</span><span id="i">-</span></div>
+            <div class="flex justify-between"><span>ID Akun:</span><span id="idg">-</span></div>
+            <!-- ✅ NAMA AKUN MUNCUL DI STRUK -->
+            <div class="flex justify-between"><span>Nama Akun:</span><span class="font-bold text-green-600" id="nama">-</span></div>
             <div class="flex justify-between font-bold text-lg border-t pt-2 mt-2"><span>Total:</span><span id="hrg">-</span></div>
             <div class="flex justify-between text-xs text-gray-500 mt-2"><span>Waktu:</span><span id="waktu">-</span></div>
         </div>
@@ -104,6 +129,19 @@ function buatKode() {
 }
 
 function buatStruk() {
+    // Ambil inputan pembeli
+    data.idGame = document.getElementById('idGame').value.trim();
+    data.namaAkun = document.getElementById('namaAkun').value.trim();
+
+    if(!data.idGame) {
+        alert('⚠️ Silakan isi ID Game dulu!');
+        return;
+    }
+    if(!data.namaAkun) {
+        alert('⚠️ Silakan isi Nama Akun / Nickname dulu!');
+        return;
+    }
+
     data.kode = buatKode();
     let sekarang = new Date();
     data.waktu = sekarang.toLocaleDateString('id-ID') + ' ' + sekarang.getHours() + ':' + String(sekarang.getMinutes()).padStart(2,'0');
@@ -111,6 +149,8 @@ function buatStruk() {
     document.getElementById('kode').textContent = data.kode;
     document.getElementById('g').textContent = data.game;
     document.getElementById('i').textContent = data.item;
+    document.getElementById('idg').textContent = data.idGame;
+    document.getElementById('nama').textContent = data.namaAkun;
     document.getElementById('hrg').textContent = data.harga;
     document.getElementById('waktu').textContent = data.waktu;
 
@@ -123,6 +163,8 @@ function kirimWA() {
 📌 Kode: ${data.kode}
 🎮 Game: ${data.game}
 📦 Item: ${data.item}
+🆔 ID Akun: ${data.idGame}
+👤 Nama Akun: ${data.namaAkun}
 💰 Bayar: ${data.harga}
 ⏰ Waktu: ${data.waktu}
 ━━━━━━━━━━━━━━━━
