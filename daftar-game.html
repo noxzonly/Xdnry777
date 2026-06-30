@@ -174,22 +174,26 @@
 
     </div>
 
-<!-- EFEK SUARA -->
+<!-- SUARA KLIK DIPERBAIKI -->
 <audio id="suaraKlik" preload="auto">
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3" type="audio/mpeg">
 
 
 <script>
-// Fungsi suara
+// Siapkan suara saat halaman buka
+const suara = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3');
+suara.volume = 0.5; // Suara tidak terlalu keras
+
 function bunyiKlik() {
-    const s = document.getElementById('suaraKlik');
-    s.currentTime = 0;
-    s.play().catch(()=>{});
+    suara.currentTime = 0;
+    suara.play().catch(e => console.log("Siap diklik"));
 }
 
-// Pasang ke semua elemen yang diklik
-document.querySelectorAll('button, div[onclick], a').forEach(el => {
-    el.addEventListener('click', bunyiKlik);
+// Pasang ke semua elemen yang bisa diklik
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('button, div[onclick], a').forEach(el => {
+        el.addEventListener('click', bunyiKlik);
+    });
 });
 
 let pilihGame = {};
