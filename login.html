@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            theme: { extend: { colors: { gelap: '#121212', ungu: '#8B5CF6' } } }
+            theme: { extend: { colors: { gelap: '#12121a', ungu: '#8B5CF6' } } }
         }
     </script>
     <style>
@@ -16,7 +16,6 @@
             -webkit-background-clip: text;
             color: transparent;
         }
-        /* ✅ EFEK KOTAK TRANSPARAN + KACA */
         .kotak-transparan {
             background: rgba(30, 30, 40, 0.5);
             backdrop-filter: blur(12px);
@@ -32,29 +31,42 @@
             border-color: rgba(139, 92, 246, 0.5);
             background: rgba(255, 255, 255, 0.08);
         }
+        .popup-pesan {
+            background: rgba(20, 20, 30, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 <body class="bg-gelap text-white min-h-screen flex items-center justify-center p-4" style="background: linear-gradient(135deg, #12121a 0%, #1a1528 100%);">
+
+    <!-- POPUP PESAN -->
+    <div id="popupPesan" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden">
+        <div class="popup-pesan p-6 rounded-xl w-80 text-center shadow-2xl">
+            <div id="iconPesan" class="text-5xl mb-3"></div>
+            <h3 id="judulPesan" class="text-xl font-bold mb-2"></h3>
+            <p id="teksPesan" class="text-gray-300 mb-5"></p>
+            <button onclick="tutupPopupPesan()" class="w-full bg-ungu py-2.5 rounded-lg font-bold">Baiklah</button>
+        </div>
+    </div>
 
     <div class="kotak-transparan p-6 rounded-2xl w-full max-w-md shadow-2xl">
         <h1 class="text-3xl font-bold text-center mb-6">
             <span class="gradasi">Xdnry777</span>
         </h1>
 
-        <!-- TOMBOL PILIH: MASUK / DAFTAR -->
         <div class="flex mb-6 bg-white/5 rounded-xl p-1">
             <button id="btnMasuk" onclick="bukaForm('masuk')" class="flex-1 py-2.5 rounded-xl font-bold bg-ungu text-white shadow-lg">Masuk</button>
             <button id="btnDaftar" onclick="bukaForm('daftar')" class="flex-1 py-2.5 rounded-xl font-bold text-gray-400 hover:text-white/80">Daftar</button>
         </div>
 
-        <!-- FORM MASUK -->
         <div id="formMasuk">
             <input type="text" id="userMasuk" placeholder="Username" class="w-full input-transparan rounded-xl p-3.5 mb-3.5 text-white placeholder-gray-400">
             <input type="password" id="passMasuk" placeholder="Kata Sandi" class="w-full input-transparan rounded-xl p-3.5 mb-5 text-white placeholder-gray-400">
             <button onclick="cekLogin()" class="w-full bg-ungu py-3.5 rounded-xl font-bold text-white hover:opacity-95 transition-all shadow-lg">Masuk Akun</button>
         </div>
 
-        <!-- FORM DAFTAR -->
         <div id="formDaftar" class="hidden">
             <input type="text" id="namaDaftar" placeholder="Nama Lengkap" class="w-full input-transparan rounded-xl p-3.5 mb-3.5 text-white placeholder-gray-400">
             <input type="text" id="userDaftar" placeholder="Buat Username" class="w-full input-transparan rounded-xl p-3.5 mb-3.5 text-white placeholder-gray-400">
@@ -62,12 +74,20 @@
             <button onclick="buatAkun()" class="w-full bg-ungu py-3.5 rounded-xl font-bold text-white hover:opacity-95 transition-all shadow-lg">Daftar Akun</button>
         </div>
 
-        <p class="text-center mt-5 text-sm text-gray-400">
-            Aman & Terpercaya ✅
-        </p>
+        <p class="text-center mt-5 text-sm text-gray-400">Aman & Terpercaya ✅</p>
     </div>
 
 <script>
+function tampilkanPesan(icon, judul, teks) {
+    document.getElementById('iconPesan').textContent = icon;
+    document.getElementById('judulPesan').textContent = judul;
+    document.getElementById('teksPesan').textContent = teks;
+    document.getElementById('popupPesan').classList.remove('hidden');
+}
+function tutupPopupPesan() {
+    document.getElementById('popupPesan').classList.add('hidden');
+}
+
 function bukaForm(tipe) {
     if(tipe === 'masuk') {
         document.getElementById('formMasuk').classList.remove('hidden');
@@ -91,30 +111,58 @@ function buatAkun() {
     const user = document.getElementById('userDaftar').value.trim();
     const pass = document.getElementById('passDaftar').value.trim();
 
-    if(!nama || !user || !pass) { alert('⚠️ Semua kolom harus diisi!'); return; }
-    if(localStorage.getItem('akun_' + user)) { alert('❌ Username sudah dipakai!'); return; }
+    if(!nama || !user || !pass) {
+        tampilkanPesan('⚠️', 'Peringatan', 'Semua kolom harus diisi!');
+        return;
+    }
+    if(localStorage.getItem('akun_' + user)) {
+        tampilkanPesan('❌', 'Gagal', 'Username sudah dipakai! Coba yang lain.');
+        return;
+    }
 
     localStorage.setItem('akun_' + user, JSON.stringify({nama, sandi: pass}));
-    alert('✅ Akun berhasil dibuat! Silakan Masuk.');
-    bukaForm('masuk');
+    tampilkanPesan('✅', 'Berhasil', 'Akun dibuat! Silakan Masuk.');
+    // POPUP OTOMATIS HILANG & PINDAH
+    setTimeout(() => {
+        tutupPopupPesan();
+        bukaForm('masuk');
+    }, 1500);
 }
 
 function cekLogin() {
     const user = document.getElementById('userMasuk').value.trim();
     const pass = document.getElementById('passMasuk').value.trim();
 
-    if(!user || !pass) { alert('⚠️ Isi Username & Kata Sandi!'); return; }
+    if(!user || !pass) {
+        tampilkanPesan('⚠️', 'Peringatan', 'Isi Username & Kata Sandi dulu!');
+        return;
+    }
 
     const data = localStorage.getItem('akun_' + user);
-    if(!data) { alert('❌ Belum punya akun? Silakan Daftar dulu!'); bukaForm('daftar'); return; }
+    if(!data) {
+        tampilkanPesan('❌', 'Belum Punya Akun', 'Silakan Daftar Akun Terlebih Dahulu!');
+        // OTOMATIS HILANG & PINDAH KE DAFTAR
+        setTimeout(() => {
+            tutupPopupPesan();
+            bukaForm('daftar');
+        }, 1500);
+        return;
+    }
 
     const akun = JSON.parse(data);
-    if(akun.sandi !== pass) { alert('❌ Kata sandi salah!'); return; }
+    if(akun.sandi !== pass) {
+        tampilkanPesan('❌', 'Kesalahan', 'Kata sandi yang dimasukkan salah!');
+        return;
+    }
 
     localStorage.setItem('login', 'ya');
     localStorage.setItem('nama', akun.nama);
-    alert('✅ Selamat Datang, ' + akun.nama + '!');
-    location.href = 'index.html';
+    tampilkanPesan('✅', 'Berhasil Masuk', 'Selamat Datang, ' + akun.nama + '!');
+    // ✅ POPUP OTOMATIS HILANG LALU PINDAH HALAMAN
+    setTimeout(() => {
+        tutupPopupPesan();
+        location.href = 'index.html';
+    }, 1200);
 }
 </script>
 
