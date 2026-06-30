@@ -7,173 +7,169 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script>
-        tailwind.config = { theme: { extend: { colors: { gelap: '#121212', kartu: '#1E1E1E', ungu: '#8B5CF6' } } } }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gelap: '#121212',
+                        kartu: '#1E1E1E',
+                        ungu: '#8B5CF6'
+                    }
+                }
+            }
+        }
     </script>
+    <style>
+        /* Pastikan semua tombol bisa diklik */
+        button, a {
+            cursor: pointer !important;
+            position: relative !important;
+            z-index: 10 !important;
+            pointer-events: auto !important;
+        }
+        * {
+            pointer-events: auto !important;
+        }
+    </style>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
 
 <div class="max-w-md mx-auto">
-    <!-- NAVIGASI -->
+    <!-- NAVIGASI: TOMBOL GARIS TIGA DIPASTIKAN BISA DIPENCET -->
     <div class="flex justify-between items-center mb-6">
-        <a href="#" class="text-gray-300 hover:text-ungu text-xl">
+        <button onclick="bukaMenu()" class="text-gray-300 hover:text-ungu text-xl">
             <i class="fa fa-bars"></i>
-        </a>
+        </button>
         <h1 class="text-xl font-bold"><span class="text-ungu">Pilih Game Kamu</span></h1>
         <div></div>
     </div>
 
-    <!-- MOBILE LEGENDS -->
-        <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <img src="https://files.catbox.moe/q692nn.jpg" class="w-20 h-20 mx-auto rounded" alt="ML">
-            <h3 class="text-xl font-bold mt-3 text-center">Mobile Legends</h3>
-            <p class="text-gray-400 text-center mb-3">Diamond</p>
-            <div class="space-y-2 text-sm mb-4">
-                <div onclick="pilih('Mobile Legends', '12 Diamond', 'Rp 3.800')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>12 Diamond</span><span>Rp 3.800</span>
-                </div>
-                <div onclick="pilih('Mobile Legends', '28 Diamond', 'Rp 7.900')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>28 Diamond</span><span>Rp 7.900</span>
-                </div>
-                <div onclick="pilih('Mobile Legends', '56 Diamond', 'Rp 15.500')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>56 Diamond</span><span>Rp 15.500</span>
-                </div>
-                <div onclick="pilih('Mobile Legends', '112 Diamond', 'Rp 30.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>112 Diamond</span><span>Rp 30.000</span>
-                </div>
-                <div onclick="pilih('Mobile Legends', '240 Diamond', 'Rp 62.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>240 Diamond</span><span>Rp 62.000</span>
-                </div>
+    <!-- PILIHAN NOMINAL DAN TOMBOL BELI -->
+    <div class="space-y-6">
+        <!-- MOBILE LEGENDS -->
+        <div class="bg-kartu p-6 rounded-xl border border-gray-700">
+            <div class="text-center mb-4">
+                <img src="https://i.ibb.co/1XzZpKq/mlbb.png" class="w-24 h-24 mx-auto rounded-lg mb-2">
+                <h3 class="text-2xl font-bold">Mobile Legends</h3>
+                <p class="text-gray-400">Diamond</p>
             </div>
-            <button onclick="lanjut()" class="w-full bg-ungu py-3 rounded-lg font-bold">Beli Sekarang</button>
+
+            <div class="space-y-3 mb-6">
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer">
+                    <input type="radio" name="ml" value="12 Diamond|Rp 3.800" class="mr-2">
+                    <span>12 Diamond</span>
+                    <span class="font-bold text-ungu">Rp 3.800</span>
+                </label>
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer">
+                    <input type="radio" name="ml" value="28 Diamond|Rp 7.900" class="mr-2">
+                    <span>28 Diamond</span>
+                    <span class="font-bold text-ungu">Rp 7.900</span>
+                </label>
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer">
+                    <input type="radio" name="ml" value="56 Diamond|Rp 15.500" class="mr-2">
+                    <span>56 Diamond</span>
+                    <span class="font-bold text-ungu">Rp 15.500</span>
+                </label>
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer">
+                    <input type="radio" name="ml" value="112 Diamond|Rp 30.000" class="mr-2">
+                    <span>112 Diamond</span>
+                    <span class="font-bold text-ungu">Rp 30.000</span>
+                </label>
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer">
+                    <input type="radio" name="ml" value="240 Diamond|Rp 62.000" class="mr-2">
+                    <span>240 Diamond</span>
+                    <span class="font-bold text-ungu">Rp 62.000</span>
+                </label>
+            </div>
+
+            <!-- TOMBOL BELI SEKARANG DIPASTIKAN BISA DIPENCET -->
+            <button onclick="pilihNominal('Mobile Legends')" class="w-full bg-ungu py-3 rounded-xl text-lg font-bold hover:bg-ungu/80">
+                Beli Sekarang
+            </button>
         </div>
 
         <!-- FREE FIRE -->
-        <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <img src="https://files.catbox.moe/00jh4l.jpg" class="w-20 h-20 mx-auto rounded" alt="FF">
-            <h3 class="text-xl font-bold mt-3 text-center">Free Fire</h3>
-            <p class="text-gray-400 text-center mb-3">Diamond</p>
-            <div class="space-y-2 text-sm mb-4">
-                <div onclick="pilih('Free Fire', '20 Diamond', 'Rp 3.500')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>20 Diamond</span><span>Rp 3.500</span>
-                </div>
-                <div onclick="pilih('Free Fire', '55 Diamond', 'Rp 9.800')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>55 Diamond</span><span>Rp 9.800</span>
-                </div>
-                <div onclick="pilih('Free Fire', '70 Diamond', 'Rp 12.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>70 Diamond</span><span>Rp 12.000</span>
-                </div>
-                <div onclick="pilih('Free Fire', '355 Diamond', 'Rp 56.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>355 Diamond</span><span>Rp 56.000</span>
-                </div>
-                <div onclick="pilih('Free Fire', '720 Diamond', 'Rp 108.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>720 Diamond</span><span>Rp 108.000</span>
-                </div>
+        <div class="bg-kartu p-6 rounded-xl border border-gray-700">
+            <div class="text-center mb-4">
+                <img src="https://i.ibb.co/9cXQZpD/ff.png" class="w-24 h-24 mx-auto rounded-lg mb-2">
+                <h3 class="text-2xl font-bold">Free Fire</h3>
+                <p class="text-gray-400">Diamond</p>
             </div>
-            <button onclick="lanjut()" class="w-full bg-ungu py-3 rounded-lg font-bold">Beli Sekarang</button>
-        </div>
 
-        <!-- PUBG MOBILE -->
-        <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <img src="https://files.catbox.moe/xfxvzz.jpg" class="w-20 h-20 mx-auto rounded" alt="PUBG">
-            <h3 class="text-xl font-bold mt-3 text-center">PUBG Mobile</h3>
-            <p class="text-gray-400 text-center mb-3">UC</p>
-            <div class="space-y-2 text-sm mb-4">
-                <div onclick="pilih('PUBG Mobile', '30 UC', 'Rp 10.500')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>30 UC</span><span>Rp 10.500</span>
-                </div>
-                <div onclick="pilih('PUBG Mobile', '60 UC', 'Rp 18.500')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>60 UC</span><span>Rp 18.500</span>
-                </div>
-                <div onclick="pilih('PUBG Mobile', '150 UC', 'Rp 45.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>150 UC</span><span>Rp 45.000</span>
-                </div>
-                <div onclick="pilih('PUBG Mobile', '325 UC', 'Rp 90.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>325 UC</span><span>Rp 90.000</span>
-                </div>
-                <div onclick="pilih('PUBG Mobile', '660 UC', 'Rp 175.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>660 UC</span><span>Rp 175.000</span>
-                </div>
+            <div class="space-y-3 mb-6">
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer">
+                    <input type="radio" name="ff" value="20 Diamond|Rp 3.500" class="mr-2">
+                    <span>20 Diamond</span>
+                    <span class="font-bold text-ungu">Rp 3.500</span>
+                </label>
+                <label class="flex justify-between items-center p-3 bg-gelap rounded-lg cursor-pointer">
+                    <input type="radio" name="ff" value="55 Diamond|Rp 9.800" class="mr-2">
+                    <span>55 Diamond</span>
+                    <span class="font-bold text-ungu">Rp 9.800</span>
+                </label>
             </div>
-            <button onclick="lanjut()" class="w-full bg-ungu py-3 rounded-lg font-bold">Beli Sekarang</button>
-        </div>
 
-        <!-- VALORANT -->
-        <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <img src="https://files.catbox.moe/wvkmfq.jpg" class="w-20 h-20 mx-auto rounded" alt="Valorant">
-            <h3 class="text-xl font-bold mt-3 text-center">Valorant</h3>
-            <p class="text-gray-400 text-center mb-3">Valorant Point</p>
-            <div class="space-y-2 text-sm mb-4">
-                <div onclick="pilih('Valorant', '300 VP', 'Rp 49.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>300 VP</span><span>Rp 49.000</span>
-                </div>
-                <div onclick="pilih('Valorant', '475 VP', 'Rp 73.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>475 VP</span><span>Rp 73.000</span>
-                </div>
-                <div onclick="pilih('Valorant', '1.100 VP', 'Rp 160.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>1.100 VP</span><span>Rp 160.000</span>
-                </div>
-                <div onclick="pilih('Valorant', '2.400 VP', 'Rp 335.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>2.400 VP</span><span>Rp 335.000</span>
-                </div>
-            </div>
-            <button onclick="lanjut()" class="w-full bg-ungu py-3 rounded-lg font-bold">Beli Sekarang</button>
+            <button onclick="pilihNominal('Free Fire')" class="w-full bg-ungu py-3 rounded-xl text-lg font-bold hover:bg-ungu/80">
+                Beli Sekarang
+            </button>
         </div>
-
-        <!-- HIGH DOMINO -->
-        <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <img src="https://files.catbox.moe/hpyri8.jpg" class="w-20 h-20 mx-auto rounded" alt="High Domino">
-            <h3 class="text-xl font-bold mt-3 text-center">High Domino</h3>
-            <p class="text-gray-400 text-center mb-3">Koin Emas</p>
-            <div class="space-y-2 text-sm mb-4">
-                <div onclick="pilih('High Domino', '100 M Koin', 'Rp 15.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>100 M Koin</span><span>Rp 15.000</span>
-                </div>
-                <div onclick="pilih('High Domino', '300 M Koin', 'Rp 40.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>300 M Koin</span><span>Rp 40.000</span>
-                </div>
-                <div onclick="pilih('High Domino', '1 B Koin', 'Rp 120.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>1 B Koin</span><span>Rp 120.000</span>
-                </div>
-                <div onclick="pilih('High Domino', '3 B Koin', 'Rp 330.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>3 B Koin</span><span>Rp 330.000</span>
-                </div>
-                <div onclick="pilih('High Domino', '10 B Koin', 'Rp 950.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>10 B Koin</span><span>Rp 950.000</span>
-                </div>
-            </div>
-            <button onclick="lanjut()" class="w-full bg-ungu py-3 rounded-lg font-bold">Beli Sekarang</button>
-        </div>
-
-        <!-- ✅ ROBLOX -->
-        <div class="bg-kartu p-5 rounded-xl border border-gray-700">
-            <img src="https://files.catbox.moe/rsf4xo.jpg" class="w-20 h-20 mx-auto rounded" alt="Roblox">
-            <h3 class="text-xl font-bold mt-3 text-center">Roblox</h3>
-            <p class="text-gray-400 text-center mb-3">Robux</p>
-            <div class="space-y-2 text-sm mb-4">
-                <div onclick="pilih('Roblox', '400 Robux', 'Rp 75.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>400 Robux</span><span>Rp 75.000</span>
-                </div>
-                <div onclick="pilih('Roblox', '800 Robux', 'Rp 140.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>800 Robux</span><span>Rp 140.000</span>
-                </div>
-                <div onclick="pilih('Roblox', '1.700 Robux', 'Rp 285.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>1.700 Robux</span><span>Rp 285.000</span>
-                </div>
-                <div onclick="pilih('Roblox', '4.500 Robux', 'Rp 690.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>4.500 Robux</span><span>Rp 690.000</span>
-                </div>
-                <div onclick="pilih('Roblox', '10.000 Robux', 'Rp 1.450.000')" class="flex justify-between cursor-pointer hover:text-ungu">
-                    <span>10.000 Robux</span><span>Rp 1.450.000</span>
-                </div>
-            </div>
-            <button onclick="lanjut()" class="w-full bg-ungu py-3 rounded-lg font-bold">Beli Sekarang</button>
-        </div>
-    
+    </div>
 </div>
 
+<!-- MENU SAMPING (GARIS TIGA) -->
+<div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4 transform -translate-x-full transition-transform duration-300">
+    <div class="flex justify-between items-center mb-6">
+        <span class="text-xl font-bold text-ungu">Xdnry777</span>
+        <button onclick="tutupMenu()" class="text-2xl text-gray-300 hover:text-white">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+
+    <nav class="space-y-3">
+        <a href="index.html" class="block py-2 border-b border-gray-700 text-ungu">
+            <i class="fa fa-home mr-2"></i> Beranda
+        </a>
+        <a href="daftar-game.html" class="block py-2 border-b border-gray-700 hover:text-ungu">
+            <i class="fa fa-gamepad mr-2"></i> Daftar Game
+        </a>
+        <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu">
+            <i class="fa fa-list-alt mr-2"></i> Riwayat Pesanan
+        </a>
+        <a href="#" class="block py-2 border-b border-gray-700 hover:text-ungu">
+            <i class="fa fa-credit-card mr-2"></i> Cara Beli
+        </a>
+        <a href="#" class="block py-2 border-b border-gray-700 hover:text-ungu">
+            <i class="fa fa-user mr-2"></i> Masuk / Daftar
+        </a>
+        <a href="#" class="block py-2 hover:text-ungu">
+            <i class="fa fa-sign-out mr-2"></i> Keluar Akun
+        </a>
+    </nav>
+</div>
+
+<div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
 <script>
-function pilihGame(game, item, harga) {
-    localStorage.setItem('game', game);
+// FUNGSI MENU
+function bukaMenu() {
+    document.getElementById('menuSamping').classList.remove('-translate-x-full');
+    document.getElementById('latarTutup').classList.remove('hidden');
+}
+function tutupMenu() {
+    document.getElementById('menuSamping').classList.add('-translate-x-full');
+    document.getElementById('latarTutup').classList.add('hidden');
+}
+
+// FUNGSI PILIH NOMINAL
+function pilihNominal(namaGame) {
+    let pilih = document.querySelector(`input[name="${namaGame === 'Mobile Legends' ? 'ml' : 'ff'}"]:checked`);
+    if (!pilih) {
+        alert('Pilih dulu nominal yang mau dibeli!');
+        return;
+    }
+
+    let [item, harga] = pilih.value.split('|');
+    localStorage.setItem('game', namaGame);
     localStorage.setItem('item', item);
     localStorage.setItem('harga', harga);
     location.href = 'bayar.html';
