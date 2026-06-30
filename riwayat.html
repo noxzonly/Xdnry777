@@ -9,6 +9,7 @@
     <script>
         tailwind.config = { theme: { extend: { colors: { gelap: '#121212', kartu: '#1E1E1E', ungu: '#8B5CF6' } } } }
     </script>
+    <style>.struk { background: #fff; color: #000; } @media print { body *:not(.struk, .struk *) { display: none; } }</style>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
 <div class="max-w-md mx-auto">
@@ -25,19 +26,52 @@
         <div class="text-center text-gray-500 py-10"><i class="fa fa-history text-4xl mb-2"></i><p>Belum ada riwayat pesanan</p></div>
     </div>
 </div>
+
+<!-- POPUP STRUK DARI RIWAYAT -->
+<div id="boxStrukRiwayat" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
+    <div class="struk p-5 rounded-lg w-full max-w-sm">
+        <div class="text-center border-b pb-3 mb-3">
+            <h2 class="text-xl font-bold">Xdnry777 STORE</h2>
+            <p class="text-xs text-gray-500">Top Up Terpercaya</p>
+        </div>
+        <div class="space-y-1 text-sm">
+            <div class="flex justify-between"><span>Kode Struk:</span><span class="font-mono font-bold" id="rKode">-</span></div>
+            <div class="flex justify-between"><span>Game:</span><span id="rGame">-</span></div>
+            <div class="flex justify-between"><span>Item:</span><span id="rItem">-</span></div>
+            <div class="flex justify-between"><span>ID Akun:</span><span id="rId">-</span></div>
+            <div class="flex justify-between"><span>Nama Akun:</span><span id="rNama">-</span></div>
+            <div class="flex justify-between font-bold border-t pt-2 mt-2">
+                <span>Status:</span>
+                <span class="text-green-600" id="rStatus">-</span>
+            </div>
+            <div class="flex justify-between font-bold text-lg"><span>Total:</span><span id="rHarga">-</span></div>
+            <div class="flex justify-between text-xs text-gray-500 mt-2"><span>Waktu:</span><span id="rWaktu">-</span></div>
+        </div>
+        <p class="text-center text-xs text-gray-400 mt-4">Terima Kasih!</p>
+        <div class="mt-4">
+            <button onclick="tutupStrukRiwayat()" class="w-full bg-ungu py-2 rounded font-bold">Tutup</button>
+        </div>
+    </div>
+</div>
+
 <script>
+let semuaRiwayat = [];
+
 function tampilkanRiwayat() {
-    let riwayat = JSON.parse(localStorage.getItem('riwayatPesanan') || '[]');
+    semuaRiwayat = JSON.parse(localStorage.getItem('riwayatPesanan') || '[]');
     let wadah = document.getElementById('daftarRiwayat');
     wadah.innerHTML = '';
-    if(riwayat.length === 0) {
+
+    if(semuaRiwayat.length === 0) {
         wadah.innerHTML = `<div class="text-center text-gray-500 py-10"><i class="fa fa-history text-4xl mb-2"></i><p>Belum ada riwayat pesanan</p></div>`;
         return;
     }
-    riwayat.reverse().forEach(item => {
+
+    // Tampilkan dari yang terbaru
+    semuaRiwayat.reverse().forEach((item, indeks) => {
         let warna = item.status === 'LUNAS' ? 'text-green-400' : 'text-red-400';
-        wadah.innerHTML += `
-            <div class="bg-kartu p-4 rounded-xl border border-gray-700">
+        let kartu = `
+            <div onclick="bukaStrukRiwayat(${indeks})" class="bg-kartu p-4 rounded-xl border border-gray-700 cursor-pointer hover:border-ungu/50 transition">
                 <div class="flex justify-between items-start mb-2">
                     <p class="font-bold">${item.game}</p>
                     <span class="text-sm font-bold ${warna}">${item.status}</span>
@@ -51,14 +85,36 @@ function tampilkanRiwayat() {
                 <p class="text-xs text-gray-500 mt-1">📌 Kode: ${item.kode}</p>
             </div>
         `;
+        wadah.innerHTML += kartu;
     });
 }
+
+// BUKA STRUK KETIKA KARTU DIKLIK
+function bukaStrukRiwayat(indeks) {
+    let data = semuaRiwayat[indeks];
+    document.getElementById('rKode').textContent = data.kode;
+    document.getElementById('rGame').textContent = data.game;
+    document.getElementById('rItem').textContent = data.item;
+    document.getElementById('rId').textContent = data.idGame;
+    document.getElementById('rNama').textContent = data.namaAkun;
+    document.getElementById('rStatus').textContent = data.status;
+    document.getElementById('rHarga').textContent = data.harga;
+    document.getElementById('rWaktu').textContent = data.waktu;
+
+    document.getElementById('boxStrukRiwayat').classList.remove('hidden');
+}
+
+function tutupStrukRiwayat() {
+    document.getElementById('boxStrukRiwayat').classList.add('hidden');
+}
+
 function hapusSemua() {
     if(confirm('Yakin hapus semua riwayat?')) {
         localStorage.removeItem('riwayatPesanan');
         tampilkanRiwayat();
     }
 }
+
 window.onload = tampilkanRiwayat;
 </script>
 </body>
