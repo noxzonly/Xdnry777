@@ -62,6 +62,11 @@
                 <i class="fa fa-whatsapp"></i> KIRIM PESANAN
             </button>
         </div>
+
+        <!-- ✅ TAMPILAN HITUNG MUNDUR -->
+        <div id="infoTunggu" class="mt-4 text-center text-yellow-400 hidden">
+            <i class="fa fa-clock-o"></i> Struk akan muncul dalam <span id="detik">30</span> detik...
+        </div>
     </div>
 
     <!-- INFO PEMBAYARAN -->
@@ -74,7 +79,7 @@
     </div>
 </div>
 
-<!-- POPUP STRUK (MUNCUL OTOMATIS) -->
+<!-- POPUP STRUK -->
 <div id="boxStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
     <div class="struk p-5 rounded-lg w-full max-w-sm">
         <div class="text-center border-b pb-3 mb-3">
@@ -105,12 +110,11 @@
 <script>
 let data = {};
 
-// AMBIL DATA OTOMATIS
 window.onload = function() {
     data.game = localStorage.getItem('game');
     data.item = localStorage.getItem('item');
     data.harga = localStorage.getItem('harga');
-    data.status = "LUNAS"; // STATUS OTOMATIS LANGSUNG LUNAS
+    data.status = "LUNAS";
 
     if(!data.game) {
         alert('⚠️ Silakan pilih game dan nominal dulu!');
@@ -131,17 +135,14 @@ function buatKode() {
 }
 
 function prosesOtomatis() {
-    // AMBIL ISIAN
     data.idGame = document.getElementById('idGame').value.trim();
     data.namaAkun = document.getElementById('namaAkun').value.trim();
 
-    // VALIDASI
     if(!data.idGame || !data.namaAkun) {
         alert('⚠️ Silakan lengkapi ID Game dan Nama Akun terlebih dahulu!');
         return;
     }
 
-    // BUAT DATA
     data.kode = buatKode();
     let sekarang = new Date();
     data.waktu = sekarang.toLocaleDateString('id-ID') + ' ' + sekarang.getHours() + ':' + String(sekarang.getMinutes()).padStart(2,'0');
@@ -162,7 +163,23 @@ Silakan diproses ya!`;
 
     window.open('https://wa.me/6285169935089?text=' + encodeURIComponent(pesan), '_blank');
 
-    // TAMPILKAN STRUK LANGSUNG SEKARANG JUGA
+    // ✅ MUNCULKAN INFORMASI HITUNG MUNDUR
+    document.getElementById('infoTunggu').classList.remove('hidden');
+    let sisaDetik = 30;
+    let hitungMundur = setInterval(function() {
+        sisaDetik--;
+        document.getElementById('detik').textContent = sisaDetik;
+        if(sisaDetik <= 0) {
+            clearInterval(hitungMundur);
+            tampilkanStruk();
+        }
+    }, 1000);
+
+    // ✅ STRUK MUNCUL SETELAH TEPAT 30 DETIK
+    // setTimeout(tampilkanStruk, 30000);
+}
+
+function tampilkanStruk() {
     document.getElementById('kode').textContent = data.kode;
     document.getElementById('g').textContent = data.game;
     document.getElementById('i').textContent = data.item;
