@@ -12,7 +12,7 @@
     <style>
         .struk { background: #fff; color: #000; }
         @media print { body *:not(.struk, .struk *) { display: none; } }
-        .admin-kontrol { display: none; } /* Sembunyikan dari pembeli */
+        .admin-status { display: none; } /* Sembunyikan dari pembeli */
     </style>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
@@ -23,7 +23,7 @@
         <a href="daftar-game.html" class="text-gray-300 hover:text-ungu text-xl">
             <i class="fa fa-arrow-left"></i>
         </a>
-        <h1 class="text-xl font-bold"><span class="text-ungu">Konfirmasi Pesanan</span></h1>
+        <h1 class="text-xl font-bold"><span class="text-ungu">Isi Data Pesanan</span></h1>
         <a href="index.html" class="text-gray-300 hover:text-ungu text-xl">
             <i class="fa fa-home"></i>
         </a>
@@ -31,6 +31,7 @@
 
     <div class="bg-kartu p-5 rounded-xl border border-gray-700 mb-6">
         <div class="space-y-3">
+            <!-- DATA YANG SUDAH DIPILIH -->
             <div class="p-3 bg-gelap rounded-lg">
                 <p class="text-gray-400 text-sm">Game</p>
                 <p class="font-bold" id="game">-</p>
@@ -40,31 +41,20 @@
                 <p class="font-bold" id="item">-</p>
             </div>
 
-            <!-- ID GAME -->
+            <!-- KOLOM ISIAN PEMBELI -->
             <div class="p-3 bg-gelap rounded-lg">
                 <p class="text-gray-400 text-sm">ID Game / Server</p>
                 <input type="text" id="idGame" placeholder="Contoh: 12345678 (1234)" class="w-full bg-transparent font-bold mt-1 outline-none border-none">
             </div>
-
-            <!-- NAMA AKUN -->
             <div class="p-3 bg-gelap rounded-lg">
                 <p class="text-gray-400 text-sm">Nama Akun / Nickname</p>
-                <input type="text" id="namaAkun" placeholder="Tulis nama akun kamu disini..." class="w-full bg-transparent font-bold mt-1 outline-none border-none">
+                <input type="text" id="namaAkun" placeholder="Tulis nama akun kamu..." class="w-full bg-transparent font-bold mt-1 outline-none border-none">
             </div>
 
-            <!-- ✅ KHUSUS ADMIN: PILIH STATUS (TIDAK TERLIHAT PEMBELI) -->
-            <div class="admin-kontrol p-3 bg-yellow-900/30 border border-yellow-500 rounded-lg">
-                <p class="text-yellow-400 text-sm mb-2">🔧 KONTROL ADMIN - Status Pembayaran</p>
-                <div class="flex gap-3">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="radio" name="status" value="LUNAS" class="accent-green-500">
-                        <span class="text-green-400 font-bold">✅ LUNAS</span>
-                    </label>
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="radio" name="status" value="BELUM LUNAS" class="accent-red-500">
-                        <span class="text-red-400 font-bold">⏳ BELUM LUNAS</span>
-                    </label>
-                </div>
+            <!-- KONTROL STATUS ADMIN (TERSEMBUNYI) -->
+            <div class="admin-status">
+                <input type="radio" name="status" value="LUNAS" id="stsLunas" checked>
+                <input type="radio" name="status" value="BELUM LUNAS" id="stsBelum">
             </div>
 
             <div class="p-3 bg-gelap rounded-lg">
@@ -73,9 +63,12 @@
             </div>
         </div>
 
+        <!-- TOMBOL UTAMA -->
         <div class="flex gap-3 mt-5">
-            <a href="daftar-game.html" class="flex-1 bg-gray-700 py-3 rounded-lg font-bold text-center">Ubah</a>
-            <button onclick="buatStruk()" class="flex-1 bg-ungu py-3 rounded-lg font-bold">Buat Struk</button>
+            <a href="daftar-game.html" class="flex-1 bg-gray-700 py-3 rounded-lg font-bold text-center">Ubah Pesanan</a>
+            <button onclick="kirimPesanan()" class="flex-1 bg-green-600 py-3 rounded-lg font-bold">
+                <i class="fa fa-whatsapp"></i> Kirim Pesanan
+            </button>
         </div>
     </div>
 
@@ -89,7 +82,7 @@
     </div>
 </div>
 
-<!-- POPUP STRUK -->
+<!-- POPUP STRUK (AKAN MUNCUL OTOMATIS SETELAH KIRIM WA) -->
 <div id="boxStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
     <div class="struk p-5 rounded-lg w-full max-w-sm">
         <div class="text-center border-b pb-3 mb-3">
@@ -102,21 +95,17 @@
             <div class="flex justify-between"><span>Item:</span><span id="i">-</span></div>
             <div class="flex justify-between"><span>ID Akun:</span><span id="idg">-</span></div>
             <div class="flex justify-between"><span>Nama Akun:</span><span id="nama">-</span></div>
-            <!-- STATUS MUNCUL DI STRUK -->
             <div class="flex justify-between font-bold border-t pt-2 mt-2">
                 <span>Status:</span>
-                <span id="statusStruk">-</span>
+                <span id="statusStruk" class="text-green-600">LUNAS</span>
             </div>
             <div class="flex justify-between font-bold text-lg"><span>Total:</span><span id="hrg">-</span></div>
             <div class="flex justify-between text-xs text-gray-500 mt-2"><span>Waktu:</span><span id="waktu">-</span></div>
         </div>
         <p class="text-center text-xs text-gray-400 mt-4">Terima Kasih!</p>
 
-        <div class="flex gap-2 mt-4">
-            <button onclick="kirimWA()" class="flex-1 bg-green-500 text-white py-2 rounded font-bold">
-                <i class="fa fa-whatsapp"></i> Kirim WA
-            </button>
-            <button onclick="tutupStruk()" class="flex-1 bg-gray-600 py-2 rounded font-bold">Tutup</button>
+        <div class="mt-4">
+            <button onclick="tutupStruk()" class="w-full bg-ungu py-2 rounded font-bold">Tutup Struk</button>
         </div>
     </div>
 </div>
@@ -124,13 +113,14 @@
 <script>
 let data = {};
 
+// AMBIL DATA DARI HALAMAN SEBELUMNYA
 window.onload = function() {
     data.game = localStorage.getItem('game');
     data.item = localStorage.getItem('item');
     data.harga = localStorage.getItem('harga');
 
     if(!data.game) {
-        alert('⚠️ Pilih dulu di halaman Daftar Game!');
+        alert('⚠️ Pilih dulu game & nominalnya!');
         location.href = 'daftar-game.html';
         return;
     }
@@ -147,31 +137,54 @@ function buatKode() {
     return 'XDN-' + kode;
 }
 
-function buatStruk() {
+function kirimPesanan() {
+    // AMBIL ISIAN PEMBELI
     data.idGame = document.getElementById('idGame').value.trim();
     data.namaAkun = document.getElementById('namaAkun').value.trim();
-    
-    // CEK PILIHAN ADMIN
-    let pilihStatus = document.querySelector('input[name="status"]:checked');
-    if(!pilihStatus) {
-        alert('⚠️ ADMIN: Silakan tentukan status pembayaran dulu!');
-        return;
-    }
-    data.status = pilihStatus.value;
 
+    // VALIDASI ISIAN
     if(!data.idGame) {
-        alert('⚠️ Silakan isi ID Game dulu!');
+        alert('⚠️ Isi dulu ID Game kamu!');
         return;
     }
     if(!data.namaAkun) {
-        alert('⚠️ Silakan isi Nama Akun dulu!');
+        alert('⚠️ Isi dulu Nama Akun kamu!');
         return;
     }
 
+    // AMBIL STATUS DARI PENGATURAN ADMIN (OTOMATIS LUNAS)
+    data.status = document.querySelector('input[name="status"]:checked').value;
+
+    // BUAT DATA STRUK
     data.kode = buatKode();
     let sekarang = new Date();
     data.waktu = sekarang.toLocaleDateString('id-ID') + ' ' + sekarang.getHours() + ':' + String(sekarang.getMinutes()).padStart(2,'0');
 
+    // ✅ PESAN UNTUK DIKIRIM KE WA ADMIN
+    let pesan = `*PESANAN BARU - Xdnry777*
+━━━━━━━━━━━━━━━━
+📌 Kode: ${data.kode}
+🎮 Game: ${data.game}
+📦 Item: ${data.item}
+🆔 ID Akun: ${data.idGame}
+👤 Nama Akun: ${data.namaAkun}
+💰 Bayar: ${data.harga}
+📊 Status: ${data.status}
+⏰ Waktu: ${data.waktu}
+━━━━━━━━━━━━━━━━
+Siap diproses!`;
+
+    // BUKA WA LANGSUNG
+    window.open('https://wa.me/6285169935089?text=' + encodeURIComponent(pesan), '_blank');
+
+    // ✅ SETELAH WA TERBUKA → OTOMATIS TAMPILKAN STRUK
+    setTimeout(function() {
+        tampilkanStruk();
+    }, 800);
+}
+
+function tampilkanStruk() {
+    // ISI DATA KE STRUK
     document.getElementById('kode').textContent = data.kode;
     document.getElementById('g').textContent = data.game;
     document.getElementById('i').textContent = data.item;
@@ -185,28 +198,13 @@ function buatStruk() {
     elStatus.textContent = data.status;
     elStatus.className = data.status === 'LUNAS' ? 'text-green-600' : 'text-red-600';
 
+    // TAMPILKAN STRUK
     document.getElementById('boxStruk').classList.remove('hidden');
-}
-
-function kirimWA() {
-    let pesan = `*STRUK PEMBELIAN - Xdnry777*
-━━━━━━━━━━━━━━━━
-📌 Kode: ${data.kode}
-🎮 Game: ${data.game}
-📦 Item: ${data.item}
-🆔 ID Akun: ${data.idGame}
-👤 Nama Akun: ${data.namaAkun}
-💰 Total: ${data.harga}
-📊 Status: ${data.status}
-⏰ Waktu: ${data.waktu}
-━━━━━━━━━━━━━━━━
-Terima Kasih!`;
-
-    window.open('https://wa.me/6285169935089?text=' + encodeURIComponent(pesan), '_blank');
 }
 
 function tutupStruk() {
     document.getElementById('boxStruk').classList.add('hidden');
+    location.href = 'daftar-game.html'; // KEMBALI KE PILIH GAME
 }
 </script>
 </body>
