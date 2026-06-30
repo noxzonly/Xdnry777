@@ -15,7 +15,8 @@
         #menuSamping.buka { transform: translateX(0); }
         .struk-cetak { background: #fff; color: #000; }
         @media print { body *:not(.struk-cetak, .struk-cetak *) { display: none; } }
-        .input-nonaktif { background: rgba(255,255,255,0.05); color: #aaa; border-color: #444; }
+        .pilihan { background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff; }
+        .pilihan:focus { outline: none; border-color: #8B5CF6; }
     </style>
 </head>
 <body class="bg-gelap text-white min-h-screen">
@@ -58,7 +59,7 @@
     </div>
 </div>
 
-<!-- ✅ FORM STRUK: DATA OTOMATIS TERISI -->
+<!-- ✅ FORM STRUK: PILIHAN LENGKAP -->
 <div id="formStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
     <div class="bg-kartu p-5 rounded-xl border border-gray-700 w-full max-w-md">
         <div class="flex justify-between items-center mb-4">
@@ -67,13 +68,39 @@
         </div>
 
         <div class="space-y-3">
-            <input type="text" id="namaPembeli" class="w-full input-nonaktif border border-gray-600 rounded-lg p-3" readonly>
-            <input type="text" id="namaGame" class="w-full input-nonaktif border border-gray-600 rounded-lg p-3" readonly>
-            <input type="text" id="itemBeli" class="w-full input-nonaktif border border-gray-600 rounded-lg p-3" readonly>
+            <!-- Nama Pembeli (Otomatis) -->
+            <input type="text" id="namaPembeli" class="w-full pilihan rounded-lg p-3" readonly>
+
+            <!-- Pilih Game -->
+            <select id="pilihGame" onchange="updateItem()" class="w-full pilihan rounded-lg p-3">
+                <option value="">Pilih Game</option>
+                <option value="Mobile Legends">Mobile Legends</option>
+                <option value="Free Fire">Free Fire</option>
+                <option value="PUBG Mobile">PUBG Mobile</option>
+                <option value="Genshin Impact">Genshin Impact</option>
+            </select>
+
+            <!-- Pilih Item (Sesuai Game) -->
+            <select id="pilihItem" onchange="updateHarga()" class="w-full pilihan rounded-lg p-3">
+                <option value="">Pilih Item & Nominal</option>
+            </select>
+
+            <!-- ID Game (Isi Sendiri) -->
             <input type="text" id="idGame" placeholder="Masukkan ID Game Kamu" class="w-full bg-gelap border border-gray-600 rounded-lg p-3">
-            <input type="text" id="hargaTotal" class="w-full input-nonaktif border border-gray-600 rounded-lg p-3" readonly>
-            <input type="text" id="metodeBayar" class="w-full input-nonaktif border border-gray-600 rounded-lg p-3" readonly>
-            <input type="text" id="tanggalTransaksi" class="w-full input-nonaktif border border-gray-600 rounded-lg p-3" readonly>
+
+            <!-- Harga (Otomatis) -->
+            <input type="text" id="hargaTotal" class="w-full pilihan rounded-lg p-3" readonly>
+
+            <!-- Pilih Metode Bayar -->
+            <select id="metodeBayar" class="w-full pilihan rounded-lg p-3">
+                <option value="">Pilih Metode Pembayaran</option>
+                <option value="QRIS">QRIS</option>
+                <option value="Transfer Dana">Transfer Dana</option>
+                <option value="E-Wallet">E-Wallet</option>
+            </select>
+
+            <!-- Tanggal (Otomatis) -->
+            <input type="text" id="tanggalTransaksi" class="w-full pilihan rounded-lg p-3" readonly>
         </div>
 
         <div class="flex gap-3 mt-5">
@@ -140,45 +167,84 @@
 </section>
 
 <script>
-// CONTOH DATA OTOMATIS (nanti bisa dihubungkan ke pilihan game)
-const dataTransaksi = {
-    nama: localStorage.getItem('nama') || 'Pengguna',
-    game: 'Mobile Legends',
-    item: '28 Diamond',
-    harga: 'Rp 7.900',
-    metode: 'QRIS / Transfer',
-    tanggal: new Date().toLocaleDateString('id-ID', {day:'2-digit', month:'2-digit', year:'numeric'})
+// Data Harga Item
+const daftarHarga = {
+    'Mobile Legends': [
+        {item: '12 Diamond', harga: 'Rp 3.800'},
+        {item: '28 Diamond', harga: 'Rp 7.900'},
+        {item: '56 Diamond', harga: 'Rp 15.500'},
+        {item: '112 Diamond', harga: 'Rp 30.000'}
+    ],
+    'Free Fire': [
+        {item: '20 Diamond', harga: 'Rp 3.500'},
+        {item: '55 Diamond', harga: 'Rp 9.800'},
+        {item: '140 Diamond', harga: 'Rp 24.500'}
+    ],
+    'PUBG Mobile': [
+        {item: '60 UC', harga: 'Rp 15.000'},
+        {item: '325 UC', harga: 'Rp 75.000'}
+    ],
+    'Genshin Impact': [
+        {item: '60 Genesis', harga: 'Rp 16.000'},
+        {item: '300 Genesis', harga: 'Rp 78.000'}
+    ]
 };
+
+// Update Item Sesuai Game
+function updateItem() {
+    const game = document.getElementById('pilihGame').value;
+    const itemSelect = document.getElementById('pilihItem');
+    itemSelect.innerHTML = '<option value="">Pilih Item & Nominal</option>';
+    
+    if(game && daftarHarga[game]) {
+        daftarHarga[game].forEach(i => {
+            itemSelect.innerHTML += `<option value="${i.item}" data-harga="${i.harga}">${i.item} - ${i.harga}</option>`;
+        });
+    }
+    document.getElementById('hargaTotal').value = '';
+}
+
+// Update Harga Otomatis
+function updateHarga() {
+    const pilih = document.getElementById('pilihItem');
+    const harga = pilih.options[pilih.selectedIndex].dataset.harga || '';
+    document.getElementById('hargaTotal').value = harga;
+}
 
 function bukaMenu() { document.getElementById('menuSamping').classList.add('buka'); document.getElementById('latarTutup').classList.remove('hidden'); }
 function tutupMenu() { document.getElementById('menuSamping').classList.remove('buka'); document.getElementById('latarTutup').classList.add('hidden'); }
 
-// ✅ ISI OTOMATIS SAAT DIBUKA
+// Buka Form & Isi Otomatis
 function bukaFormStruk() {
     document.getElementById('formStruk').classList.remove('hidden');
     document.getElementById('hasilStruk').classList.add('hidden');
     
-    // Isi otomatis dari data
-    document.getElementById('namaPembeli').value = dataTransaksi.nama;
-    document.getElementById('namaGame').value = dataTransaksi.game;
-    document.getElementById('itemBeli').value = dataTransaksi.item;
-    document.getElementById('hargaTotal').value = dataTransaksi.harga;
-    document.getElementById('metodeBayar').value = dataTransaksi.metode;
-    document.getElementById('tanggalTransaksi').value = dataTransaksi.tanggal;
+    // Isi Nama & Tanggal Otomatis
+    document.getElementById('namaPembeli').value = localStorage.getItem('nama') || 'Pengguna';
+    document.getElementById('tanggalTransaksi').value = new Date().toLocaleDateString('id-ID', {day:'2-digit', month:'2-digit', year:'numeric'});
 }
 function tutupFormStruk() { document.getElementById('formStruk').classList.add('hidden'); }
 
 function tampilkanStruk() {
+    const game = document.getElementById('pilihGame').value;
+    const item = document.getElementById('pilihItem').value;
     const idgm = document.getElementById('idGame').value.trim();
-    if(!idgm) { alert('⚠️ Silakan isi ID Game kamu!'); return; }
+    const harga = document.getElementById('hargaTotal').value;
+    const metode = document.getElementById('metodeBayar').value;
 
-    document.getElementById('sNama').textContent = dataTransaksi.nama;
-    document.getElementById('sGame').textContent = dataTransaksi.game;
-    document.getElementById('sItem').textContent = dataTransaksi.item;
+    if(!game || !item || !idgm || !harga || !metode) {
+        alert('⚠️ Lengkapi semua pilihan & data!');
+        return;
+    }
+
+    // Tampilkan ke Struk
+    document.getElementById('sNama').textContent = document.getElementById('namaPembeli').value;
+    document.getElementById('sGame').textContent = game;
+    document.getElementById('sItem').textContent = item;
     document.getElementById('sId').textContent = idgm;
-    document.getElementById('sHarga').textContent = dataTransaksi.harga;
-    document.getElementById('sMetode').textContent = dataTransaksi.metode;
-    document.getElementById('sTanggal').textContent = dataTransaksi.tanggal;
+    document.getElementById('sHarga').textContent = harga;
+    document.getElementById('sMetode').textContent = metode;
+    document.getElementById('sTanggal').textContent = document.getElementById('tanggalTransaksi').value;
 
     tutupFormStruk();
     document.getElementById('hasilStruk').classList.remove('hidden');
