@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin - Xdnry777</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script src="cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script>
         tailwind.config = {
             theme: {
@@ -31,26 +31,25 @@
         <div></div>
     </div>
 
-    <!-- KONTROL ADMIN -->
     <div class="space-y-4">
         <div class="bg-kartu p-4 rounded-xl border border-gray-700">
-            <h3 class="font-bold text-lg mb-3">🎮 Kelola Game & Harga</h3>
+            <h3 class="font-bold text-lg mb-3">✏️ Ubah / Atur Harga</h3>
             
             <div class="space-y-3 mb-4">
-                <input type="text" id="namaGame" placeholder="Nama Game" class="w-full bg-gelap p-2 rounded-lg outline-none">
-                <input type="text" id="itemGame" placeholder="Item/Isi (contoh: 12 Diamond)" class="w-full bg-gelap p-2 rounded-lg outline-none">
-                <input type="number" id="hargaGame" placeholder="Harga (Rp)" class="w-full bg-gelap p-2 rounded-lg outline-none">
+                <input type="text" id="namaGame" placeholder="Nama Game (contoh: Mobile Legends)" class="w-full bg-gelap p-3 rounded-lg outline-none">
+                <input type="text" id="itemGame" placeholder="Item (contoh: 25 Diamond)" class="w-full bg-gelap p-3 rounded-lg outline-none">
+                <input type="number" id="hargaBaru" placeholder="Harga Baru (angka saja)" class="w-full bg-gelap p-3 rounded-lg outline-none">
             </div>
             
-            <button onclick="tambahHarga()" class="w-full bg-ungu py-2 rounded-lg font-bold hover:bg-ungu/80">
-                <i class="fa fa-plus mr-1"></i> Simpan Harga
+            <button onclick="simpanPerubahan()" class="w-full bg-ungu py-3 rounded-lg font-bold hover:bg-ungu/80">
+                <i class="fa fa-save mr-1"></i> Simpan Perubahan Harga
             </button>
         </div>
 
         <div class="bg-kartu p-4 rounded-xl border border-gray-700">
             <h3 class="font-bold text-lg mb-3">📋 Daftar Harga Saat Ini</h3>
             <div id="daftarHarga" class="space-y-2 text-sm">
-                <p class="text-gray-400">Belum ada data...</p>
+                <p class="text-gray-400">Memuat data...</p>
             </div>
         </div>
     </div>
@@ -76,76 +75,80 @@
 <div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
 <script>
-// CEK HANYA ADMIN YANG BISA MASUK
-const akunAdminTetap = {
-    nama: "Admin Xdnry777",
-    user: "admin",
-    sandi: "admin123", // GANTI SANDI INI YA!
-    email: "admin@xdnry777.com",
-    tipe: "admin"
-};
+const akunAdminTetap = { user: "admin", sandi: "admin123" };
 
 window.onload = function(){
     const aktif = JSON.parse(localStorage.getItem('akunAktif') || '{}');
     if(aktif.user !== akunAdminTetap.user){
-        alert("⚠️ HANYA ADMIN YANG BISA AKSES HALAMAN INI!");
+        alert("⚠️ HANYA ADMIN YANG BISA AKSES!");
         location.href = "index.html";
         return;
     }
-    tampilkanHarga();
+    tampilkanDaftarHarga();
 };
 
-// FUNGSI MENU
 function bukaMenu(){document.getElementById('menuSamping').classList.remove('-translate-x-full');document.getElementById('latarTutup').classList.remove('hidden');}
 function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
 
-// KELOLA HARGA
-function ambilDataHarga(){
-    return JSON.parse(localStorage.getItem('daftarHargaToko') || '[]');
-}
-function simpanDataHarga(data){
-    localStorage.setItem('daftarHargaToko', JSON.stringify(data));
-}
-
-function tambahHarga(){
-    let game = document.getElementById('namaGame').value.trim();
+// FUNGSI SIMPAN / UBAH HARGA
+function simpanPerubahan(){
+    let nama = document.getElementById('namaGame').value.trim();
     let item = document.getElementById('itemGame').value.trim();
-    let harga = document.getElementById('hargaGame').value.trim();
+    let harga = document.getElementById('hargaBaru').value.trim();
 
-    if(!game || !item || !harga){
+    if(!nama || !item || !harga){
         alert("Lengkapi semua data!");
         return;
     }
 
-    let data = ambilDataHarga();
-    data.push({game, item, harga: "Rp " + Number(harga).toLocaleString('id-ID')});
-    simpanDataHarga(data);
+    let hargaFormatted = "Rp " + Number(harga).toLocaleString('id-ID');
+    let dataHarga = JSON.parse(localStorage.getItem('daftarHargaToko') || '[]');
 
-    alert("✅ Harga berhasil ditambahkan!");
+    // Cari: JIKA SUDAH ADA -> UBAH, JIKA BELUM ADA -> TAMBAH
+    let indeks = dataHarga.findIndex(d => 
+        d.game.toLowerCase() === nama.toLowerCase() && 
+        d.item.toLowerCase() === item.toLowerCase()
+    );
+
+    if(indeks !== -1){
+        // UBAH HARGA YANG SUDAH ADA
+        dataHarga[indeks].harga = hargaFormatted;
+        alert("✅ Harga berhasil diubah!");
+    } else {
+        // TAMBAH BARU
+        dataHarga.push({ game: nama, item: item, harga: hargaFormatted });
+        alert("✅ Harga baru berhasil ditambahkan!");
+    }
+
+    localStorage.setItem('daftarHargaToko', JSON.stringify(dataHarga));
+    
+    // KOSONGKAN FORM
     document.getElementById('namaGame').value = "";
     document.getElementById('itemGame').value = "";
-    document.getElementById('hargaGame').value = "";
-    tampilkanHarga();
+    document.getElementById('hargaBaru').value = "";
+
+    tampilkanDaftarHarga();
 }
 
-function tampilkanHarga(){
+// TAMPILKAN DAFTAR DI ADMIN
+function tampilkanDaftarHarga(){
     let wadah = document.getElementById('daftarHarga');
-    let data = ambilDataHarga();
+    let data = JSON.parse(localStorage.getItem('daftarHargaToko') || '[]');
     wadah.innerHTML = "";
 
     if(data.length === 0){
-        wadah.innerHTML = '<p class="text-gray-400">Belum ada harga yang diatur</p>';
+        wadah.innerHTML = '<p class="text-gray-400">Belum ada perubahan harga</p>';
         return;
     }
 
-    data.forEach((h, i) => {
-        let el = document.createElement('div');
-        el.className = "flex justify-between items-center p-2 bg-gelap rounded-lg";
-        el.innerHTML = `
-            <div><b>${h.game}</b> · ${h.item}</div>
-            <span class="text-ungu font-bold">${h.harga}</span>
-        `;
-        wadah.appendChild(el);
+    data.forEach((d, i) => {
+        wadah.innerHTML += `
+        <div class="flex justify-between items-center p-2 bg-gelap rounded-lg">
+            <div class="text-sm">
+                <b>${d.game}</b> · ${d.item}
+            </div>
+            <span class="text-ungu font-bold">${d.harga}</span>
+        </div>`;
     });
 }
 </script>
