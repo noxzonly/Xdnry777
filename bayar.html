@@ -35,14 +35,9 @@
 <script>
 let data;
 window.onload = function(){
-    let dataMentah = localStorage.getItem('pilihSekarang');
-    if(!dataMentah){
-        alert("Pilih dulu itemnya!");
-        location.href = 'daftar-game.html';
-        return;
-    }
+    data = JSON.parse(localStorage.getItem('pilihSekarang')||'{}');
+    if(!data.game){alert('Pilih dulu itemnya!');location.href='daftar-game.html';return;}
 
-    data = JSON.parse(dataMentah);
     document.getElementById('gameNama').textContent = data.game;
     document.getElementById('itemNama').textContent = data.item;
     document.getElementById('hargaTotal').textContent = data.harga;
@@ -54,16 +49,9 @@ function kirimPesanan(){
     let wa = document.getElementById('nomorWa').value.trim();
     if(!id||!nama||!wa){alert('Lengkapi semua data!');return;}
 
-    let riwayat = JSON.parse(localStorage.getItem('riwayat')||'[]');
-    riwayat.unshift({
-        waktu: new Date().toLocaleString('id-ID'), game:data.game, item:data.item,
-        harga:data.harga, idTujuan:id, namaAkun:nama, wa:wa, status:'Baru'
-    });
-    localStorage.setItem('riwayat', JSON.stringify(riwayat));
-
-    alert('✅ Pesanan terkirim! Cek Riwayat ya.');
+    alert('✅ Pesanan Berhasil! Silakan bayar sebesar ' + data.harga);
     localStorage.removeItem('pilihSekarang');
-    location.href='riwayat.html';
+    location.href='daftar-game.html';
 }
 </script>
 </body>
