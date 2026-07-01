@@ -8,183 +8,118 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script>
         tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        gelap: '#121212',
-                        kartu: '#1E1E1E',
-                        ungu: '#8B5CF6',
-                        admin: '#EF4444'
-                    }
-                }
-            }
+            theme: { extend: { colors: { gelap:'#121212', kartu:'#1E1E1E', ungu:'#8B5CF6', merah:'#EF4444' } } }
         }
     </script>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
 <div class="max-w-md mx-auto">
     <div class="flex justify-between items-center mb-6">
-        <button onclick="bukaMenu()" class="text-gray-300 hover:text-ungu text-xl">
-            <i class="fa fa-bars"></i>
-        </button>
-        <h1 class="text-xl font-bold text-admin">⚙️ Panel Admin</h1>
+        <button onclick="bukaMenu()" class="text-gray-300 hover:text-ungu text-xl"><i class="fa fa-bars"></i></button>
+        <h1 class="text-xl font-bold text-merah">⚙️ Panel Admin</h1>
         <div></div>
     </div>
 
     <div class="space-y-4">
-        <!-- TAMBAH ITEM BARU -->
         <div class="bg-kartu p-4 rounded-xl border border-gray-700">
             <h3 class="font-bold text-lg mb-3">➕ Tambah Item Baru</h3>
-            <div class="space-y-3 mb-4">
-                <select id="pilihGame" class="w-full bg-gelap p-3 rounded-lg outline-none">
-                    <option value="">-- Pilih Nama Game --</option>
-                    <option value="Mobile Legends">Mobile Legends</option>
-                    <option value="Free Fire">Free Fire</option>
-                    <option value="PUBG Mobile">PUBG Mobile</option>
-                    <option value="Valorant">Valorant</option>
-                    <option value="Genshin Impact">Genshin Impact</option>
-                    <option value="Honor of Kings">Honor of Kings</option>
-                </select>
-                <input type="text" id="itemBaru" placeholder="Nama Item: 100 Diamond" class="w-full bg-gelap p-3 rounded-lg outline-none">
-                <input type="number" id="hargaBaru" placeholder="Harga: 15000" class="w-full bg-gelap p-3 rounded-lg outline-none">
-            </div>
+            <select id="game" class="w-full bg-gelap p-3 rounded-lg mb-3 outline-none">
+                <option value="">-- Pilih Game --</option>
+                <option value="Mobile Legends">Mobile Legends</option>
+                <option value="Free Fire">Free Fire</option>
+                <option value="PUBG Mobile">PUBG Mobile</option>
+                <option value="Valorant">Valorant</option>
+                <option value="Genshin Impact">Genshin Impact</option>
+                <option value="Honor of Kings">Honor of Kings</option>
+            </select>
+            <input type="text" id="item" placeholder="Contoh: 70 Diamond" class="w-full bg-gelap p-3 rounded-lg mb-3 outline-none">
+            <input type="number" id="harga" placeholder="Harga: 10000" class="w-full bg-gelap p-3 rounded-lg mb-3 outline-none">
             <button onclick="tambahItem()" class="w-full bg-ungu py-3 rounded-lg font-bold hover:bg-ungu/80">
-                <i class="fa fa-plus-circle mr-1"></i> Tambahkan Item
+                <i class="fa fa-plus mr-1"></i> Tambahkan
             </button>
         </div>
 
-        <!-- UBAH HARGA -->
         <div class="bg-kartu p-4 rounded-xl border border-gray-700">
-            <h3 class="font-bold text-lg mb-3">✏️ Ubah Harga</h3>
-            <div class="space-y-3 mb-4">
-                <input type="text" id="namaGameUbah" placeholder="Nama Game" class="w-full bg-gelap p-3 rounded-lg outline-none">
-                <input type="text" id="itemUbah" placeholder="Nama Item" class="w-full bg-gelap p-3 rounded-lg outline-none">
-                <input type="number" id="hargaGanti" placeholder="Harga Baru" class="w-full bg-gelap p-3 rounded-lg outline-none">
-            </div>
-            <button onclick="ubahHargaLama()" class="w-full bg-yellow-600 py-3 rounded-lg font-bold hover:bg-yellow-600/80">
-                <i class="fa fa-pencil mr-1"></i> Simpan Perubahan
-            </button>
-        </div>
-
-        <!-- DAFTAR SEMUA ITEM + TOMBOL HAPUS -->
-        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
-            <h3 class="font-bold text-lg mb-3">📋 Daftar Item</h3>
-            <div id="daftarItem" class="space-y-2 text-sm">
-                <p class="text-gray-400">Memuat data...</p>
-            </div>
+            <h3 class="font-bold text-lg mb-3">📋 Daftar Item Tersimpan</h3>
+            <div id="daftarItem" class="space-y-2 text-sm"><p class="text-gray-400">Memuat...</p></div>
         </div>
     </div>
 </div>
 
 <div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4 transform -translate-x-full transition-all">
-    <div class="flex justify-between items-center mb-6">
-        <span class="text-xl font-bold text-ungu">Xdnry777</span>
-        <button onclick="tutupMenu()" class="text-2xl text-gray-300 hover:text-white">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
+    <div class="flex justify-between items-center mb-6"><span class="text-xl font-bold text-ungu">Xdnry777</span><button onclick="tutupMenu()" class="text-2xl text-gray-300"><i class="fa fa-times"></i></button></div>
     <nav class="space-y-3">
         <a href="index.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-home mr-2"></i> Beranda</a>
         <a href="daftar-game.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-gamepad mr-2"></i> Daftar Game</a>
-        <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-list-alt mr-2"></i> Riwayat Pesanan</a>
-        <a href="cara-beli.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-credit-card mr-2"></i> Cara Beli</a>
-        <a href="masuk.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-user mr-2"></i> Akun Saya</a>
-        <a href="admin.html" class="block py-2 border-b border-gray-700 text-admin"><i class="fa fa-cog mr-2"></i> Panel Admin</a>
+        <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-list-alt mr-2"></i> Riwayat</a>
+        <a href="admin.html" class="block py-2 border-b border-gray-700 text-merah"><i class="fa fa-cog mr-2"></i> Panel Admin</a>
     </nav>
 </div>
 <div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
 <script>
+const logoGame = {
+    'Mobile Legends':'https://i.imgur.com/6XZpKqG.png',
+    'Free Fire':'https://i.imgur.com/9cXQZpD.png',
+    'PUBG Mobile':'https://i.imgur.com/rdcXjwM.png',
+    'Valorant':'https://i.imgur.com/9sD2fQm.png',
+    'Genshin Impact':'https://i.imgur.com/5tG9aXj.png',
+    'Honor of Kings':'https://i.imgur.com/8kD7sLz.png'
+};
+
 window.onload = function(){
-    const aktif = JSON.parse(localStorage.getItem('akunAktif') || '{}');
-    if(aktif.user !== 'admin'){ alert("Hanya Admin!"); location.href="index.html"; return; }
-    tampilSemua();
+    if(!JSON.parse(localStorage.getItem('akunAktif')||'{}').user==='admin'){alert('Hanya Admin!');location.href='index.html';return;}
+    tampilDaftar();
 };
 function bukaMenu(){document.getElementById('menuSamping').classList.remove('-translate-x-full');document.getElementById('latarTutup').classList.remove('hidden');}
 function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
 
-const logoGame = {
-    'Mobile Legends': 'https://files.catbox.moe/q692nn.jpg',
-    'Free Fire': 'https://files.catbox.moe/00jh4l.jpg',
-    'PUBG Mobile': 'https://files.catbox.moe/xfxvzz.jpg',
-    'Valorant': 'https://files.catbox.moe/wvkmfq.jpg',
-    'Genshin Impact': 'https://files.catbox.moe/080ygh.jpg',
-    'Honor of Kings': 'https://files.catbox.moe/gcbelg.jpg'
-};
-
-// TAMBAH ITEM BARU
 function tambahItem(){
-    let game = document.getElementById('pilihGame').value;
-    let item = document.getElementById('itemBaru').value.trim();
-    let harga = document.getElementById('hargaBaru').value.trim();
-    if(!game || !item || !harga){ alert("Lengkapi semua data!"); return; }
+    let g = document.getElementById('game').value;
+    let i = document.getElementById('item').value.trim();
+    let h = document.getElementById('harga').value.trim();
+    if(!g||!i||!h){alert('Lengkapi semua data!');return;}
 
-    let semuaItem = JSON.parse(localStorage.getItem('daftarItemLengkap') || '[]');
-    let kunci = game.toLowerCase() + "||" + item.toLowerCase();
-    if(semuaItem.find(i => i.kunci === kunci)){ alert("Item ini sudah ada!"); return; }
-
-    semuaItem.push({
-        kunci: kunci, game: game, item: item,
-        harga: "Rp " + Number(harga).toLocaleString('id-ID'), logo: logoGame[game]
+    // KUNCI PENYIMPANAN: SAMA PENUH DENGAN DAFTAR GAME
+    let semua = JSON.parse(localStorage.getItem('semuaItem')||'[]');
+    semua.push({
+        id: Date.now(), 
+        game: g, 
+        item: i,
+        harga: 'Rp ' + Number(h).toLocaleString('id-ID'), 
+        logo: logoGame[g]
     });
-
-    localStorage.setItem('daftarItemLengkap', JSON.stringify(semuaItem));
-    alert("✅ Item berhasil ditambahkan!");
-    document.getElementById('pilihGame').value='';document.getElementById('itemBaru').value='';document.getElementById('hargaBaru').value='';
-    tampilSemua();
+    
+    localStorage.setItem('semuaItem', JSON.stringify(semua));
+    alert('✅ BERHASIL DITAMBAHKAN! Sekarang cek Daftar Game ya.');
+    
+    document.getElementById('game').value='';
+    document.getElementById('item').value='';
+    document.getElementById('harga').value='';
+    tampilDaftar();
 }
 
-// UBAH HARGA
-function ubahHargaLama(){
-    let game = document.getElementById('namaGameUbah').value.trim();
-    let item = document.getElementById('itemUbah').value.trim();
-    let harga = document.getElementById('hargaGanti').value.trim();
-    if(!game || !item || !harga){ alert("Lengkapi data!"); return; }
-
-    let semuaItem = JSON.parse(localStorage.getItem('daftarItemLengkap') || '[]');
-    let kunci = game.toLowerCase() + "||" + item.toLowerCase();
-    let idx = semuaItem.findIndex(i => i.kunci === kunci);
-    if(idx === -1){ alert("Data tidak ditemukan!"); return; }
-
-    semuaItem[idx].harga = "Rp " + Number(harga).toLocaleString('id-ID');
-    localStorage.setItem('daftarItemLengkap', JSON.stringify(semuaItem));
-    alert("✅ Harga berhasil diubah!");
-    document.getElementById('namaGameUbah').value='';document.getElementById('itemUbah').value='';document.getElementById('hargaGanti').value='';
-    tampilSemua();
+function hapusItem(id){
+    if(!confirm('Yakin mau hapus item ini?')) return;
+    let semua = JSON.parse(localStorage.getItem('semuaItem')||'[]').filter(item => item.id !== id);
+    localStorage.setItem('semuaItem', JSON.stringify(semua));
+    tampilDaftar();
 }
 
-// ✅ FUNGSI HAPUS ITEM
-function hapusItem(kunci){
-    if(!confirm("Yakin mau hapus item ini? Tindakan ini tidak bisa dibatalkan!")) return;
-
-    let semuaItem = JSON.parse(localStorage.getItem('daftarItemLengkap') || '[]');
-    let tersisa = semuaItem.filter(i => i.kunci !== kunci);
-    localStorage.setItem('daftarItemLengkap', JSON.stringify(tersisa));
-
-    alert("🗑️ Item berhasil dihapus!");
-    tampilSemua();
-}
-
-// TAMPILKAN DAFTAR + TOMBOL HAPUS
-function tampilSemua(){
-    let data = JSON.parse(localStorage.getItem('daftarItemLengkap') || '[]');
+function tampilDaftar(){
+    let semua = JSON.parse(localStorage.getItem('semuaItem')||'[]');
     let wadah = document.getElementById('daftarItem');
     wadah.innerHTML = '';
-
-    if(data.length === 0){
-        wadah.innerHTML = '<p class="text-gray-400">Belum ada item yang ditambahkan</p>';
+    
+    if(semua.length===0){
+        wadah.innerHTML='<p class="text-gray-400">Belum ada item yang disimpan</p>';
         return;
     }
-
-    data.forEach(d => {
-        wadah.innerHTML += `
-        <div class="flex justify-between items-center p-2 bg-gelap rounded-lg">
-            <div class="text-sm">
-                <b>${d.game}</b> · ${d.item} → <span class="text-ungu font-bold">${d.harga}</span>
-            </div>
-            <button onclick="hapusItem('${d.kunci}')" class="text-red-500 hover:text-red-400 text-lg px-2">
-                <i class="fa fa-trash"></i>
-            </button>
+    
+    semua.forEach(d=>{
+        wadah.innerHTML += `<div class="flex justify-between items-center p-2 bg-gelap rounded">
+            <div><b>${d.game}</b> · ${d.item} → <span class="text-ungu font-bold">${d.harga}</span></div>
+            <button onclick="hapusItem(${d.id})" class="text-merah px-2"><i class="fa fa-trash"></i></button>
         </div>`;
     });
 }
