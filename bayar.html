@@ -35,9 +35,14 @@
 <script>
 let data;
 window.onload = function(){
-    data = JSON.parse(localStorage.getItem('pilihSekarang')||'{}');
-    if(!data.game){alert('Pilih dulu itemnya!');location.href='daftar-game.html';return;}
+    let dataMentah = localStorage.getItem('pilihSekarang');
+    if(!dataMentah){
+        alert("Pilih dulu itemnya!");
+        location.href = 'daftar-game.html';
+        return;
+    }
 
+    data = JSON.parse(dataMentah);
     document.getElementById('gameNama').textContent = data.game;
     document.getElementById('itemNama').textContent = data.item;
     document.getElementById('hargaTotal').textContent = data.harga;
