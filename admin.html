@@ -28,70 +28,54 @@
                 <option value="Mobile Legends">Mobile Legends</option>
                 <option value="Free Fire">Free Fire</option>
                 <option value="PUBG Mobile">PUBG Mobile</option>
-                <option value="Valorant">Valorant</option>
-                <option value="Genshin Impact">Genshin Impact</option>
-                <option value="Honor of Kings">Honor of Kings</option>
             </select>
-            <input type="text" id="item" placeholder="Contoh: 70 Diamond" class="w-full bg-gelap p-3 rounded-lg mb-3 outline-none">
-            <input type="number" id="harga" placeholder="Harga: 10000" class="w-full bg-gelap p-3 rounded-lg mb-3 outline-none">
+            <input type="text" id="item" placeholder="70 Diamond" class="w-full bg-gelap p-3 rounded-lg mb-3 outline-none">
+            <input type="number" id="harga" placeholder="10000" class="w-full bg-gelap p-3 rounded-lg mb-3 outline-none">
             <button onclick="tambahItem()" class="w-full bg-ungu py-3 rounded-lg font-bold hover:bg-ungu/80">
                 <i class="fa fa-plus mr-1"></i> Tambahkan
             </button>
         </div>
 
         <div class="bg-kartu p-4 rounded-xl border border-gray-700">
-            <h3 class="font-bold text-lg mb-3">📋 Daftar Item Tersimpan</h3>
-            <div id="daftarItem" class="space-y-2 text-sm"><p class="text-gray-400">Memuat...</p></div>
+            <h3 class="font-bold text-lg mb-3">📋 Daftar Item</h3>
+            <div id="daftarItem" class="space-y-2 text-sm"><p class="text-gray-400">Kosong</p></div>
         </div>
     </div>
 </div>
-
-<div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4 transform -translate-x-full transition-all">
-    <div class="flex justify-between items-center mb-6"><span class="text-xl font-bold text-ungu">Xdnry777</span><button onclick="tutupMenu()" class="text-2xl text-gray-300"><i class="fa fa-times"></i></button></div>
-    <nav class="space-y-3">
-        <a href="index.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-home mr-2"></i> Beranda</a>
-        <a href="daftar-game.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-gamepad mr-2"></i> Daftar Game</a>
-        <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-list-alt mr-2"></i> Riwayat</a>
-        <a href="admin.html" class="block py-2 border-b border-gray-700 text-merah"><i class="fa fa-cog mr-2"></i> Panel Admin</a>
-    </nav>
-</div>
-<div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
 <script>
 const logoGame = {
     'Mobile Legends':'https://i.imgur.com/6XZpKqG.png',
     'Free Fire':'https://i.imgur.com/9cXQZpD.png',
-    'PUBG Mobile':'https://i.imgur.com/rdcXjwM.png',
-    'Valorant':'https://i.imgur.com/9sD2fQm.png',
-    'Genshin Impact':'https://i.imgur.com/5tG9aXj.png',
-    'Honor of Kings':'https://i.imgur.com/8kD7sLz.png'
+    'PUBG Mobile':'https://i.imgur.com/rdcXjwM.png'
 };
 
+// BERSIHKAN DATA LAMA SAAT BUKA ADMIN
 window.onload = function(){
-    if(!JSON.parse(localStorage.getItem('akunAktif')||'{}').user==='admin'){alert('Hanya Admin!');location.href='index.html';return;}
+    localStorage.removeItem('semuaItem'); // HAPUS DATA LAMA TOTAL
     tampilDaftar();
 };
-function bukaMenu(){document.getElementById('menuSamping').classList.remove('-translate-x-full');document.getElementById('latarTutup').classList.remove('hidden');}
-function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
 
 function tambahItem(){
     let g = document.getElementById('game').value;
     let i = document.getElementById('item').value.trim();
     let h = document.getElementById('harga').value.trim();
-    if(!g||!i||!h){alert('Lengkapi semua data!');return;}
+    if(!g||!i||!h){alert('Isi semua!');return;}
 
-    // KUNCI PENYIMPANAN: SAMA PENUH DENGAN DAFTAR GAME
-    let semua = JSON.parse(localStorage.getItem('semuaItem')||'[]');
-    semua.push({
-        id: Date.now(), 
-        game: g, 
-        item: i,
-        harga: 'Rp ' + Number(h).toLocaleString('id-ID'), 
-        logo: logoGame[g]
+    let data = [];
+    // AMBIL DATA BARU ATAU KOSONG
+    let lama = localStorage.getItem('dataToko');
+    if(lama) data = JSON.parse(lama);
+
+    data.push({
+        game:g, item:i,
+        harga:'Rp '+Number(h).toLocaleString('id-ID'),
+        logo:logoGame[g]
     });
-    
-    localStorage.setItem('semuaItem', JSON.stringify(semua));
-    alert('✅ BERHASIL DITAMBAHKAN! Sekarang cek Daftar Game ya.');
+
+    // SIMPAN DENGAN NAMA KUNCI PASTI: "dataToko"
+    localStorage.setItem('dataToko', JSON.stringify(data));
+    alert('✅ BERHASIL! Buka Daftar Game lalu REFRESH');
     
     document.getElementById('game').value='';
     document.getElementById('item').value='';
@@ -99,28 +83,13 @@ function tambahItem(){
     tampilDaftar();
 }
 
-function hapusItem(id){
-    if(!confirm('Yakin mau hapus item ini?')) return;
-    let semua = JSON.parse(localStorage.getItem('semuaItem')||'[]').filter(item => item.id !== id);
-    localStorage.setItem('semuaItem', JSON.stringify(semua));
-    tampilDaftar();
-}
-
 function tampilDaftar(){
-    let semua = JSON.parse(localStorage.getItem('semuaItem')||'[]');
+    let data = JSON.parse(localStorage.getItem('dataToko')||'[]');
     let wadah = document.getElementById('daftarItem');
     wadah.innerHTML = '';
-    
-    if(semua.length===0){
-        wadah.innerHTML='<p class="text-gray-400">Belum ada item yang disimpan</p>';
-        return;
-    }
-    
-    semua.forEach(d=>{
-        wadah.innerHTML += `<div class="flex justify-between items-center p-2 bg-gelap rounded">
-            <div><b>${d.game}</b> · ${d.item} → <span class="text-ungu font-bold">${d.harga}</span></div>
-            <button onclick="hapusItem(${d.id})" class="text-merah px-2"><i class="fa fa-trash"></i></button>
-        </div>`;
+    if(data.length===0){wadah.innerHTML='<p class="text-gray-400">Belum ada item</p>';return;}
+    data.forEach(d=>{
+        wadah.innerHTML += `<div class="p-2 bg-gelap rounded"><b>${d.game}</b> · ${d.item} → ${d.harga}</div>`;
     });
 }
 </script>
