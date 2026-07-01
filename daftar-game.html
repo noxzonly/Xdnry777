@@ -42,12 +42,11 @@ window.onload = function(){
     let akun = JSON.parse(localStorage.getItem('akunAktif')||'{}');
     if(akun.tipe==='admin') document.getElementById('menuAdmin').classList.remove('hidden');
 
-    // Ambil SEMUA item yang sudah ditambahkan admin
     let semuaItem = JSON.parse(localStorage.getItem('daftarItemLengkap') || '[]');
     let wadah = document.getElementById('wadahGame'); wadah.innerHTML='';
 
     if(semuaItem.length === 0){
-        wadah.innerHTML = `<p class="text-center text-gray-400">Belum ada item yang ditambahkan Admin</p>`;
+        wadah.innerHTML = `<p class="text-center text-gray-400">Belum ada item yang ditambahkan</p>`;
         return;
     }
 
