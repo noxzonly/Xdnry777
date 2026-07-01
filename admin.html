@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - Xdnry777</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gelap: '#121212',
+                        kartu: '#1E1E1E',
+                        ungu: '#8B5CF6',
+                        admin: '#EF4444'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gelap text-white min-h-screen p-4">
+<div class="max-w-md mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <button onclick="bukaMenu()" class="text-gray-300 hover:text-ungu text-xl">
+            <i class="fa fa-bars"></i>
+        </button>
+        <h1 class="text-xl font-bold text-admin">⚙️ Panel Admin</h1>
+        <div></div>
+    </div>
+
+    <!-- KONTROL ADMIN -->
+    <div class="space-y-4">
+        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
+            <h3 class="font-bold text-lg mb-3">🎮 Kelola Game & Harga</h3>
+            
+            <div class="space-y-3 mb-4">
+                <input type="text" id="namaGame" placeholder="Nama Game" class="w-full bg-gelap p-2 rounded-lg outline-none">
+                <input type="text" id="itemGame" placeholder="Item/Isi (contoh: 12 Diamond)" class="w-full bg-gelap p-2 rounded-lg outline-none">
+                <input type="number" id="hargaGame" placeholder="Harga (Rp)" class="w-full bg-gelap p-2 rounded-lg outline-none">
+            </div>
+            
+            <button onclick="tambahHarga()" class="w-full bg-ungu py-2 rounded-lg font-bold hover:bg-ungu/80">
+                <i class="fa fa-plus mr-1"></i> Simpan Harga
+            </button>
+        </div>
+
+        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
+            <h3 class="font-bold text-lg mb-3">📋 Daftar Harga Saat Ini</h3>
+            <div id="daftarHarga" class="space-y-2 text-sm">
+                <p class="text-gray-400">Belum ada data...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MENU SAMPING -->
+<div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4 transform -translate-x-full transition-all">
+    <div class="flex justify-between items-center mb-6">
+        <span class="text-xl font-bold text-ungu">Xdnry777</span>
+        <button onclick="tutupMenu()" class="text-2xl text-gray-300 hover:text-white">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <nav class="space-y-3">
+        <a href="index.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-home mr-2"></i> Beranda</a>
+        <a href="daftar-game.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-gamepad mr-2"></i> Daftar Game</a>
+        <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-list-alt mr-2"></i> Riwayat Pesanan</a>
+        <a href="cara-beli.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-credit-card mr-2"></i> Cara Beli</a>
+        <a href="masuk.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-user mr-2"></i> Akun Saya</a>
+        <a href="admin.html" class="block py-2 border-b border-gray-700 text-admin"><i class="fa fa-cog mr-2"></i> Panel Admin</a>
+    </nav>
+</div>
+<div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+<script>
+// CEK HANYA ADMIN YANG BISA MASUK
+const akunAdminTetap = {
+    nama: "Admin Xdnry777",
+    user: "Xdnry777-Admin",
+    sandi: "admin321", // GANTI SANDI INI YA!
+    email: "admin@xdnry777.com",
+    tipe: "admin"
+};
+
+window.onload = function(){
+    const aktif = JSON.parse(localStorage.getItem('akunAktif') || '{}');
+    if(aktif.user !== akunAdminTetap.user){
+        alert("⚠️ HANYA ADMIN YANG BISA AKSES HALAMAN INI!");
+        location.href = "index.html";
+        return;
+    }
+    tampilkanHarga();
+};
+
+// FUNGSI MENU
+function bukaMenu(){document.getElementById('menuSamping').classList.remove('-translate-x-full');document.getElementById('latarTutup').classList.remove('hidden');}
+function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
+
+// KELOLA HARGA
+function ambilDataHarga(){
+    return JSON.parse(localStorage.getItem('daftarHargaToko') || '[]');
+}
+function simpanDataHarga(data){
+    localStorage.setItem('daftarHargaToko', JSON.stringify(data));
+}
+
+function tambahHarga(){
+    let game = document.getElementById('namaGame').value.trim();
+    let item = document.getElementById('itemGame').value.trim();
+    let harga = document.getElementById('hargaGame').value.trim();
+
+    if(!game || !item || !harga){
+        alert("Lengkapi semua data!");
+        return;
+    }
+
+    let data = ambilDataHarga();
+    data.push({game, item, harga: "Rp " + Number(harga).toLocaleString('id-ID')});
+    simpanDataHarga(data);
+
+    alert("✅ Harga berhasil ditambahkan!");
+    document.getElementById('namaGame').value = "";
+    document.getElementById('itemGame').value = "";
+    document.getElementById('hargaGame').value = "";
+    tampilkanHarga();
+}
+
+function tampilkanHarga(){
+    let wadah = document.getElementById('daftarHarga');
+    let data = ambilDataHarga();
+    wadah.innerHTML = "";
+
+    if(data.length === 0){
+        wadah.innerHTML = '<p class="text-gray-400">Belum ada harga yang diatur</p>';
+        return;
+    }
+
+    data.forEach((h, i) => {
+        let el = document.createElement('div');
+        el.className = "flex justify-between items-center p-2 bg-gelap rounded-lg";
+        el.innerHTML = `
+            <div><b>${h.game}</b> · ${h.item}</div>
+            <span class="text-ungu font-bold">${h.harga}</span>
+        `;
+        wadah.appendChild(el);
+    });
+}
+</script>
+</body>
+</html>
