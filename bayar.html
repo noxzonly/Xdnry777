@@ -7,33 +7,30 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script>
-        tailwind.config = { theme: { extend: { colors: { gelap: '#121212', kartu: '#1E1E1E', ungu: '#8B5CF6' } } } }
+        tailwind.config = {theme:{extend:{colors:{gelap:'#121212', kartu:'#1E1E1E', ungu:'#8B5CF6'}}}}
     </script>
-    <style>.struk { background: #fff; color: #000; } @media print { body *:not(.struk, .struk *) { display: none; } }</style>
+    <style>.struk{background:#fff;color:#000;}button{cursor:pointer!important;z-index:10!important;}</style>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
 <div class="max-w-md mx-auto">
     <div class="flex justify-between items-center mb-6">
         <a href="daftar-game.html" class="text-gray-300 hover:text-ungu text-xl"><i class="fa fa-arrow-left"></i></a>
-        <h1 class="text-xl font-bold"><span class="text-ungu">Isi Data Pesanan</span></h1>
+        <h1 class="text-xl font-bold"><span class="text-ungu">Data Pesanan</span></h1>
         <a href="index.html" class="text-gray-300 hover:text-ungu text-xl"><i class="fa fa-home"></i></a>
     </div>
+
     <div class="bg-kartu p-5 rounded-xl border border-gray-700 mb-6">
         <div class="space-y-3">
             <div class="p-3 bg-gelap rounded-lg"><p class="text-gray-400 text-sm">Game</p><p class="font-bold" id="game">-</p></div>
             <div class="p-3 bg-gelap rounded-lg"><p class="text-gray-400 text-sm">Item</p><p class="font-bold" id="item">-</p></div>
-            <div class="p-3 bg-gelap rounded-lg"><p class="text-gray-400 text-sm">ID Game / Server</p><input type="text" id="idGame" placeholder="Contoh: 12345678 (1234)" class="w-full bg-transparent font-bold mt-1 outline-none border-none"></div>
-            <div class="p-3 bg-gelap rounded-lg"><p class="text-gray-400 text-sm">Nama Akun / Nickname</p><input type="text" id="namaAkun" placeholder="Tulis nama akun..." class="w-full bg-transparent font-bold mt-1 outline-none border-none"></div>
+            <div class="p-3 bg-gelap rounded-lg"><p class="text-gray-400 text-sm">ID Game / Server</p><input type="text" id="idGame" placeholder="Contoh: 12345678 (1234)" class="w-full bg-transparent font-bold mt-1 outline-none"></div>
+            <div class="p-3 bg-gelap rounded-lg"><p class="text-gray-400 text-sm">Nama Akun</p><input type="text" id="namaAkun" placeholder="Nama akun game..." class="w-full bg-transparent font-bold mt-1 outline-none"></div>
             <div class="p-3 bg-gelap rounded-lg"><p class="text-gray-400 text-sm">Total Bayar</p><p class="font-bold text-xl text-ungu" id="harga">-</p></div>
         </div>
-        <!-- TOMBOL SUDAH DIPASTIKAN BISA DIPENCET -->
-        <div class="mt-5">
-            <button onclick="prosesOtomatis()" class="w-full bg-green-600 py-3 rounded-lg font-bold text-lg active:scale-95 transition-transform">
-                <i class="fa fa-whatsapp"></i> KIRIM PESANAN
-            </button>
-        </div>
+        <div class="mt-5"><button onclick="proses()" class="w-full bg-green-600 py-3 rounded-lg font-bold text-lg hover:bg-green-700"><i class="fa fa-whatsapp"></i> KIRIM PESANAN</button></div>
         <div id="infoTunggu" class="mt-4 text-center text-yellow-400 hidden"><i class="fa fa-clock-o"></i> Struk muncul dalam <span id="detik">30</span> detik...</div>
     </div>
+
     <div class="bg-kartu p-5 rounded-xl border border-gray-700">
         <h3 class="text-lg font-bold text-green-400 mb-3"><i class="fa fa-qrcode"></i> Bayar via QRIS</h3>
         <img src="https://files.catbox.moe/g2agou.jpg" class="w-48 h-48 mx-auto rounded mb-3">
@@ -43,7 +40,7 @@
     </div>
 </div>
 
-<div id="boxStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
+<div id="boxStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[9999] hidden p-4">
     <div class="struk p-5 rounded-lg w-full max-w-sm">
         <div class="text-center border-b pb-3 mb-3"><h2 class="text-xl font-bold">Xdnry777 STORE</h2><p class="text-xs text-gray-500">Top Up Terpercaya</p></div>
         <div class="space-y-1 text-sm">
@@ -57,55 +54,59 @@
             <div class="flex justify-between text-xs text-gray-500 mt-2"><span>Waktu:</span><span id="waktu">-</span></div>
         </div>
         <p class="text-center text-xs text-gray-400 mt-4">Terima Kasih!</p>
-        <div class="mt-4"><button onclick="tutupStruk()" class="w-full bg-ungu py-2 rounded font-bold">Selesai</button></div>
+        <div class="mt-4"><button onclick="tutupStruk()" class="w-full bg-ungu py-2 rounded font-bold text-white">Selesai</button></div>
     </div>
 </div>
 
 <script>
-let data = {};
-window.onload = function() {
-    data.game = localStorage.getItem('game'); 
-    data.item = localStorage.getItem('item'); 
-    data.harga = localStorage.getItem('harga'); 
-    data.status = "LUNAS";
-    if(!data.game) { alert('Pilih game dulu!'); location.href = 'daftar-game.html'; return; }
-    document.getElementById('game').textContent = data.game;
-    document.getElementById('item').textContent = data.item;
-    document.getElementById('harga').textContent = data.harga;
-};
-function buatKode() { let kode=''; let acak='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; for(let i=0;i<8;i++) kode+=acak[Math.floor(Math.random()*acak.length)]; return 'XDN-'+kode; }
-function prosesOtomatis() {
-    data.idGame = document.getElementById('idGame').value.trim();
-    data.namaAkun = document.getElementById('namaAkun').value.trim();
-    if(!data.idGame || !data.namaAkun) { alert('Lengkapi data dulu!'); return; }
-    data.kode = buatKode(); 
-    let sekarang = new Date();
-    data.waktu = sekarang.toLocaleDateString('id-ID') + ' ' + sekarang.getHours() + ':' + String(sekarang.getMinutes()).padStart(2,'0');
+// 🔒 KUNCI HALAMAN
+if(!localStorage.getItem('akunAktif')){alert('⚠️ Wajib Masuk/Daftar Akun!');location.href='masuk.html';}
 
-    let pesan = `*PESANAN BARU MASUK*\n━━━━━━━━━━━━━━━━\n📌 Kode: ${data.kode}\n🎮 Game: ${data.game}\n📦 Item: ${data.item}\n🆔 ID: ${data.idGame}\n👤 Nama: ${data.namaAkun}\n💰 Bayar: ${data.harga}\n📊 Status: LUNAS\n⏰ Waktu: ${data.waktu}\n━━━━━━━━━━━━━━━━`;
-    window.open('https://wa.me/6285169935089?text=' + encodeURIComponent(pesan), '_blank');
+let data={};
+window.onload=function(){
+    data.game=localStorage.getItem('game');data.item=localStorage.getItem('item');data.harga=localStorage.getItem('harga');
+    if(!data.game){alert('Pilih game dulu!');location.href='daftar-game.html';return;}
+    document.getElementById('game').textContent=data.game;
+    document.getElementById('item').textContent=data.item;
+    document.getElementById('harga').textContent=data.harga;
+};
+
+function buatKode(){let kode='',acak='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';for(let i=0;i<8;i++)kode+=acak[Math.floor(Math.random()*acak.length)];return'XDN-'+kode;}
+
+function proses(){
+    data.idGame=document.getElementById('idGame').value.trim();
+    data.namaAkun=document.getElementById('namaAkun').value.trim();
+    if(!data.idGame||!data.namaAkun){alert('Lengkapi data dulu!');return;}
+
+    data.kode=buatKode();
+    let skrg=new Date();data.waktu=skrg.toLocaleDateString('id-ID')+' '+skrg.getHours()+':'+String(skrg.getMinutes()).padStart(2,'0');
+
+    let pesan=`*PESANAN BARU MASUK*\n━━━━━━━━━━━━━━━━\n📌 Kode: ${data.kode}\n🎮 Game: ${data.game}\n📦 Item: ${data.item}\n🆔 ID: ${data.idGame}\n👤 Nama: ${data.namaAkun}\n💰 Bayar: ${data.harga}\n📊 Status: LUNAS\n⏰ Waktu: ${data.waktu}\n━━━━━━━━━━━━━━━━`;
+    window.open('https://wa.me/6285169935089?text='+encodeURIComponent(pesan),'_blank');
 
     document.getElementById('infoTunggu').classList.remove('hidden');
-    let sisa = 30;
-    let hitung = setInterval(()=>{ sisa--; document.getElementById('detik').textContent = sisa; if(sisa<=0) { clearInterval(hitung); tampilkanStruk(); } }, 1000);
+    let sisa=30,hitung=setInterval(()=>{sisa--;document.getElementById('detik').textContent=sisa;if(sisa<=0){clearInterval(hitung);tampilStruk();}},1000);
 }
-function simpanKeRiwayat() {
-    let riwayat = JSON.parse(localStorage.getItem('riwayatPesanan') || '[]');
-    riwayat.push({kode:data.kode, game:data.game, item:data.item, idGame:data.idGame, namaAkun:data.namaAkun, harga:data.harga, status:data.status, waktu:data.waktu});
-    localStorage.setItem('riwayatPesanan', JSON.stringify(riwayat));
+
+function simpanRiwayat(){
+    let riwayat=JSON.parse(localStorage.getItem('riwayat')||'[]');
+    riwayat.push({kode:data.kode,game:data.game,item:data.item,idGame:data.idGame,namaAkun:data.namaAkun,harga:data.harga,status:'LUNAS',waktu:data.waktu});
+    localStorage.setItem('riwayat',JSON.stringify(riwayat));
 }
-function tampilkanStruk() {
-    simpanKeRiwayat();
-    document.getElementById('kode').textContent = data.kode;
-    document.getElementById('g').textContent = data.game;
-    document.getElementById('i').textContent = data.item;
-    document.getElementById('idg').textContent = data.idGame;
-    document.getElementById('nama').textContent = data.namaAkun;
-    document.getElementById('hrg').textContent = data.harga;
-    document.getElementById('waktu').textContent = data.waktu;
+
+function tampilStruk(){
+    simpanRiwayat();
+    document.getElementById('kode').textContent=data.kode;
+    document.getElementById('g').textContent=data.game;
+    document.getElementById('i').textContent=data.item;
+    document.getElementById('idg').textContent=data.idGame;
+    document.getElementById('nama').textContent=data.namaAkun;
+    document.getElementById('hrg').textContent=data.harga;
+    document.getElementById('waktu').textContent=data.waktu;
     document.getElementById('boxStruk').classList.remove('hidden');
 }
-function tutupStruk() { document.getElementById('boxStruk').classList.add('hidden'); location.href='daftar-game.html'; }
+
+function tutupStruk(){document.getElementById('boxStruk').classList.add('hidden');location.href='daftar-game.html';}
 </script>
 </body>
 </html>
