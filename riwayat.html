@@ -3,18 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riwayat - Xdnry777</title>
+    <title>Riwayat Pesanan - Xdnry777</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-    <script>tailwind.config={theme:{extend:{colors:{gelap:'#121212',kartu:'#1E1E1E',ungu:'#8B5CF6'}}}}</script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gelap: '#121212',
+                        kartu: '#1E1E1E',
+                        ungu: '#8B5CF6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .struk-box { background: #fff; color: #000; }
+    </style>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
 <div class="max-w-md mx-auto">
-    <div class="flex items-center mb-6">
-        <a href="daftar-game.html" class="text-gray-300 hover:text-ungu text-xl mr-3"><i class="fa fa-arrow-left"></i></a>
+    <!-- NAVIGASI -->
+    <div class="flex justify-between items-center mb-6">
+        <button onclick="bukaMenu()" class="text-gray-300 hover:text-ungu text-xl">
+            <i class="fa fa-bars"></i>
+        </button>
         <h1 class="text-xl font-bold text-ungu">Riwayat Pesanan</h1>
+        <div></div>
     </div>
 
+    <!-- DAFTAR RIWAYAT -->
     <div id="daftarRiwayat" class="space-y-3"></div>
     <div id="kosong" class="text-center text-gray-400 py-10 hidden">
         <i class="fa fa-history text-4xl mb-3"></i>
@@ -22,27 +42,104 @@
     </div>
 </div>
 
-<script>
-if(!localStorage.getItem('akunAktif')){alert('⚠️ Wajib Masuk!');location.href='masuk.html';}
-
-let riwayat=JSON.parse(localStorage.getItem('riwayat')||'[]');
-let wadah=document.getElementById('daftarRiwayat');
-
-if(riwayat.length===0){document.getElementById('kosong').classList.remove('hidden');}
-else{riwayat.reverse().forEach(r=>{
-    let el=document.createElement('div');
-    el.className='bg-kartu p-4 rounded-xl border border-gray-700';
-    el.innerHTML=`
-        <div class="flex justify-between items-center mb-2">
-            <span class="font-bold">${r.game}</span>
-            <span class="text-green-400 text-sm">${r.status}</span>
+<!-- MODAL STRUK LENGKAP -->
+<div id="modalStruk" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[9999] hidden p-4">
+    <div class="struk-box p-5 rounded-lg w-full max-w-sm">
+        <div class="text-center border-b pb-3 mb-3">
+            <h2 class="text-xl font-bold">Xdnry777 STORE</h2>
+            <p class="text-xs text-gray-500">Top Up Terpercaya</p>
         </div>
-        <p class="text-gray-400 text-sm">${r.item}</p>
-        <p class="text-ungu font-bold">${r.harga}</p>
-        <p class="text-xs text-gray-500 mt-2">${r.waktu} | ${r.kode}</p>
-    `;
-    wadah.appendChild(el);
-});}
+        <div class="space-y-1 text-sm">
+            <div class="flex justify-between"><span>Kode Struk:</span><span class="font-mono font-bold" id="sKode">-</span></div>
+            <div class="flex justify-between"><span>Game:</span><span id="sGame">-</span></div>
+            <div class="flex justify-between"><span>Item:</span><span id="sItem">-</span></div>
+            <div class="flex justify-between"><span>ID Akun:</span><span id="sId">-</span></div>
+            <div class="flex justify-between"><span>Nama Akun:</span><span id="sNama">-</span></div>
+            <div class="flex justify-between font-bold border-t pt-2 mt-2"><span>Status:</span><span class="text-green-600">LUNAS</span></div>
+            <div class="flex justify-between font-bold text-lg"><span>Total:</span><span id="sHarga">-</span></div>
+            <div class="flex justify-between text-xs text-gray-500 mt-2"><span>Waktu:</span><span id="sWaktu">-</span></div>
+        </div>
+        <p class="text-center text-xs text-gray-400 mt-4">Terima Kasih telah berbelanja!</p>
+        <div class="mt-4">
+            <button onclick="tutupStruk()" class="w-full bg-ungu py-2 rounded font-bold text-white">Tutup</button>
+        </div>
+    </div>
+</div>
+
+<!-- MENU SAMPING -->
+<div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4 transform -translate-x-full transition-all">
+    <div class="flex justify-between items-center mb-6">
+        <span class="text-xl font-bold text-ungu">Xdnry777</span>
+        <button onclick="tutupMenu()" class="text-2xl text-gray-300 hover:text-white">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <nav class="space-y-3">
+        <a href="index.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-home mr-2"></i> Beranda</a>
+        <a href="daftar-game.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-gamepad mr-2"></i> Daftar Game</a>
+        <a href="riwayat.html" class="block py-2 border-b border-gray-700 text-ungu"><i class="fa fa-list-alt mr-2"></i> Riwayat Pesanan</a>
+        <a href="cara-beli.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-credit-card mr-2"></i> Cara Beli</a>
+        <a href="masuk.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-user mr-2"></i> Akun Saya</a>
+        <a href="#" onclick="keluar(event)" class="block py-2 hover:text-ungu"><i class="fa fa-sign-out mr-2"></i> Keluar Akun</a>
+    </nav>
+</div>
+<div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+<script>
+// CEK LOGIN
+if(!localStorage.getItem('akunAktif')){
+    alert('⚠️ Wajib Masuk Akun Dulu!');
+    location.href='masuk.html';
+}
+
+// FUNGSI MENU
+function bukaMenu(){document.getElementById('menuSamping').classList.remove('-translate-x-full');document.getElementById('latarTutup').classList.remove('hidden');}
+function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
+function keluar(e){e.preventDefault();if(confirm('Yakin keluar?')){localStorage.removeItem('akunAktif');location.href='index.html';}}
+
+// TAMPILKAN RIWAYAT
+let riwayat = JSON.parse(localStorage.getItem('riwayat') || '[]');
+let wadah = document.getElementById('daftarRiwayat');
+
+if(riwayat.length === 0){
+    document.getElementById('kosong').classList.remove('hidden');
+} else {
+    riwayat.reverse().forEach((r, indeks) => {
+        let kotak = document.createElement('div');
+        kotak.className = 'bg-kartu p-4 rounded-xl border border-gray-700 cursor-pointer hover:border-ungu transition-all';
+        kotak.onclick = () => bukaStruk(r); // KLIK UNTUK BUKA STRUK
+        kotak.innerHTML = `
+            <div class="flex justify-between items-center mb-2">
+                <span class="font-bold">${r.game}</span>
+                <span class="text-green-400 text-sm font-bold">${r.status}</span>
+            </div>
+            <p class="text-gray-400 text-sm">${r.item}</p>
+            <p class="text-ungu font-bold text-lg">${r.harga}</p>
+            <p class="text-xs text-gray-500 mt-2">
+                <i class="fa fa-clock-o mr-1"></i> ${r.waktu}
+            </p>
+            <p class="text-xs text-gray-600 mt-1">Kode: ${r.kode}</p>
+            <p class="text-xs text-ungu mt-2">👉 Klik untuk lihat struk lengkap</p>
+        `;
+        wadah.appendChild(kotak);
+    });
+}
+
+// FUNGSI BUKA STRUK LENGKAP
+function bukaStruk(data){
+    document.getElementById('sKode').textContent = data.kode;
+    document.getElementById('sGame').textContent = data.game;
+    document.getElementById('sItem').textContent = data.item;
+    document.getElementById('sId').textContent = data.idGame;
+    document.getElementById('sNama').textContent = data.namaAkun;
+    document.getElementById('sHarga').textContent = data.harga;
+    document.getElementById('sWaktu').textContent = data.waktu;
+    document.getElementById('modalStruk').classList.remove('hidden');
+}
+
+function tutupStruk(){
+    document.getElementById('modalStruk').classList.add('hidden');
+}
 </script>
 </body>
 </html>
