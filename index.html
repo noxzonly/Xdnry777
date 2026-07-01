@@ -3,104 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beranda - Xdnry777</title>
+    <title>Xdnry777</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        gelap: '#121212',
-                        kartu: '#1E1E1E',
-                        ungu: '#8B5CF6'
-                    }
-                }
-            }
-        }
+        tailwind.config = {theme:{extend:{colors:{gelap:'#121212', kartu:'#1E1E1E', ungu:'#8B5CF6'}}}}
     </script>
 </head>
-<body class="bg-gelap text-white min-h-screen">
-
-<!-- TOMBOL BUKA MENU -->
-<button onclick="bukaMenu()" class="fixed top-4 left-4 z-40 text-2xl text-gray-300 hover:text-ungu">
-    <i class="fa fa-bars"></i>
-</button>
-
-<!-- MENU SAMPING -->
-<div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4 transform -translate-x-full transition-transform duration-300">
-    <div class="flex justify-between items-center mb-6">
-        <span class="text-xl font-bold text-ungu">Xdnry777</span>
-        <button onclick="tutupMenu()" class="text-2xl text-gray-300 hover:text-white">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-
-    <nav class="space-y-3">
-        <a href="index.html" class="block py-2 border-b border-gray-700 text-ungu">
-            <i class="fa fa-home mr-2"></i> Beranda
-        </a>
-        <a href="daftar-game.html" class="block py-2 border-b border-gray-700 hover:text-ungu">
-            <i class="fa fa-gamepad mr-2"></i> Daftar Game
-        </a>
-        <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu">
-            <i class="fa fa-list-alt mr-2"></i> Riwayat Pesanan
-        </a>
-        <a href="#" class="block py-2 border-b border-gray-700 hover:text-ungu">
-            <i class="fa fa-credit-card mr-2"></i> Cara Beli
-        </a>
-        <a href="#" class="block py-2 border-b border-gray-700 hover:text-ungu">
-            <i class="fa fa-user mr-2"></i> Masuk / Daftar
-        </a>
-        <a href="#" class="block py-2 hover:text-ungu">
-            <i class="fa fa-sign-out mr-2"></i> Keluar Akun
-        </a>
-    </nav>
-</div>
-
-<!-- LATAR BELAKANG GELAP SAAT MENU TERBUKA -->
-<div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
-
-<!-- KONTEN UTAMA -->
-<div class="max-w-md mx-auto p-6 pt-20 text-center">
-    <h1 class="text-3xl font-bold mb-2"><span class="text-ungu">Xdnry777</span> STORE</h1>
-    <p class="text-gray-400 mb-8">Top Up Game Cepat, Murah & Terpercaya</p>
-
-    <a href="daftar-game.html" class="inline-block w-full bg-ungu py-4 rounded-xl text-lg font-bold mb-6 hover:bg-ungu/80">
-        <i class="fa fa-shopping-cart mr-2"></i> MULAI BELI
+<body class="bg-gelap text-white min-h-screen flex items-center justify-center p-4">
+<div class="text-center max-w-md">
+    <div class="text-6xl text-ungu mb-4"><i class="fa fa-bolt"></i></div>
+    <h1 class="text-3xl font-bold mb-2">Xdnry777 <span class="text-ungu">
+    <p class="text-gray-400 mb-8">Top Up Game Terpercaya, Cepat & Aman</p>
+    
+    <a href="daftar-game.html" class="block w-full bg-ungu py-3 rounded-xl font-bold text-lg hover:bg-ungu/80 mb-3">
+        <i class="fa fa-shopping-cart mr-2"></i> Mulai Top Up
     </a>
-
-    <div class="grid grid-cols-2 gap-4 mt-8">
-        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
-            <i class="fa fa-bolt text-yellow-400 text-2xl mb-2"></i>
-            <p class="font-bold">Proses Cepat</p>
-        </div>
-        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
-            <i class="fa fa-shield text-green-400 text-2xl mb-2"></i>
-            <p class="font-bold">Aman Terpercaya</p>
-        </div>
-        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
-            <i class="fa fa-tag text-blue-400 text-2xl mb-2"></i>
-            <p class="font-bold">Harga Termurah</p>
-        </div>
-        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
-            <i class="fa fa-headphones text-purple-400 text-2xl mb-2"></i>
-            <p class="font-bold">Layanan 24 Jam</p>
-        </div>
-    </div>
+    <a href="masuk.html" class="block w-full bg-kartu border border-gray-600 py-3 rounded-xl font-bold hover:border-ungu">
+        <i class="fa fa-user mr-2"></i> Masuk / Daftar
+    </a>
 </div>
-
-<script>
-function bukaMenu() {
-    document.getElementById('menuSamping').classList.remove('-translate-x-full');
-    document.getElementById('latarTutup').classList.remove('hidden');
-}
-
-function tutupMenu() {
-    document.getElementById('menuSamping').classList.add('-translate-x-full');
-    document.getElementById('latarTutup').classList.add('hidden');
-}
-</script>
-
 </body>
 </html>
