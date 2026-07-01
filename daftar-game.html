@@ -9,7 +9,7 @@
     <script>
         tailwind.config = { theme: { extend: { colors: { gelap:'#121212', kartu:'#1E1E1E', ungu:'#8B5CF6' } } } }
     </script>
-    <style>.logo-game{width:48px;height:48px;border-radius:12px;object-fit:cover;flex-shrink:0;}</style>
+    <style>.logo{width:48px;height:48px;border-radius:12px;object-fit:cover;flex-shrink:0;}</style>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
 <div class="max-w-md mx-auto">
@@ -18,17 +18,15 @@
         <h1 class="text-xl font-bold text-ungu">Pilih Game</h1>
         <div></div>
     </div>
-    <div id="wadahGame" class="space-y-4"></div>
+    <div id="wadah" class="space-y-4"></div>
 </div>
 
 <div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4 transform -translate-x-full transition-all">
-    <div class="flex justify-between items-center mb-6"><span class="text-xl font-bold text-ungu">Xdnry777</span><button onclick="tutupMenu()" class="text-2xl text-gray-300 hover:text-white"><i class="fa fa-times"></i></button></div>
+    <div class="flex justify-between items-center mb-6"><span class="text-xl font-bold text-ungu">Xdnry777</span><button onclick="tutupMenu()" class="text-2xl text-gray-300"><i class="fa fa-times"></i></button></div>
     <nav class="space-y-3">
         <a href="index.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-home mr-2"></i> Beranda</a>
         <a href="daftar-game.html" class="block py-2 border-b border-gray-700 text-ungu"><i class="fa fa-gamepad mr-2"></i> Daftar Game</a>
-        <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-list-alt mr-2"></i> Riwayat Pesanan</a>
-        <a href="cara-beli.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-credit-card mr-2"></i> Cara Beli</a>
-        <a href="masuk.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-user mr-2"></i> Akun Saya</a>
+        <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-list-alt mr-2"></i> Riwayat</a>
         <a href="admin.html" id="menuAdmin" class="hidden block py-2 border-b border-gray-700 text-red-500"><i class="fa fa-cog mr-2"></i> Panel Admin</a>
     </nav>
 </div>
@@ -39,27 +37,24 @@ function bukaMenu(){document.getElementById('menuSamping').classList.remove('-tr
 function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
 
 window.onload = function(){
-    let akun = JSON.parse(localStorage.getItem('akunAktif')||'{}');
-    if(akun.tipe==='admin') document.getElementById('menuAdmin').classList.remove('hidden');
+    if(JSON.parse(localStorage.getItem('akunAktif')||'{}').user==='admin') document.getElementById('menuAdmin').classList.remove('hidden');
 
-    let semuaItem = JSON.parse(localStorage.getItem('daftarItemLengkap') || '[]');
-    let wadah = document.getElementById('wadahGame'); wadah.innerHTML='';
+    let semua = JSON.parse(localStorage.getItem('semuaItem')||'[]');
+    let wadah = document.getElementById('wadah'); wadah.innerHTML='';
 
-    if(semuaItem.length === 0){
-        wadah.innerHTML = `<p class="text-center text-gray-400">Belum ada item yang ditambahkan</p>`;
-        return;
-    }
+    if(semua.length===0){wadah.innerHTML='<p class="text-center text-gray-400">Belum ada item</p>';return;}
 
-    semuaItem.forEach(g=>{
+    semua.forEach(i=>{
         let kotak = document.createElement('div');
-        kotak.className = 'bg-kartu p-4 rounded-xl border border-gray-700 hover:border-ungu/50 transition-all cursor-pointer flex items-center gap-3';
+        kotak.className = 'bg-kartu p-4 rounded-xl border border-gray-700 hover:border-ungu/50 flex items-center gap-3 cursor-pointer';
         kotak.innerHTML = `
-            <img src="${g.logo}" alt="${g.game}" class="logo-game">
-            <div class="flex-1"><h3 class="font-bold text-lg">${g.game}</h3><p class="text-gray-400 text-sm">${g.item}</p></div>
-            <span class="text-ungu font-bold text-xl">${g.harga}</span>
+            <img src="${i.logo}" class="logo">
+            <div class="flex-1"><h3 class="font-bold">${i.game}</h3><p class="text-gray-400 text-sm">${i.item}</p></div>
+            <span class="text-ungu font-bold">${i.harga}</span>
         `;
         kotak.onclick = () => {
-            localStorage.setItem('pilihanBeli', JSON.stringify({game:g.game,item:g.item,harga:g.harga}));
+            localStorage.removeItem('pilihSekarang');
+            localStorage.setItem('pilihSekarang', JSON.stringify({game:i.game,item:i.item,harga:i.harga}));
             location.href='bayar.html';
         };
         wadah.appendChild(kotak);
