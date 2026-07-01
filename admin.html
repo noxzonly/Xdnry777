@@ -32,24 +32,44 @@
     </div>
 
     <div class="space-y-4">
+        <!-- ✅ TAMBAH PILIHAN BARU -->
         <div class="bg-kartu p-4 rounded-xl border border-gray-700">
-            <h3 class="font-bold text-lg mb-3">✏️ Ubah Harga Game</h3>
-            
+            <h3 class="font-bold text-lg mb-3">➕ Tambah Pilihan Item Baru</h3>
             <div class="space-y-3 mb-4">
-                <input type="text" id="namaGame" placeholder="Nama Game: Mobile Legends" class="w-full bg-gelap p-3 rounded-lg outline-none">
-                <input type="text" id="itemGame" placeholder="Item: 25 Diamond" class="w-full bg-gelap p-3 rounded-lg outline-none">
-                <input type="number" id="hargaBaru" placeholder="Harga Baru: 5000" class="w-full bg-gelap p-3 rounded-lg outline-none">
+                <select id="pilihGame" class="w-full bg-gelap p-3 rounded-lg outline-none">
+                    <option value="">-- Pilih Nama Game --</option>
+                    <option value="Mobile Legends">Mobile Legends</option>
+                    <option value="Free Fire">Free Fire</option>
+                    <option value="PUBG Mobile">PUBG Mobile</option>
+                    <option value="Valorant">Valorant</option>
+                    <option value="Genshin Impact">Genshin Impact</option>
+                    <option value="Honor of Kings">Honor of Kings</option>
+                </select>
+                <input type="text" id="itemBaru" placeholder="Nama Item: 100 Diamond / 100 UC" class="w-full bg-gelap p-3 rounded-lg outline-none">
+                <input type="number" id="hargaBaru" placeholder="Harga: 15000" class="w-full bg-gelap p-3 rounded-lg outline-none">
             </div>
-            
-            <button onclick="ubahHarga()" class="w-full bg-ungu py-3 rounded-lg font-bold hover:bg-ungu/80">
-                <i class="fa fa-save mr-1"></i> Simpan Perubahan
+            <button onclick="tambahItem()" class="w-full bg-ungu py-3 rounded-lg font-bold hover:bg-ungu/80">
+                <i class="fa fa-plus-circle mr-1"></i> Tambahkan Item
+            </button>
+        </div>
+
+        <!-- ✅ UBAH HARGA YANG SUDAH ADA -->
+        <div class="bg-kartu p-4 rounded-xl border border-gray-700">
+            <h3 class="font-bold text-lg mb-3">✏️ Ubah Harga</h3>
+            <div class="space-y-3 mb-4">
+                <input type="text" id="namaGameUbah" placeholder="Nama Game" class="w-full bg-gelap p-3 rounded-lg outline-none">
+                <input type="text" id="itemUbah" placeholder="Nama Item" class="w-full bg-gelap p-3 rounded-lg outline-none">
+                <input type="number" id="hargaGanti" placeholder="Harga Baru" class="w-full bg-gelap p-3 rounded-lg outline-none">
+            </div>
+            <button onclick="ubahHargaLama()" class="w-full bg-yellow-600 py-3 rounded-lg font-bold hover:bg-yellow-600/80">
+                <i class="fa fa-pencil mr-1"></i> Simpan Perubahan
             </button>
         </div>
 
         <div class="bg-kartu p-4 rounded-xl border border-gray-700">
-            <h3 class="font-bold text-lg mb-3">📋 Daftar Harga Diubah</h3>
-            <div id="daftarHarga" class="space-y-2 text-sm">
-                <p class="text-gray-400">Belum ada perubahan</p>
+            <h3 class="font-bold text-lg mb-3">📋 Semua Item Toko</h3>
+            <div id="daftarItem" class="space-y-2 text-sm">
+                <p class="text-gray-400">Memuat data...</p>
             </div>
         </div>
     </div>
@@ -77,40 +97,97 @@
 window.onload = function(){
     const aktif = JSON.parse(localStorage.getItem('akunAktif') || '{}');
     if(aktif.user !== 'admin'){ alert("Hanya Admin!"); location.href="index.html"; return; }
-    tampilDaftar();
+    tampilSemua();
 };
 function bukaMenu(){document.getElementById('menuSamping').classList.remove('-translate-x-full');document.getElementById('latarTutup').classList.remove('hidden');}
 function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
 
-function ubahHarga(){
-    let game = document.getElementById('namaGame').value.trim();
-    let item = document.getElementById('itemGame').value.trim();
+// DAFTAR LOGO UNTUK GAME
+const logoGame = {
+    'Mobile Legends': 'https://i.imgur.com/6XZpKqG.png',
+    'Free Fire': 'https://i.imgur.com/9cXQZpD.png',
+    'PUBG Mobile': 'https://i.imgur.com/rdcXjwM.png',
+    'Valorant': 'https://i.imgur.com/9sD2fQm.png',
+    'Genshin Impact': 'https://i.imgur.com/5tG9aXj.png',
+    'Honor of Kings': 'https://i.imgur.com/8kD7sLz.png'
+};
+
+// FUNGSI TAMBAH ITEM BARU
+function tambahItem(){
+    let game = document.getElementById('pilihGame').value;
+    let item = document.getElementById('itemBaru').value.trim();
     let harga = document.getElementById('hargaBaru').value.trim();
-    if(!game||!item||!harga){alert("Lengkapi data!");return;}
 
-    let data = JSON.parse(localStorage.getItem('perubahanHarga') || '{}');
-    // Kunci unik: gabung nama + item biar pasti cocok
+    if(!game || !item || !harga){ alert("Lengkapi semua data!"); return; }
+
+    let semuaItem = JSON.parse(localStorage.getItem('daftarItemLengkap') || '[]');
     let kunci = game.toLowerCase() + "||" + item.toLowerCase();
-    data[kunci] = "Rp " + Number(harga).toLocaleString('id-ID');
 
-    localStorage.setItem('perubahanHarga', JSON.stringify(data));
-    alert("✅ BERHASIL DIUBAH! Cek di Daftar Game sekarang!");
+    // Cek kalau sudah ada
+    let cek = semuaItem.find(i => i.kunci === kunci);
+    if(cek){ alert("Item ini sudah ada! Silakan ubah harganya saja."); return; }
 
-    document.getElementById('namaGame').value='';
-    document.getElementById('itemGame').value='';
-    document.getElementById('hargaBaru').value='';
-    tampilDaftar();
+    semuaItem.push({
+        kunci: kunci,
+        game: game,
+        item: item,
+        harga: "Rp " + Number(harga).toLocaleString('id-ID'),
+        logo: logoGame[game]
+    });
+
+    localStorage.setItem('daftarItemLengkap', JSON.stringify(semuaItem));
+    alert("✅ Item baru berhasil ditambahkan!");
+
+    document.getElementById('pilihGame').value = '';
+    document.getElementById('itemBaru').value = '';
+    document.getElementById('hargaBaru').value = '';
+    tampilSemua();
 }
 
-function tampilDaftar(){
-    let data = JSON.parse(localStorage.getItem('perubahanHarga') || '{}');
-    let wadah = document.getElementById('daftarHarga');
+// FUNGSI UBAH HARGA
+function ubahHargaLama(){
+    let game = document.getElementById('namaGameUbah').value.trim();
+    let item = document.getElementById('itemUbah').value.trim();
+    let harga = document.getElementById('hargaGanti').value.trim();
+
+    if(!game || !item || !harga){ alert("Lengkapi data!"); return; }
+
+    let semuaItem = JSON.parse(localStorage.getItem('daftarItemLengkap') || '[]');
+    let kunci = game.toLowerCase() + "||" + item.toLowerCase();
+    let idx = semuaItem.findIndex(i => i.kunci === kunci);
+
+    if(idx === -1){ alert("Data tidak ditemukan!"); return; }
+
+    semuaItem[idx].harga = "Rp " + Number(harga).toLocaleString('id-ID');
+    localStorage.setItem('daftarItemLengkap', JSON.stringify(semuaItem));
+    alert("✅ Harga berhasil diubah!");
+
+    document.getElementById('namaGameUbah').value = '';
+    document.getElementById('itemUbah').value = '';
+    document.getElementById('hargaGanti').value = '';
+    tampilSemua();
+}
+
+// TAMPILKAN DAFTAR DI ADMIN
+function tampilSemua(){
+    let data = JSON.parse(localStorage.getItem('daftarItemLengkap') || '[]');
+    let wadah = document.getElementById('daftarItem');
     wadah.innerHTML = '';
-    if(Object.keys(data).length === 0){ wadah.innerHTML='<p class="text-gray-400">Belum ada perubahan</p>'; return; }
-    for(let k in data){
-        let [g,i] = k.split("||");
-        wadah.innerHTML += `<div class="p-2 bg-gelap rounded"><b>${g}</b> · ${i} → <span class="text-ungu font-bold">${data[k]}</span></div>`;
+
+    if(data.length === 0){
+        wadah.innerHTML = '<p class="text-gray-400">Belum ada item yang ditambahkan</p>';
+        return;
     }
+
+    data.forEach(d => {
+        wadah.innerHTML += `
+        <div class="flex justify-between items-center p-2 bg-gelap rounded-lg">
+            <div class="text-sm">
+                <b>${d.game}</b> · ${d.item}
+            </div>
+            <span class="text-ungu font-bold">${d.harga}</span>
+        </div>`;
+    });
 }
 </script>
 </body>
