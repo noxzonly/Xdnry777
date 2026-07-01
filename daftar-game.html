@@ -38,37 +38,29 @@
 function bukaMenu(){document.getElementById('menuSamping').classList.remove('-translate-x-full');document.getElementById('latarTutup').classList.remove('hidden');}
 function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
 
-const daftarGame = [
-    {game:'Mobile Legends',item:'25 Diamond',hargaAwal:'Rp 4.200',logo:'https://i.imgur.com/6XZpKqG.png'},
-    {game:'Mobile Legends',item:'50 Diamond',hargaAwal:'Rp 8.400',logo:'https://i.imgur.com/6XZpKqG.png'},
-    {game:'Free Fire',item:'70 Diamond',hargaAwal:'Rp 10.000',logo:'https://i.imgur.com/9cXQZpD.png'},
-    {game:'Free Fire',item:'140 Diamond',hargaAwal:'Rp 20.000',logo:'https://i.imgur.com/9cXQZpD.png'},
-    {game:'PUBG Mobile',item:'60 UC',hargaAwal:'Rp 15.000',logo:'https://i.imgur.com/rdcXjwM.png'},
-    {game:'Valorant',item:'475 VP',hargaAwal:'Rp 75.000',logo:'https://i.imgur.com/9sD2fQm.png'},
-    {game:'Genshin Impact',item:'60 Genesis Crystal',hargaAwal:'Rp 15.000',logo:'https://i.imgur.com/5tG9aXj.png'},
-    {game:'Honor of Kings',item:'288 Token',hargaAwal:'Rp 10.000',logo:'https://i.imgur.com/8kD7sLz.png'}
-];
-
 window.onload = function(){
     let akun = JSON.parse(localStorage.getItem('akunAktif')||'{}');
     if(akun.tipe==='admin') document.getElementById('menuAdmin').classList.remove('hidden');
 
-    let ubahan = JSON.parse(localStorage.getItem('perubahanHarga')||'{}');
+    // Ambil SEMUA item yang sudah ditambahkan admin
+    let semuaItem = JSON.parse(localStorage.getItem('daftarItemLengkap') || '[]');
     let wadah = document.getElementById('wadahGame'); wadah.innerHTML='';
 
-    daftarGame.forEach(g=>{
-        let kunci = g.game.toLowerCase() + "||" + g.item.toLowerCase();
-        let hargaAkhir = ubahan[kunci] || g.hargaAwal;
+    if(semuaItem.length === 0){
+        wadah.innerHTML = `<p class="text-center text-gray-400">Belum ada item yang ditambahkan Admin</p>`;
+        return;
+    }
 
+    semuaItem.forEach(g=>{
         let kotak = document.createElement('div');
         kotak.className = 'bg-kartu p-4 rounded-xl border border-gray-700 hover:border-ungu/50 transition-all cursor-pointer flex items-center gap-3';
         kotak.innerHTML = `
             <img src="${g.logo}" alt="${g.game}" class="logo-game">
             <div class="flex-1"><h3 class="font-bold text-lg">${g.game}</h3><p class="text-gray-400 text-sm">${g.item}</p></div>
-            <span class="text-ungu font-bold text-xl">${hargaAkhir}</span>
+            <span class="text-ungu font-bold text-xl">${g.harga}</span>
         `;
         kotak.onclick = () => {
-            localStorage.setItem('pilihanBeli', JSON.stringify({game:g.game,item:g.item,harga:hargaAkhir}));
+            localStorage.setItem('pilihanBeli', JSON.stringify({game:g.game,item:g.item,harga:g.harga}));
             location.href='beli.html';
         };
         wadah.appendChild(kotak);
