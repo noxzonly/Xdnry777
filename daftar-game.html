@@ -7,39 +7,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        gelap: '#121212',
-                        kartu: '#1E1E1E',
-                        ungu: '#8B5CF6'
-                    }
-                }
-            }
-        }
+        tailwind.config = {theme:{extend:{colors:{gelap:'#121212', kartu:'#1E1E1E', ungu:'#8B5CF6'}}}}
     </script>
-    <style>
-        button, a, label {
-            cursor: pointer !important;
-            position: relative !important;
-            z-index: 10 !important;
-            pointer-events: auto !important;
-        }
-        * {
-            pointer-events: auto !important;
-        }
-    </style>
+    <style>button,a,label{cursor:pointer!important;position:relative!important;z-index:10!important;pointer-events:auto!important;}*{pointer-events:auto!important;}</style>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
-
 <div class="max-w-md mx-auto">
-    <!-- NAVIGASI -->
     <div class="flex justify-between items-center mb-6">
-        <button onclick="bukaMenu()" class="text-gray-300 hover:text-ungu text-xl">
-            <i class="fa fa-bars"></i>
-        </button>
-        <h1 class="text-xl font-bold"><span class="text-ungu">Pilih Game Kamu</span></h1>
+        <button onclick="bukaMenu()" class="text-gray-300 hover:text-ungu text-xl"><i class="fa fa-bars"></i></button>
+        <h1 class="text-xl font-bold"><span class="text-ungu">Pilih Game</span></h1>
         <div></div>
     </div>
 
@@ -238,81 +214,40 @@
     </div>
 </div>
 
-<!-- MENU SAMPING DIPERBAIKI -->
-<div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4 transform -translate-x-full transition-transform duration-300">
+<!-- MENU SAMPING -->
+<div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4 transform -translate-x-full transition-all">
     <div class="flex justify-between items-center mb-6">
         <span class="text-xl font-bold text-ungu">Xdnry777</span>
-        <button onclick="tutupMenu()" class="text-2xl text-gray-300 hover:text-white">
-            <i class="fa fa-times"></i>
-        </button>
+        <button onclick="tutupMenu()" class="text-2xl text-gray-300 hover:text-white"><i class="fa fa-times"></i></button>
     </div>
     <nav class="space-y-3">
-        <a href="index.html" class="block py-2 border-b border-gray-700 hover:text-ungu transition">
-            <i class="fa fa-home mr-2"></i> Beranda
-        </a>
-        <a href="daftar-game.html" class="block py-2 border-b border-gray-700 hover:text-ungu transition">
-            <i class="fa fa-gamepad mr-2"></i> Daftar Game
-        </a>
-        <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu transition">
-            <i class="fa fa-list-alt mr-2"></i> Riwayat Pesanan
-        </a>
-        <a href="cara-beli.html" class="block py-2 border-b border-gray-700 hover:text-ungu transition">
-            <i class="fa fa-credit-card mr-2"></i> Cara Beli
-        </a>
-        <a href="masuk.html" class="block py-2 border-b border-gray-700 hover:text-ungu transition">
-            <i class="fa fa-user mr-2"></i> Masuk / Daftar
-        </a>
-        <a href="#" onclick="konfirmasiKeluar(event)" class="block py-2 hover:text-ungu transition">
-            <i class="fa fa-sign-out mr-2"></i> Keluar Akun
-        </a>
+        <a href="index.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-home mr-2"></i> Beranda</a>
+        <a href="daftar-game.html" class="block py-2 border-b border-gray-700 text-ungu"><i class="fa fa-gamepad mr-2"></i> Daftar Game</a>
+        <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-list-alt mr-2"></i> Riwayat Pesanan</a>
+        <a href="cara-beli.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-credit-card mr-2"></i> Cara Beli</a>
+        <a href="masuk.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-user mr-2"></i> Akun Saya</a>
+        <a href="#" onclick="keluar(event)" class="block py-2 hover:text-ungu"><i class="fa fa-sign-out mr-2"></i> Keluar Akun</a>
     </nav>
 </div>
 <div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
 <script>
-function bukaMenu() {
-    document.getElementById('menuSamping').classList.remove('-translate-x-full');
-    document.getElementById('latarTutup').classList.remove('hidden');
-}
-function tutupMenu() {
-    document.getElementById('menuSamping').classList.add('-translate-x-full');
-    document.getElementById('latarTutup').classList.add('hidden');
-}
+function bukaMenu(){document.getElementById('menuSamping').classList.remove('-translate-x-full');document.getElementById('latarTutup').classList.remove('hidden');}
+function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
+function keluar(e){e.preventDefault();if(confirm('Yakin keluar?')){localStorage.removeItem('akunAktif');location.href='index.html';}}
 
-// Fungsi tambahan untuk menu Keluar Akun
-function konfirmasiKeluar(e) {
-    e.preventDefault();
-    if(confirm('Yakin ingin keluar dari akun?')) {
-        alert('Berhasil keluar!');
-        location.href = 'index.html';
-    }
-}
+// 🔒 WAJIB LOGIN
+function pilihNominal(namaGame){
+    if(!localStorage.getItem('akunAktif')){alert('⚠️ Wajib Masuk/Daftar Akun Dulu!');location.href='masuk.html';return;}
 
-// Fungsi pilih nominal tetap sama seperti sebelumnya
-function pilihNominal(namaGame) {
     let namaInput;
-    switch(namaGame) {
-        case 'Mobile Legends': namaInput='ml'; break;
-        case 'Free Fire': namaInput='ff'; break;
-        case 'PUBG Mobile': namaInput='pubg'; break;
-        case 'Honor of Kings': namaInput='hok'; break;
-        case 'Genshin Impact': namaInput='genshin'; break;
-        case 'Valorant': namaInput='valorant'; break;
-    }
-
-    let pilih = document.querySelector(`input[name="${namaInput}"]:checked`);
-    if (!pilih) {
-        alert('⚠️ Pilih dulu nominal yang mau dibeli!');
-        return;
-    }
-
-    let [item, harga] = pilih.value.split('|');
-    localStorage.setItem('game', namaGame);
-    localStorage.setItem('item', item);
-    localStorage.setItem('harga', harga);
-    location.href = 'bayar.html';
+    switch(namaGame){case'Mobile Legends':namaInput='ml';break;case'Free Fire':namaInput='ff';break;case'PUBG Mobile':namaInput='pubg';break;case'Honor of Kings':namaInput='hok';break;case'Genshin Impact':namaInput='genshin';break;case'Valorant':namaInput='valorant';break;}
+    let pilih=document.querySelector(`input[name="${namaInput}"]:checked`);
+    if(!pilih){alert('Pilih nominal dulu!');return;}
+    let [item,harga]=pilih.value.split('|');
+    localStorage.setItem('game',namaGame);localStorage.setItem('item',item);localStorage.setItem('harga',harga);
+    location.href='bayar.html';
 }
 </script>
-
 </body>
 </html>
