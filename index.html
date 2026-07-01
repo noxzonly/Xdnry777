@@ -3,25 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xdnry777</title>
+    <title>Xdnry777 - Top Up Game Terpercaya</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script>
-        tailwind.config = {theme:{extend:{colors:{gelap:'#121212', kartu:'#1E1E1E', ungu:'#8B5CF6'}}}}
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gelap: '#121212',
+                        kartu: '#1E1E1E',
+                        ungu: '#8B5CF6'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
     </script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animasi-ungu { animation: float 2s ease-in-out infinite; }
+        .bayangan-ungu { box-shadow: 0 0 25px rgba(139, 92, 246, 0.35); }
+    </style>
 </head>
-<body class="bg-gelap text-white min-h-screen flex items-center justify-center p-4">
-<div class="text-center max-w-md">
-    <div class="text-6xl text-ungu mb-4"><i class="fa fa-bolt"></i></div>
-    <h1 class="text-3xl font-bold mb-2">Xdnry777 <span class="text-ungu">
-    <p class="text-gray-400 mb-8">Top Up Game Terpercaya, Cepat & Aman</p>
-    
-    <a href="daftar-game.html" class="block w-full bg-ungu py-3 rounded-xl font-bold text-lg text-white hover:bg-ungu/80 mb-3">
-    <i class="fa fa-shopping-cart mr-2"></i> Mulai Top Up
-    </a>
-    <a href="masuk.html" class="block w-full bg-kartu border border-gray-600 py-3 rounded-xl font-bold hover:border-ungu">
-        <i class="fa fa-user mr-2"></i> Masuk / Daftar
-    </a>
+<body class="bg-gelap text-white min-h-screen flex flex-col p-4">
+<div class="max-w-md mx-auto w-full flex-1 flex flex-col justify-center">
+
+    <!-- LOGO & JUDUL -->
+    <div class="text-center mb-8">
+        <div class="text-7xl text-ungu mb-4 animasi-ungu">
+            <i class="fa fa-bolt"></i>
+        </div>
+        <h1 class="text-3xl font-bold mb-2">
+            Xdnry777 <span class="text-ungu">STORE</span>
+        </h1>
+        <p class="text-gray-400 text-lg">Top Up Game Terpercaya, Cepat & Aman</p>
+    </div>
+
+    <!-- KOTAK KEUNGGULAN -->
+    <div class="grid grid-cols-3 gap-3 mb-8">
+        <div class="bg-kartu p-3 rounded-xl text-center border border-gray-700">
+            <div class="text-2xl text-ungu mb-1"><i class="fa fa-bolt"></i></div>
+            <p class="text-xs">Proses Kilat</p>
+        </div>
+        <div class="bg-kartu p-3 rounded-xl text-center border border-gray-700">
+            <div class="text-2xl text-ungu mb-1"><i class="fa fa-shield"></i></div>
+            <p class="text-xs">100% Aman</p>
+        </div>
+        <div class="bg-kartu p-3 rounded-xl text-center border border-gray-700">
+            <div class="text-2xl text-ungu mb-1"><i class="fa fa-whatsapp"></i></div>
+            <p class="text-xs">Layanan 24/7</p>
+        </div>
+    </div>
+
+    <!-- TOMBOL UTAMA -->
+    <div class="space-y-3 mb-8">
+        <a href="daftar-game.html" class="block w-full bg-ungu py-4 rounded-xl font-bold text-lg text-white hover:bg-ungu/80 bayangan-ungu transition-all transform hover:scale-[1.02]">
+            <i class="fa fa-shopping-cart mr-2"></i> Mulai Top Up
+        </a>
+        <a href="masuk.html" class="block w-full bg-kartu border border-gray-600 py-4 rounded-xl font-bold text-lg text-ungu hover:border-ungu hover:bg-kartu/80 transition-all">
+            <i class="fa fa-user mr-2"></i> Masuk / Daftar Akun
+        </a>
+    </div>
+
+    <!-- GAME POPULER -->
+    <div class="bg-kartu p-5 rounded-xl border border-gray-700 mb-6">
+        <h3 class="font-bold text-lg mb-4 text-center">🎮 Game Populer</h3>
+        <div class="grid grid-cols-3 gap-4">
+            <div class="text-center">
+                <div class="w-14 h-14 mx-auto bg-gelap rounded-xl flex items-center justify-center text-2xl mb-1">⚔️</div>
+                <p class="text-xs text-gray-400">MLBB</p>
+            </div>
+            <div class="text-center">
+                <div class="w-14 h-14 mx-auto bg-gelap rounded-xl flex items-center justify-center text-2xl mb-1">🔥</div>
+                <p class="text-xs text-gray-400">Free Fire</p>
+            </div>
+            <div class="text-center">
+                <div class="w-14 h-14 mx-auto bg-gelap rounded-xl flex items-center justify-center text-2xl mb-1">🔫</div>
+                <p class="text-xs text-gray-400">PUBG</p>
+            </div>
+            <div class="text-center">
+                <div class="w-14 h-14 mx-auto bg-gelap rounded-xl flex items-center justify-center text-2xl mb-1">⚡</div>
+                <p class="text-xs text-gray-400">Valorant</p>
+            </div>
+            <div class="text-center">
+                <div class="w-14 h-14 mx-auto bg-gelap rounded-xl flex items-center justify-center text-2xl mb-1">🌌</div>
+                <p class="text-xs text-gray-400">Genshin</p>
+            </div>
+            <div class="text-center">
+                <div class="w-14 h-14 mx-auto bg-gelap rounded-xl flex items-center justify-center text-2xl mb-1">👑</div>
+                <p class="text-xs text-gray-400">HoK</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- KONTAK BANTUAN -->
+    <div class="text-center text-gray-500 text-sm">
+        <p>Butuh Bantuan?</p>
+        <a href="https://wa.me/6285169935089" target="_blank" class="text-green-400 font-bold hover:text-green-300">
+            <i class="fa fa-whatsapp"></i> Hubungi Admin
+        </a>
+    </div>
+
 </div>
+
+<script>
+// Cek otomatis: kalau sudah login, tulisan tombol berubah
+window.onload = function() {
+    if(localStorage.getItem('akunAktif')) {
+        document.querySelector('a[href="masuk.html"]').innerHTML = '<i class="fa fa-user-circle mr-2"></i> Lihat Akun Saya';
+    }
+}
+</script>
+
 </body>
 </html>
