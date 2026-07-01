@@ -32,10 +32,8 @@
         <div></div>
     </div>
 
-    <!-- DAFTAR GAME & HARGA (OTOMATIS DARI ADMIN) -->
-    <div id="wadahGame" class="space-y-4">
-        <p class="text-center text-gray-400">Memuat data harga...</p>
-    </div>
+    <!-- DAFTAR GAME TETAP ADA -->
+    <div id="wadahGame" class="space-y-4"></div>
 
 </div>
 
@@ -59,56 +57,66 @@
 <div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
 <script>
+// FUNGSI MENU
 function bukaMenu(){document.getElementById('menuSamping').classList.remove('-translate-x-full');document.getElementById('latarTutup').classList.remove('hidden');}
 function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
 
-// TAMPILKAN HARGA YANG DIATUR ADMIN
+// 📋 DAFTAR GAME TETAP KAMU MILIKI (BISA DITAMBAH JIKA PERLU)
+const daftarGameDasar = [
+    { game: 'Mobile Legends', item: '25 Diamond', hargaAwal: 'Rp 4.200' },
+    { game: 'Mobile Legends', item: '50 Diamond', hargaAwal: 'Rp 8.400' },
+    { game: 'Free Fire', item: '70 Diamond', hargaAwal: 'Rp 10.000' },
+    { game: 'Free Fire', item: '140 Diamond', hargaAwal: 'Rp 20.000' },
+    { game: 'PUBG Mobile', item: '60 UC', hargaAwal: 'Rp 15.000' },
+    { game: 'Valorant', item: '475 VP', hargaAwal: 'Rp 75.000' },
+    { game: 'Genshin Impact', item: '60 Genesis', hargaAwal: 'Rp 15.000' },
+    { game: 'Honor of Kings', item: '288 Token', hargaAwal: 'Rp 10.000' }
+];
+
 window.onload = function(){
-    // Cek jika admin
+    // Tampilkan menu admin jika login admin
     if(localStorage.getItem('akunAktif')){
         let akun = JSON.parse(localStorage.getItem('akunAktif'));
         if(akun.tipe === 'admin') document.getElementById('menuAdmin').classList.remove('hidden');
     }
 
-    // Ambil data harga dari Panel Admin
-    let daftarHarga = JSON.parse(localStorage.getItem('daftarHargaToko') || '[]');
+    // Ambil harga yang sudah diatur admin
+    let hargaDiatur = JSON.parse(localStorage.getItem('daftarHargaToko') || '[]');
     let wadah = document.getElementById('wadahGame');
     wadah.innerHTML = '';
 
-    if(daftarHarga.length === 0){
-        wadah.innerHTML = `
-        <div class="bg-kartu p-5 rounded-xl border border-gray-700 text-center">
-            <i class="fa fa-gamepad text-3xl text-ungu mb-2"></i>
-            <p class="text-gray-400">Belum ada daftar harga yang diatur Admin</p>
-            <p class="text-sm text-gray-500 mt-1">Silakan buka Panel Admin untuk menambah harga</p>
-        </div>`;
-        return;
-    }
+    // Tampilkan game, pakai harga admin jika ada, kalau tidak pakai harga awal
+    daftarGameDasar.forEach(game => {
+        // Cek apakah game ini sudah diatur harganya oleh admin
+        let dataAdmin = hargaDiatur.find(d => d.game === game.game && d.item === game.item);
+        let hargaAkhir = dataAdmin ? dataAdmin.harga : game.hargaAwal;
 
-    // Tampilkan setiap game & harga
-    daftarHarga.forEach((data, indeks) => {
         let kotak = document.createElement('div');
         kotak.className = 'bg-kartu p-4 rounded-xl border border-gray-700 hover:border-ungu/50 transition-all cursor-pointer';
         kotak.innerHTML = `
             <div class="flex justify-between items-center">
                 <div>
-                    <h3 class="font-bold text-lg">${data.game}</h3>
-                    <p class="text-gray-400 text-sm">${data.item}</p>
+                    <h3 class="font-bold text-lg">${game.game}</h3>
+                    <p class="text-gray-400 text-sm">${game.item}</p>
                 </div>
-                <span class="text-ungu font-bold text-xl">${data.harga}</span>
+                <span class="text-ungu font-bold text-xl">${hargaAkhir}</span>
             </div>
         `;
-        // Saat diklik lanjut ke pembelian
-        kotak.onclick = () => lanjutBeli(data);
+
+        // Simpan data saat diklik untuk beli
+        kotak.onclick = () => {
+            let dataBeli = {
+                game: game.game,
+                item: game.item,
+                harga: hargaAkhir
+            };
+            localStorage.setItem('pilihanSaatIni', JSON.stringify(dataBeli));
+            location.href = 'beli.html';
+        };
+
         wadah.appendChild(kotak);
     });
 };
-
-// LANGKAH KE HALAMAN PEMBELIAN
-function lanjutBeli(data){
-    localStorage.setItem('pilihanSaatIni', JSON.stringify(data));
-    location.href = 'beli.html';
-}
 </script>
 </body>
 </html>
