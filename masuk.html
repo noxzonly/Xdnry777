@@ -23,7 +23,7 @@
 <body class="bg-gelap text-white min-h-screen p-4">
 <div class="max-w-md mx-auto w-full flex flex-col">
 
-    <!-- 📌 BAGIAN ATAS: TETAP DI ATAS -->
+    <!-- 📌 BAGIAN ATAS: TETAP DI POSISI AWAL -->
     <div class="flex justify-between items-center mb-6">
         <button onclick="bukaMenu()" class="text-gray-300 hover:text-ungu text-xl">
             <i class="fa fa-bars"></i>
@@ -32,10 +32,11 @@
         <div></div>
     </div>
 
-    <!-- 🎯 BAGIAN FORM: PAS DI TENGAH LAYAR -->
-    <div class="flex-1 flex flex-col justify-center">
+    <!-- 🎯 BAGIAN FORM: DIPUSATKAN TEPAT DI TENGAH -->
+    <div class="flex-1 flex items-center justify-center">
+        <div class="w-full">
 
-        <!-- HALAMAN PROFIL (JIKA SUDAH LOGIN) -->
+        <!-- HALAMAN PROFIL -->
         <div id="halamanAkun" class="hidden">
             <div class="bg-kartu p-6 rounded-xl border border-gray-700 text-center">
                 <div class="text-5xl text-ungu mb-3">
@@ -43,7 +44,6 @@
                 </div>
                 <h2 class="text-xl font-bold mb-1" id="namaPengguna">-</h2>
                 <p class="text-gray-400 text-sm mb-6" id="emailPengguna">-</p>
-
                 <div class="space-y-3">
                     <a href="riwayat.html" class="block w-full bg-gelap p-3 rounded-lg text-left hover:bg-gelap/80">
                         <i class="fa fa-history mr-2 text-ungu"></i> Riwayat Pesanan
@@ -74,7 +74,6 @@
                 </div>
                 <button onclick="prosesMasuk()" class="w-full bg-ungu py-3 rounded-lg font-bold hover:bg-ungu/80">Masuk Sekarang</button>
 
-                <!-- ✅ KATA-KATA DI BAWAH LOGIN -->
                 <div class="text-center text-sm text-gray-400 pt-2">
                     <p>🔒 Data akun kamu aman & rahasia</p>
                     <p class="mt-1">Belum punya akun? Pilih tab <b class="text-ungu">Daftar</b></p>
@@ -101,7 +100,6 @@
                 </div>
                 <button onclick="prosesDaftar()" class="w-full bg-ungu py-3 rounded-lg font-bold hover:bg-ungu/80">Buat Akun</button>
 
-                <!-- ✅ KATA-KATA DI BAWAH DAFTAR -->
                 <div class="text-center text-sm text-gray-400 pt-2">
                     <p>🎉 Daftar untuk kemudahan belanja!</p>
                     <p class="mt-1">Sudah punya akun? Pilih tab <b class="text-ungu">Masuk</b></p>
@@ -109,8 +107,10 @@
             </div>
         </div>
 
-    </div> <!-- Penutup bagian tengah -->
-</div> <!-- Penutup utama -->
+        </div>
+    </div>
+
+</div>
 
 <!-- MENU SAMPING -->
 <div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4 transform -translate-x-full transition-all">
@@ -132,15 +132,11 @@
 <div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
 <script>
-// FUNGSI MENU
 function bukaMenu(){document.getElementById('menuSamping').classList.remove('-translate-x-full');document.getElementById('latarTutup').classList.remove('hidden');}
 function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
 function keluarDariMenu(e){e.preventDefault();if(confirm('Yakin keluar?')){localStorage.removeItem('akunAktif');location.href='index.html';}}
-
-// FUNGSI KELUAR AKUN
 function konfirmasiKeluar(){if(confirm('Yakin keluar akun?')){localStorage.removeItem('akunAktif');cekLogin();}}
 
-// FUNGSI AKUN
 function cekLogin(){
     if(localStorage.getItem('akunAktif')){
         let d=JSON.parse(localStorage.getItem('akunAktif'));
