@@ -54,8 +54,12 @@ window.onload = function(){
         `;
         kotak.onclick = () => {
             localStorage.removeItem('pilihSekarang');
-            localStorage.setItem('pilihSekarang', JSON.stringify({game:i.game,item:i.item,harga:i.harga}));
-            location.href='bayar.html';
+            localStorage.setItem('pilihSekarang', JSON.stringify({
+                game: i.game,
+                item: i.item,
+                harga: i.harga
+            }));
+            location.href = 'bayar.html';
         };
         wadah.appendChild(kotak);
     });
