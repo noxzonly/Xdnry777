@@ -3,119 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riwayat Pesanan - Xdnry777</title>
+    <title>Riwayat - Xdnry777</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-    <script>
-        tailwind.config = { theme: { extend: { colors: { gelap: '#121212', kartu: '#1E1E1E', ungu: '#8B5CF6' } } } }
-    </script>
-    <style>.struk { background: #fff; color: #000; } @media print { body *:not(.struk, .struk *) { display: none; } }</style>
+    <script>tailwind.config={theme:{extend:{colors:{gelap:'#121212',kartu:'#1E1E1E',ungu:'#8B5CF6'}}}}</script>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
 <div class="max-w-md mx-auto">
-    <div class="flex justify-between items-center mb-6">
-        <a href="daftar-game.html" class="text-gray-300 hover:text-ungu text-xl"><i class="fa fa-arrow-left"></i></a>
-        <h1 class="text-xl font-bold"><span class="text-ungu">Riwayat Pesanan</span></h1>
-        <a href="index.html" class="text-gray-300 hover:text-ungu text-xl"><i class="fa fa-home"></i></a>
+    <div class="flex items-center mb-6">
+        <a href="daftar-game.html" class="text-gray-300 hover:text-ungu text-xl mr-3"><i class="fa fa-arrow-left"></i></a>
+        <h1 class="text-xl font-bold text-ungu">Riwayat Pesanan</h1>
     </div>
-    <div class="mb-4 flex justify-between items-center">
-        <p class="text-gray-400 text-sm">Semua pesanan</p>
-        <button onclick="hapusSemua()" class="text-red-400 text-sm">Hapus Semua</button>
-    </div>
-    <div id="daftarRiwayat" class="space-y-3">
-        <div class="text-center text-gray-500 py-10"><i class="fa fa-history text-4xl mb-2"></i><p>Belum ada riwayat pesanan</p></div>
-    </div>
-</div>
 
-<!-- POPUP STRUK DARI RIWAYAT -->
-<div id="boxStrukRiwayat" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden p-4">
-    <div class="struk p-5 rounded-lg w-full max-w-sm">
-        <div class="text-center border-b pb-3 mb-3">
-            <h2 class="text-xl font-bold">Xdnry777 STORE</h2>
-            <p class="text-xs text-gray-500">Top Up Terpercaya</p>
-        </div>
-        <div class="space-y-1 text-sm">
-            <div class="flex justify-between"><span>Kode Struk:</span><span class="font-mono font-bold" id="rKode">-</span></div>
-            <div class="flex justify-between"><span>Game:</span><span id="rGame">-</span></div>
-            <div class="flex justify-between"><span>Item:</span><span id="rItem">-</span></div>
-            <div class="flex justify-between"><span>ID Akun:</span><span id="rId">-</span></div>
-            <div class="flex justify-between"><span>Nama Akun:</span><span id="rNama">-</span></div>
-            <div class="flex justify-between font-bold border-t pt-2 mt-2">
-                <span>Status:</span>
-                <span class="text-green-600" id="rStatus">-</span>
-            </div>
-            <div class="flex justify-between font-bold text-lg"><span>Total:</span><span id="rHarga">-</span></div>
-            <div class="flex justify-between text-xs text-gray-500 mt-2"><span>Waktu:</span><span id="rWaktu">-</span></div>
-        </div>
-        <p class="text-center text-xs text-gray-400 mt-4">Terima Kasih!</p>
-        <div class="mt-4">
-            <button onclick="tutupStrukRiwayat()" class="w-full bg-ungu py-2 rounded font-bold">Tutup</button>
-        </div>
+    <div id="daftarRiwayat" class="space-y-3"></div>
+    <div id="kosong" class="text-center text-gray-400 py-10 hidden">
+        <i class="fa fa-history text-4xl mb-3"></i>
+        <p>Belum ada riwayat pesanan</p>
     </div>
 </div>
 
 <script>
-let semuaRiwayat = [];
+if(!localStorage.getItem('akunAktif')){alert('⚠️ Wajib Masuk!');location.href='masuk.html';}
 
-function tampilkanRiwayat() {
-    semuaRiwayat = JSON.parse(localStorage.getItem('riwayatPesanan') || '[]');
-    let wadah = document.getElementById('daftarRiwayat');
-    wadah.innerHTML = '';
+let riwayat=JSON.parse(localStorage.getItem('riwayat')||'[]');
+let wadah=document.getElementById('daftarRiwayat');
 
-    if(semuaRiwayat.length === 0) {
-        wadah.innerHTML = `<div class="text-center text-gray-500 py-10"><i class="fa fa-history text-4xl mb-2"></i><p>Belum ada riwayat pesanan</p></div>`;
-        return;
-    }
-
-    // Tampilkan dari yang terbaru
-    semuaRiwayat.reverse().forEach((item, indeks) => {
-        let warna = item.status === 'LUNAS' ? 'text-green-400' : 'text-red-400';
-        let kartu = `
-            <div onclick="bukaStrukRiwayat(${indeks})" class="bg-kartu p-4 rounded-xl border border-gray-700 cursor-pointer hover:border-ungu/50 transition">
-                <div class="flex justify-between items-start mb-2">
-                    <p class="font-bold">${item.game}</p>
-                    <span class="text-sm font-bold ${warna}">${item.status}</span>
-                </div>
-                <p class="text-sm text-gray-300">${item.item}</p>
-                <p class="text-sm text-gray-400">🆔 ${item.idGame} • 👤 ${item.namaAkun}</p>
-                <div class="flex justify-between items-center mt-2">
-                    <p class="font-bold text-ungu">${item.harga}</p>
-                    <p class="text-xs text-gray-500">${item.waktu}</p>
-                </div>
-                <p class="text-xs text-gray-500 mt-1">📌 Kode: ${item.kode}</p>
-            </div>
-        `;
-        wadah.innerHTML += kartu;
-    });
-}
-
-// BUKA STRUK KETIKA KARTU DIKLIK
-function bukaStrukRiwayat(indeks) {
-    let data = semuaRiwayat[indeks];
-    document.getElementById('rKode').textContent = data.kode;
-    document.getElementById('rGame').textContent = data.game;
-    document.getElementById('rItem').textContent = data.item;
-    document.getElementById('rId').textContent = data.idGame;
-    document.getElementById('rNama').textContent = data.namaAkun;
-    document.getElementById('rStatus').textContent = data.status;
-    document.getElementById('rHarga').textContent = data.harga;
-    document.getElementById('rWaktu').textContent = data.waktu;
-
-    document.getElementById('boxStrukRiwayat').classList.remove('hidden');
-}
-
-function tutupStrukRiwayat() {
-    document.getElementById('boxStrukRiwayat').classList.add('hidden');
-}
-
-function hapusSemua() {
-    if(confirm('Yakin hapus semua riwayat?')) {
-        localStorage.removeItem('riwayatPesanan');
-        tampilkanRiwayat();
-    }
-}
-
-window.onload = tampilkanRiwayat;
+if(riwayat.length===0){document.getElementById('kosong').classList.remove('hidden');}
+else{riwayat.reverse().forEach(r=>{
+    let el=document.createElement('div');
+    el.className='bg-kartu p-4 rounded-xl border border-gray-700';
+    el.innerHTML=`
+        <div class="flex justify-between items-center mb-2">
+            <span class="font-bold">${r.game}</span>
+            <span class="text-green-400 text-sm">${r.status}</span>
+        </div>
+        <p class="text-gray-400 text-sm">${r.item}</p>
+        <p class="text-ungu font-bold">${r.harga}</p>
+        <p class="text-xs text-gray-500 mt-2">${r.waktu} | ${r.kode}</p>
+    `;
+    wadah.appendChild(el);
+});}
 </script>
 </body>
 </html>
