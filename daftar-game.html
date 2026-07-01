@@ -9,41 +9,44 @@
     <script>
         tailwind.config = { theme: { extend: { colors: { gelap:'#121212', kartu:'#1E1E1E', ungu:'#8B5CF6' } } } }
     </script>
-    <style>.logo{width:48px;height:48px;border-radius:12px;}</style>
+    <style>.logo{width:48px;height:48px;border-radius:12px;object-fit:cover;}</style>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
 <div class="max-w-md mx-auto">
-    <h1 class="text-xl font-bold text-center text-ungu mb-6">Pilih Game</h1>
-    <div id="wadah" class="space-y-4"></div>
+    <h1 class="text-xl font-bold text-center text-ungu mb-6">Pilih Item Top Up</h1>
+
+    <div class="space-y-4">
+        <!-- Mobile Legends -->
+        <div class="bg-kartu p-4 rounded-xl border border-gray-700 cursor-pointer hover:border-ungu/50 flex items-center gap-3" onclick="beli('Mobile Legends', '70 Diamond', 'Rp 28.000')">
+            <img src="https://i.imgur.com/6XZpKqG.png" class="logo">
+            <div class="flex-1"><h3 class="font-bold">Mobile Legends</h3><p class="text-gray-400 text-sm">70 Diamond</p></div>
+            <span class="text-ungu font-bold">Rp 28.000</span>
+        </div>
+        <div class="bg-kartu p-4 rounded-xl border border-gray-700 cursor-pointer hover:border-ungu/50 flex items-center gap-3" onclick="beli('Mobile Legends', '140 Diamond', 'Rp 55.000')">
+            <img src="https://i.imgur.com/6XZpKqG.png" class="logo">
+            <div class="flex-1"><h3 class="font-bold">Mobile Legends</h3><p class="text-gray-400 text-sm">140 Diamond</p></div>
+            <span class="text-ungu font-bold">Rp 55.000</span>
+        </div>
+
+        <!-- Free Fire -->
+        <div class="bg-kartu p-4 rounded-xl border border-gray-700 cursor-pointer hover:border-ungu/50 flex items-center gap-3" onclick="beli('Free Fire', '70 Diamond', 'Rp 10.000')">
+            <img src="https://i.imgur.com/9cXQZpD.png" class="logo">
+            <div class="flex-1"><h3 class="font-bold">Free Fire</h3><p class="text-gray-400 text-sm">70 Diamond</p></div>
+            <span class="text-ungu font-bold">Rp 10.000</span>
+        </div>
+        <div class="bg-kartu p-4 rounded-xl border border-gray-700 cursor-pointer hover:border-ungu/50 flex items-center gap-3" onclick="beli('Free Fire', '140 Diamond', 'Rp 20.000')">
+            <img src="https://i.imgur.com/9cXQZpD.png" class="logo">
+            <div class="flex-1"><h3 class="font-bold">Free Fire</h3><p class="text-gray-400 text-sm">140 Diamond</p></div>
+            <span class="text-ungu font-bold">Rp 20.000</span>
+        </div>
+    </div>
 </div>
 
 <script>
-window.onload = function(){
-    // AMBIL DATA DENGAN KUNCI YANG SAMA PERSIS: "dataToko"
-    let semua = JSON.parse(localStorage.getItem('dataToko')||'[]');
-    let wadah = document.getElementById('wadah');
-    wadah.innerHTML = '';
-
-    if(semua.length===0){
-        wadah.innerHTML='<p class="text-center text-gray-400">Belum ada item</p>';
-        return;
-    }
-
-    semua.forEach(i=>{
-        let kotak = document.createElement('div');
-        kotak.className = 'bg-kartu p-4 rounded-xl flex items-center gap-3 cursor-pointer';
-        kotak.innerHTML = `
-            <img src="${i.logo}" class="logo">
-            <div class="flex-1"><h3 class="font-bold">${i.game}</h3><p class="text-gray-400">${i.item}</p></div>
-            <span class="text-ungu font-bold">${i.harga}</span>
-        `;
-        kotak.onclick = () => {
-            localStorage.setItem('pilihSekarang', JSON.stringify({game:i.game,item:i.item,harga:i.harga}));
-            location.href='bayar.html';
-        };
-        wadah.appendChild(kotak);
-    });
-};
+function beli(game, item, harga){
+    localStorage.setItem('pilihSekarang', JSON.stringify({game:game, item:item, harga:harga}));
+    location.href='bayar.html';
+}
 </script>
 </body>
 </html>
