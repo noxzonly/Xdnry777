@@ -7,53 +7,22 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        gelap: '#121212',
-                        kartu: '#1E1E1E',
-                        ungu: '#8B5CF6'
-                    }
-                }
-            }
-        }
+        tailwind.config = { theme: { extend: { colors: { gelap:'#121212', kartu:'#1E1E1E', ungu:'#8B5CF6' } } } }
     </script>
-    <style>
-        .logo-game {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-    </style>
+    <style>.logo-game{width:48px;height:48px;border-radius:12px;object-fit:cover;flex-shrink:0;}</style>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
 <div class="max-w-md mx-auto">
-
-    <!-- NAVIGASI -->
     <div class="flex justify-between items-center mb-6">
-        <button onclick="bukaMenu()" class="text-gray-300 hover:text-ungu text-xl">
-            <i class="fa fa-bars"></i>
-        </button>
+        <button onclick="bukaMenu()" class="text-gray-300 hover:text-ungu text-xl"><i class="fa fa-bars"></i></button>
         <h1 class="text-xl font-bold text-ungu">Pilih Game</h1>
         <div></div>
     </div>
-
-    <!-- DAFTAR GAME DENGAN LOGO ASLI -->
     <div id="wadahGame" class="space-y-4"></div>
-
 </div>
 
-<!-- MENU SAMPING -->
 <div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4 transform -translate-x-full transition-all">
-    <div class="flex justify-between items-center mb-6">
-        <span class="text-xl font-bold text-ungu">Xdnry777</span>
-        <button onclick="tutupMenu()" class="text-2xl text-gray-300 hover:text-white">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
+    <div class="flex justify-between items-center mb-6"><span class="text-xl font-bold text-ungu">Xdnry777</span><button onclick="tutupMenu()" class="text-2xl text-gray-300 hover:text-white"><i class="fa fa-times"></i></button></div>
     <nav class="space-y-3">
         <a href="index.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-home mr-2"></i> Beranda</a>
         <a href="daftar-game.html" class="block py-2 border-b border-gray-700 text-ungu"><i class="fa fa-gamepad mr-2"></i> Daftar Game</a>
@@ -66,101 +35,42 @@
 <div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
 
 <script>
-// FUNGSI MENU
 function bukaMenu(){document.getElementById('menuSamping').classList.remove('-translate-x-full');document.getElementById('latarTutup').classList.remove('hidden');}
 function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
 
-// 📋 DAFTAR GAME + LOGO ASLI
-const daftarGameDasar = [
-    { 
-        game: 'Mobile Legends', 
-        item: '25 Diamond', 
-        hargaAwal: 'Rp 4.200', 
-        logo: 'https://files.catbox.moe/q692nn.jpg'
-    },
-    { 
-        game: 'Mobile Legends', 
-        item: '50 Diamond', 
-        hargaAwal: 'Rp 8.400', 
-        logo: 'https://files.catbox.moe/q692nn.jpg'
-    },
-    { 
-        game: 'Free Fire', 
-        item: '70 Diamond', 
-        hargaAwal: 'Rp 10.000', 
-        logo: 'https://files.catbox.moe/00jh4l.jpg'
-    },
-    { 
-        game: 'Free Fire', 
-        item: '140 Diamond', 
-        hargaAwal: 'Rp 20.000', 
-        logo: 'https://files.catbox.moe/00jh4l.jpg'
-    },
-    { 
-        game: 'PUBG Mobile', 
-        item: '60 UC', 
-        hargaAwal: 'Rp 15.000', 
-        logo: 'https://files.catbox.moe/xfxvzz.jpg'
-    },
-    { 
-        game: 'Valorant', 
-        item: '475 VP', 
-        hargaAwal: 'Rp 75.000', 
-        logo: 'https://files.catbox.moe/wvkmfq.jpg'
-    },
-    { 
-        game: 'Genshin Impact', 
-        item: '60 Genesis Crystal', 
-        hargaAwal: 'Rp 15.000', 
-        logo: 'https://files.catbox.moe/080ygh.jpg'
-    },
-    { 
-        game: 'Honor of Kings', 
-        item: '288 Token', 
-        hargaAwal: 'Rp 10.000', 
-        logo: 'https://files.catbox.moe/gcbelg.jpg'
-    }
+const daftarGame = [
+    {game:'Mobile Legends',item:'25 Diamond',hargaAwal:'Rp 4.200',logo:'https://i.imgur.com/6XZpKqG.png'},
+    {game:'Mobile Legends',item:'50 Diamond',hargaAwal:'Rp 8.400',logo:'https://i.imgur.com/6XZpKqG.png'},
+    {game:'Free Fire',item:'70 Diamond',hargaAwal:'Rp 10.000',logo:'https://i.imgur.com/9cXQZpD.png'},
+    {game:'Free Fire',item:'140 Diamond',hargaAwal:'Rp 20.000',logo:'https://i.imgur.com/9cXQZpD.png'},
+    {game:'PUBG Mobile',item:'60 UC',hargaAwal:'Rp 15.000',logo:'https://i.imgur.com/rdcXjwM.png'},
+    {game:'Valorant',item:'475 VP',hargaAwal:'Rp 75.000',logo:'https://i.imgur.com/9sD2fQm.png'},
+    {game:'Genshin Impact',item:'60 Genesis Crystal',hargaAwal:'Rp 15.000',logo:'https://i.imgur.com/5tG9aXj.png'},
+    {game:'Honor of Kings',item:'288 Token',hargaAwal:'Rp 10.000',logo:'https://i.imgur.com/8kD7sLz.png'}
 ];
 
 window.onload = function(){
-    // Tampilkan menu admin jika login admin
-    if(localStorage.getItem('akunAktif')){
-        let akun = JSON.parse(localStorage.getItem('akunAktif'));
-        if(akun.tipe === 'admin') document.getElementById('menuAdmin').classList.remove('hidden');
-    }
+    let akun = JSON.parse(localStorage.getItem('akunAktif')||'{}');
+    if(akun.tipe==='admin') document.getElementById('menuAdmin').classList.remove('hidden');
 
-    // Ambil harga yang sudah diatur admin
-    let hargaDiatur = JSON.parse(localStorage.getItem('daftarHargaToko') || '[]');
-    let wadah = document.getElementById('wadahGame');
-    wadah.innerHTML = '';
+    let ubahan = JSON.parse(localStorage.getItem('perubahanHarga')||'{}');
+    let wadah = document.getElementById('wadahGame'); wadah.innerHTML='';
 
-    // Tampilkan game lengkap dengan logo asli
-    daftarGameDasar.forEach(game => {
-        let dataAdmin = hargaDiatur.find(d => d.game === game.game && d.item === game.item);
-        let hargaAkhir = dataAdmin ? dataAdmin.harga : game.hargaAwal;
+    daftarGame.forEach(g=>{
+        let kunci = g.game.toLowerCase() + "||" + g.item.toLowerCase();
+        let hargaAkhir = ubahan[kunci] || g.hargaAwal;
 
         let kotak = document.createElement('div');
         kotak.className = 'bg-kartu p-4 rounded-xl border border-gray-700 hover:border-ungu/50 transition-all cursor-pointer flex items-center gap-3';
         kotak.innerHTML = `
-            <img src="${game.logo}" alt="${game.game}" class="logo-game">
-            <div class="flex-1">
-                <h3 class="font-bold text-lg">${game.game}</h3>
-                <p class="text-gray-400 text-sm">${game.item}</p>
-            </div>
+            <img src="${g.logo}" alt="${g.game}" class="logo-game">
+            <div class="flex-1"><h3 class="font-bold text-lg">${g.game}</h3><p class="text-gray-400 text-sm">${g.item}</p></div>
             <span class="text-ungu font-bold text-xl">${hargaAkhir}</span>
         `;
-
-        // Saat diklik lanjut beli
         kotak.onclick = () => {
-            let dataBeli = {
-                game: game.game,
-                item: game.item,
-                harga: hargaAkhir
-            };
-            localStorage.setItem('pilihanSaatIni', JSON.stringify(dataBeli));
-            location.href = 'bayar.html';
+            localStorage.setItem('pilihanBeli', JSON.stringify({game:g.game,item:g.item,harga:hargaAkhir}));
+            location.href='beli.html';
         };
-
         wadah.appendChild(kotak);
     });
 };
