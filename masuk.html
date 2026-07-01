@@ -7,28 +7,51 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <script>
-        tailwind.config = {theme:{extend:{colors:{gelap:'#121212', kartu:'#1E1E1E', ungu:'#8B5CF6'}}}}
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gelap: '#121212',
+                        kartu: '#1E1E1E',
+                        ungu: '#8B5CF6'
+                    }
+                }
+            }
+        }
     </script>
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
 <div class="max-w-md mx-auto">
-    <div class="flex items-center mb-6">
-        <a href="index.html" class="text-gray-300 hover:text-ungu text-xl mr-3"><i class="fa fa-arrow-left"></i></a>
+    <!-- NAVIGASI: GARIS TIGA MENU -->
+    <div class="flex justify-between items-center mb-6">
+        <button onclick="bukaMenu()" class="text-gray-300 hover:text-ungu text-xl">
+            <i class="fa fa-bars"></i>
+        </button>
         <h1 class="text-xl font-bold text-ungu">Akun Saya</h1>
+        <div></div>
     </div>
 
+    <!-- HALAMAN JIKA SUDAH LOGIN -->
     <div id="halamanAkun" class="hidden">
         <div class="bg-kartu p-6 rounded-xl border border-gray-700 text-center">
-            <div class="text-5xl text-ungu mb-3"><i class="fa fa-user-circle"></i></div>
+            <div class="text-5xl text-ungu mb-3">
+                <i class="fa fa-user-circle"></i>
+            </div>
             <h2 class="text-xl font-bold mb-1" id="namaPengguna">-</h2>
             <p class="text-gray-400 text-sm mb-6" id="emailPengguna">-</p>
+
             <div class="space-y-3">
-                <a href="riwayat.html" class="block w-full bg-gelap p-3 rounded-lg text-left hover:bg-gelap/80"><i class="fa fa-history mr-2 text-ungu"></i> Riwayat Pesanan</a>
-                <button onclick="keluarAkun()" class="w-full bg-red-600 py-3 rounded-lg font-bold hover:bg-red-700 mt-4"><i class="fa fa-sign-out mr-2"></i> Keluar Akun</button>
+                <a href="riwayat.html" class="block w-full bg-gelap p-3 rounded-lg text-left hover:bg-gelap/80">
+                    <i class="fa fa-history mr-2 text-ungu"></i> Riwayat Pesanan
+                </a>
+                <button onclick="keluarAkun()" class="w-full bg-red-600 py-3 rounded-lg font-bold hover:bg-red-700 mt-4">
+                    <i class="fa fa-sign-out mr-2"></i> Keluar Akun
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- HALAMAN LOGIN / DAFTAR -->
     <div id="halamanAuth">
         <div class="flex mb-6 bg-kartu rounded-xl p-1">
             <button onclick="bukaTab('masuk')" id="tabMasuk" class="flex-1 py-2 rounded-lg font-bold bg-ungu text-white">Masuk</button>
@@ -36,27 +59,101 @@
         </div>
 
         <div id="formMasuk" class="bg-kartu p-6 rounded-xl border border-gray-700 space-y-4">
-            <div><label class="text-gray-400 text-sm">Email / Username</label><input type="text" id="loginUser" class="w-full bg-gelap p-3 rounded-lg mt-1 outline-none"></div>
-            <div><label class="text-gray-400 text-sm">Kata Sandi</label><input type="password" id="loginPass" class="w-full bg-gelap p-3 rounded-lg mt-1 outline-none"></div>
+            <div>
+                <label class="text-gray-400 text-sm">Email / Username</label>
+                <input type="text" id="loginUser" class="w-full bg-gelap p-3 rounded-lg mt-1 outline-none">
+            </div>
+            <div>
+                <label class="text-gray-400 text-sm">Kata Sandi</label>
+                <input type="password" id="loginPass" class="w-full bg-gelap p-3 rounded-lg mt-1 outline-none">
+            </div>
             <button onclick="prosesMasuk()" class="w-full bg-ungu py-3 rounded-lg font-bold hover:bg-ungu/80">Masuk Sekarang</button>
         </div>
 
         <div id="formDaftar" class="hidden bg-kartu p-6 rounded-xl border border-gray-700 space-y-4">
-            <div><label class="text-gray-400 text-sm">Nama Lengkap</label><input type="text" id="daftarNama" class="w-full bg-gelap p-3 rounded-lg mt-1 outline-none"></div>
-            <div><label class="text-gray-400 text-sm">Email</label><input type="email" id="daftarEmail" class="w-full bg-gelap p-3 rounded-lg mt-1 outline-none"></div>
-            <div><label class="text-gray-400 text-sm">Username</label><input type="text" id="daftarUser" class="w-full bg-gelap p-3 rounded-lg mt-1 outline-none"></div>
-            <div><label class="text-gray-400 text-sm">Kata Sandi</label><input type="password" id="daftarPass" class="w-full bg-gelap p-3 rounded-lg mt-1 outline-none"></div>
+            <div>
+                <label class="text-gray-400 text-sm">Nama Lengkap</label>
+                <input type="text" id="daftarNama" class="w-full bg-gelap p-3 rounded-lg mt-1 outline-none">
+            </div>
+            <div>
+                <label class="text-gray-400 text-sm">Email</label>
+                <input type="email" id="daftarEmail" class="w-full bg-gelap p-3 rounded-lg mt-1 outline-none">
+            </div>
+            <div>
+                <label class="text-gray-400 text-sm">Username</label>
+                <input type="text" id="daftarUser" class="w-full bg-gelap p-3 rounded-lg mt-1 outline-none">
+            </div>
+            <div>
+                <label class="text-gray-400 text-sm">Kata Sandi</label>
+                <input type="password" id="daftarPass" class="w-full bg-gelap p-3 rounded-lg mt-1 outline-none">
+            </div>
             <button onclick="prosesDaftar()" class="w-full bg-ungu py-3 rounded-lg font-bold hover:bg-ungu/80">Buat Akun</button>
         </div>
     </div>
 </div>
 
+<!-- MENU SAMPING SAMA DENGAN HALAMAN LAIN -->
+<div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4 transform -translate-x-full transition-all">
+    <div class="flex justify-between items-center mb-6">
+        <span class="text-xl font-bold text-ungu">Xdnry777</span>
+        <button onclick="tutupMenu()" class="text-2xl text-gray-300 hover:text-white">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <nav class="space-y-3">
+        <a href="index.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-home mr-2"></i> Beranda</a>
+        <a href="daftar-game.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-gamepad mr-2"></i> Daftar Game</a>
+        <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-list-alt mr-2"></i> Riwayat Pesanan</a>
+        <a href="cara-beli.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-credit-card mr-2"></i> Cara Beli</a>
+        <a href="masuk.html" class="block py-2 border-b border-gray-700 text-ungu"><i class="fa fa-user mr-2"></i> Akun Saya</a>
+        <a href="#" onclick="keluar(event)" class="block py-2 hover:text-ungu"><i class="fa fa-sign-out mr-2"></i> Keluar Akun</a>
+    </nav>
+</div>
+<div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
 <script>
-function cekLogin(){if(localStorage.getItem('akunAktif')){let d=JSON.parse(localStorage.getItem('akunAktif'));document.getElementById('halamanAkun').classList.remove('hidden');document.getElementById('halamanAuth').classList.add('hidden');document.getElementById('namaPengguna').textContent=d.nama;document.getElementById('emailPengguna').textContent=d.email;}}
-function bukaTab(t){if(t==='masuk'){document.getElementById('formMasuk').classList.remove('hidden');document.getElementById('formDaftar').classList.add('hidden');document.getElementById('tabMasuk').classList.add('bg-ungu','text-white');document.getElementById('tabDaftar').classList.remove('bg-ungu','text-white');}else{document.getElementById('formDaftar').classList.remove('hidden');document.getElementById('formMasuk').classList.add('hidden');document.getElementById('tabDaftar').classList.add('bg-ungu','text-white');document.getElementById('tabMasuk').classList.remove('bg-ungu','text-white');}}
-function prosesDaftar(){let n=document.getElementById('daftarNama').value.trim(),e=document.getElementById('daftarEmail').value.trim(),u=document.getElementById('daftarUser').value.trim(),p=document.getElementById('daftarPass').value.trim();if(!n||!e||!u||!p){alert('Lengkapi semua data!');return;}let semua=JSON.parse(localStorage.getItem('semuaAkun')||'[]');if(semua.find(a=>a.user===u||a.email===e)){alert('Sudah terdaftar!');return;}let baru={nama:n,email:e,user:u,pass:p};semua.push(baru);localStorage.setItem('semuaAkun',JSON.stringify(semua));localStorage.setItem('akunAktif',JSON.stringify(baru));alert('Berhasil Daftar! Selamat datang '+n);cekLogin();}
-function prosesMasuk(){let u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value.trim();if(!u||!p){alert('Isi data!');return;}let semua=JSON.parse(localStorage.getItem('semuaAkun')||'[]'),akun=semua.find(a=>(a.user===u||a.email===u)&&a.pass===p);if(!akun){alert('Salah username/sandi!');return;}localStorage.setItem('akunAktif',JSON.stringify(akun));alert('Berhasil Masuk! Selamat datang '+akun.nama);cekLogin();}
-function keluarAkun(){if(confirm('Yakin keluar?')){localStorage.removeItem('akunAktif');cekLogin();}}
+// FUNGSI MENU
+function bukaMenu(){document.getElementById('menuSamping').classList.remove('-translate-x-full');document.getElementById('latarTutup').classList.remove('hidden');}
+function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
+function keluar(e){e.preventDefault();if(confirm('Yakin keluar?')){localStorage.removeItem('akunAktif');location.href='index.html';}}
+
+// FUNGSI AKUN
+function cekLogin(){
+    if(localStorage.getItem('akunAktif')){
+        let d=JSON.parse(localStorage.getItem('akunAktif'));
+        document.getElementById('halamanAkun').classList.remove('hidden');
+        document.getElementById('halamanAuth').classList.add('hidden');
+        document.getElementById('namaPengguna').textContent=d.nama;
+        document.getElementById('emailPengguna').textContent=d.email;
+    }
+}
+function bukaTab(t){
+    if(t==='masuk'){
+        document.getElementById('formMasuk').classList.remove('hidden');document.getElementById('formDaftar').classList.add('hidden');
+        document.getElementById('tabMasuk').classList.add('bg-ungu','text-white');document.getElementById('tabDaftar').classList.remove('bg-ungu','text-white');
+    }else{
+        document.getElementById('formDaftar').classList.remove('hidden');document.getElementById('formMasuk').classList.add('hidden');
+        document.getElementById('tabDaftar').classList.add('bg-ungu','text-white');document.getElementById('tabMasuk').classList.remove('bg-ungu','text-white');
+    }
+}
+function prosesDaftar(){
+    let n=document.getElementById('daftarNama').value.trim(),e=document.getElementById('daftarEmail').value.trim(),u=document.getElementById('daftarUser').value.trim(),p=document.getElementById('daftarPass').value.trim();
+    if(!n||!e||!u||!p){alert('Lengkapi semua data!');return;}
+    let semua=JSON.parse(localStorage.getItem('semuaAkun')||'[]');
+    if(semua.find(a=>a.user===u||a.email===e)){alert('Username/Email sudah terdaftar!');return;}
+    let baru={nama:n,email:e,user:u,pass:p};semua.push(baru);
+    localStorage.setItem('semuaAkun',JSON.stringify(semua));localStorage.setItem('akunAktif',JSON.stringify(baru));
+    alert('Berhasil Daftar! Selamat datang '+n);cekLogin();
+}
+function prosesMasuk(){
+    let u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value.trim();
+    if(!u||!p){alert('Isi data login!');return;}
+    let semua=JSON.parse(localStorage.getItem('semuaAkun')||'[]'),akun=semua.find(a=>(a.user===u||a.email===u)&&a.pass===p);
+    if(!akun){alert('Username atau kata sandi salah!');return;}
+    localStorage.setItem('akunAktif',JSON.stringify(akun));alert('Berhasil Masuk! Selamat datang '+akun.nama);cekLogin();
+}
+function keluarAkun(){if(confirm('Yakin ingin keluar akun?')){localStorage.removeItem('akunAktif');cekLogin();}}
+
 window.onload=cekLogin;
 </script>
 </body>
