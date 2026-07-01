@@ -22,7 +22,7 @@
 </head>
 <body class="bg-gelap text-white min-h-screen p-4">
 <div class="max-w-md mx-auto">
-    <!-- NAVIGASI: GARIS TIGA MENU -->
+    <!-- NAVIGASI MENU -->
     <div class="flex justify-between items-center mb-6">
         <button onclick="bukaMenu()" class="text-gray-300 hover:text-ungu text-xl">
             <i class="fa fa-bars"></i>
@@ -31,7 +31,7 @@
         <div></div>
     </div>
 
-    <!-- HALAMAN JIKA SUDAH LOGIN -->
+    <!-- HALAMAN PROFIL (JIKA SUDAH LOGIN) -->
     <div id="halamanAkun" class="hidden">
         <div class="bg-kartu p-6 rounded-xl border border-gray-700 text-center">
             <div class="text-5xl text-ungu mb-3">
@@ -44,7 +44,8 @@
                 <a href="riwayat.html" class="block w-full bg-gelap p-3 rounded-lg text-left hover:bg-gelap/80">
                     <i class="fa fa-history mr-2 text-ungu"></i> Riwayat Pesanan
                 </a>
-                <button onclick="keluarAkun()" class="w-full bg-red-600 py-3 rounded-lg font-bold hover:bg-red-700 mt-4">
+                <!-- TOMBOL KELUAR AKUN DIPERBAIKI -->
+                <button onclick="konfirmasiKeluar()" class="w-full bg-red-600 py-3 rounded-lg font-bold hover:bg-red-700 mt-4">
                     <i class="fa fa-sign-out mr-2"></i> Keluar Akun
                 </button>
             </div>
@@ -92,7 +93,7 @@
     </div>
 </div>
 
-<!-- MENU SAMPING SAMA DENGAN HALAMAN LAIN -->
+<!-- MENU SAMPING -->
 <div id="menuSamping" class="fixed top-0 left-0 h-full w-64 bg-kartu border-r border-gray-700 z-50 p-4 transform -translate-x-full transition-all">
     <div class="flex justify-between items-center mb-6">
         <span class="text-xl font-bold text-ungu">Xdnry777</span>
@@ -106,7 +107,7 @@
         <a href="riwayat.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-list-alt mr-2"></i> Riwayat Pesanan</a>
         <a href="cara-beli.html" class="block py-2 border-b border-gray-700 hover:text-ungu"><i class="fa fa-credit-card mr-2"></i> Cara Beli</a>
         <a href="masuk.html" class="block py-2 border-b border-gray-700 text-ungu"><i class="fa fa-user mr-2"></i> Akun Saya</a>
-        <a href="#" onclick="keluar(event)" class="block py-2 hover:text-ungu"><i class="fa fa-sign-out mr-2"></i> Keluar Akun</a>
+        <a href="#" onclick="keluarDariMenu(event)" class="block py-2 hover:text-ungu"><i class="fa fa-sign-out mr-2"></i> Keluar Akun</a>
     </nav>
 </div>
 <div id="latarTutup" onclick="tutupMenu()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
@@ -115,7 +116,24 @@
 // FUNGSI MENU
 function bukaMenu(){document.getElementById('menuSamping').classList.remove('-translate-x-full');document.getElementById('latarTutup').classList.remove('hidden');}
 function tutupMenu(){document.getElementById('menuSamping').classList.add('-translate-x-full');document.getElementById('latarTutup').classList.add('hidden');}
-function keluar(e){e.preventDefault();if(confirm('Yakin keluar?')){localStorage.removeItem('akunAktif');location.href='index.html';}}
+
+// ✅ FUNGSI KELUAR AKUN - DIPERBAIKI
+function konfirmasiKeluar(){
+    if(confirm('Yakin ingin keluar dari akun ini?')){
+        localStorage.removeItem('akunAktif'); // Hapus data login
+        alert('Berhasil keluar akun!');
+        cekLogin(); // Segarkan tampilan jadi halaman login
+    }
+}
+
+function keluarDariMenu(e){
+    e.preventDefault();
+    if(confirm('Yakin ingin keluar?')){
+        localStorage.removeItem('akunAktif');
+        alert('Berhasil keluar!');
+        location.href='index.html';
+    }
+}
 
 // FUNGSI AKUN
 function cekLogin(){
@@ -125,8 +143,12 @@ function cekLogin(){
         document.getElementById('halamanAuth').classList.add('hidden');
         document.getElementById('namaPengguna').textContent=d.nama;
         document.getElementById('emailPengguna').textContent=d.email;
+    }else{
+        document.getElementById('halamanAkun').classList.add('hidden');
+        document.getElementById('halamanAuth').classList.remove('hidden');
     }
 }
+
 function bukaTab(t){
     if(t==='masuk'){
         document.getElementById('formMasuk').classList.remove('hidden');document.getElementById('formDaftar').classList.add('hidden');
@@ -136,6 +158,7 @@ function bukaTab(t){
         document.getElementById('tabDaftar').classList.add('bg-ungu','text-white');document.getElementById('tabMasuk').classList.remove('bg-ungu','text-white');
     }
 }
+
 function prosesDaftar(){
     let n=document.getElementById('daftarNama').value.trim(),e=document.getElementById('daftarEmail').value.trim(),u=document.getElementById('daftarUser').value.trim(),p=document.getElementById('daftarPass').value.trim();
     if(!n||!e||!u||!p){alert('Lengkapi semua data!');return;}
@@ -145,6 +168,7 @@ function prosesDaftar(){
     localStorage.setItem('semuaAkun',JSON.stringify(semua));localStorage.setItem('akunAktif',JSON.stringify(baru));
     alert('Berhasil Daftar! Selamat datang '+n);cekLogin();
 }
+
 function prosesMasuk(){
     let u=document.getElementById('loginUser').value.trim(),p=document.getElementById('loginPass').value.trim();
     if(!u||!p){alert('Isi data login!');return;}
@@ -152,7 +176,6 @@ function prosesMasuk(){
     if(!akun){alert('Username atau kata sandi salah!');return;}
     localStorage.setItem('akunAktif',JSON.stringify(akun));alert('Berhasil Masuk! Selamat datang '+akun.nama);cekLogin();
 }
-function keluarAkun(){if(confirm('Yakin ingin keluar akun?')){localStorage.removeItem('akunAktif');cekLogin();}}
 
 window.onload=cekLogin;
 </script>
